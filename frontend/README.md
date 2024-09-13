@@ -1,10 +1,10 @@
 # frontend
 
-This template should help get you started developing with Vue 3 in Vite.
+This is the frontend for the website, using a MEVN stack.
 
 ## Recommended IDE Setup
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur). We also reccommend the MongoDB extension for ease.
 
 ## Type Support for `.vue` Imports in TS
 
@@ -37,3 +37,5 @@ npm run build
 ```sh
 npm run lint
 ```
+
+
