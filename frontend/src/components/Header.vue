@@ -69,8 +69,4 @@ const items = ref([
 ])
 </script>
 
-<style scoped>
-.p-menubar-item-label {
-  color: red;
-}
-</style>
+<style></style>
