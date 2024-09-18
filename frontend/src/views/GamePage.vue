@@ -1,7 +1,7 @@
 <template>
     <div id="themes">
         <Tabs>
-            <TabList>
+            <TabList class="tabs" >
                 <Tab v-for="tab in tabs" :value="tab.value">{{ tab.name }}</Tab>
             </TabList>
             <TabPanels>
@@ -48,9 +48,22 @@ const img = "https://th.bing.com/th/id/OIP.R7mawz2gXi7lPv7YigIZhAHaIl?w=186&h=21
 </script>
 
 <style scoped>
+@import '../assets/themes.css';
+
+body {
+    background-color: var(--main-color);
+}
 #options {
     display: flex;
     flex-direction: row;
     align-items: center;
+}
+
+#themes {
+    align-items: center;
+}
+
+.tabs {
+    align-self: center;
 }
 </style>
