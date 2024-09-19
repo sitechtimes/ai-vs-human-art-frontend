@@ -11,14 +11,13 @@
             </TabPanels>
         </Tabs>
     </div>
-    <div id="options">
-        <Image :src="img" preview />
-        <p>or</p>
-        <Image :src="img" preview />
-    </div>
-    <Button label="Submit" @click="visible = true"></Button>
-    <div id="footer">
-        <p>COMBO: {{ combo }}</p>
+    <div id="content">
+        <div id="options">
+            <Image :src="img" preview />
+            <p>or</p>
+            <Image :src="img" preview />
+        </div>
+        <Button label="Submit" @click="visible = true"></Button>
     </div>
     <div id="result">
         <Dialog v-model:visible="visible">
@@ -26,6 +25,17 @@
             <Button label="Try Again?" @click="visible = false"></Button>
         </Dialog>
     </div>
+    <Toolbar id="footer">
+        <template #start>
+            <Button>Home</Button>
+        </template>
+        <template #center>
+            <p>COMBO: {{ combo }}</p>
+        </template>
+        <template #end>
+            <Button>Help</Button>
+        </template>
+    </Toolbar>
 </template>
 
 <script setup lang="ts">
@@ -37,6 +47,9 @@ import Tab from 'primevue/tab';
 import TabPanels from 'primevue/tabpanels';
 import TabPanel from 'primevue/tabpanel';
 import Image from 'primevue/image';
+//import Sidebar from 'primevue/sidebar';
+import Toolbar from 'primevue/toolbar';
+
 import { ref } from 'vue'
 
 const tabs = [{ name: "Randomized", value: "0" }, { name: "Realistic", value: "1" }, { name: "Anime", value: "2" }, { name: "Photogtaphy", value: "3" },  { name: "Still Life", value: "4" }, ]
@@ -51,12 +64,17 @@ const img = "https://th.bing.com/th/id/OIP.R7mawz2gXi7lPv7YigIZhAHaIl?w=186&h=21
 @import '../assets/themes.css';
 
 body {
-    background-color: var(--main-color);
+    background-color: var(pink);
 }
 #options {
     display: flex;
     flex-direction: row;
     align-items: center;
+    width: 100%;
+}
+#content {
+    width: 100%;
+    justify-content: space-around;
 }
 
 #themes {
@@ -65,5 +83,11 @@ body {
 
 .tabs {
     align-self: center;
+}
+
+#footer {
+    position: absolute;
+    width: 95%;
+    bottom: 0px;
 }
 </style>
