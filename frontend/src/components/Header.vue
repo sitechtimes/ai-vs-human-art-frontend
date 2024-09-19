@@ -2,9 +2,9 @@
   <div>
     <Menubar :model="items">
       <template #start>
-        <!-- logo should be here -->
+        <img src="../assets/placholdrre.png" alt="placeholder logo" id="header-logo" />
       </template>
-      <template #item="{ item, props, hasSubmenu }">
+      <template #item="{ item, props }">
         <router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
           <a v-ripple :href="href" v-bind="props.action" @click="navigate">
             <span class="ml-2">{{ item.label }}</span>
@@ -12,12 +12,11 @@
         </router-link>
         <a v-else v-ripple :href="item.url" :target="item.target" v-bind="props.action">
           <span class="ml-2">{{ item.label }}</span>
-          <span v-if="hasSubmenu" class="pi pi-fw pi-angle-down ml-2" />
         </a>
       </template>
       <template #end>
-        <div>
-          <!-- user profile -->
+        <div class="flex items-center gap-2">
+          <img src="../assets/nagi.jpg" alt="placeholder avatar" id="header-avatar" />
         </div>
       </template>
     </Menubar>
@@ -31,14 +30,11 @@ import Menubar from 'primevue/menubar'
 const items = ref([
   {
     route: '/',
-    label: 'Home',
-    icon: 'pi pi-home',
-    hasSubmenu: false
+    label: 'Home'
   },
   {
     route: '/game',
-    label: 'Game',
-    hasSubmenu: false
+    label: 'Game'
   },
   {
     route: false,
@@ -46,27 +42,39 @@ const items = ref([
     items: [
       {
         route: '/team',
-        label: 'The Team',
-        hasSubmenu: false
+        label: 'The Team'
       },
       {
         route: '/submit',
-        label: 'Submit Your Art',
-        hasSubmenu: false
+        label: 'Submit Your Art'
       },
       {
         route: '/credits',
-        label: 'Acknowledgements',
-        hasSubmenu: false
+        label: 'Acknowledgements'
       }
     ]
   },
   {
     route: '/sign-in',
-    label: 'Sign In',
-    hasSubmenu: false
+    label: 'Sign In'
   }
 ])
 </script>
 
-<style></style>
+<style>
+.p-menubar-root-list {
+  margin: 0 0 0 auto !important;
+}
+#header-logo {
+  width: 40px;
+  height: 40px;
+}
+.p-menubar-end {
+  margin: 0 !important;
+}
+#header-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+</style>
