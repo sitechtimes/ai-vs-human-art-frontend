@@ -67,15 +67,13 @@ const combo = ref(0)
 const img = '/womp.png'
 </script>
 
-<!-- <style>
-</style> -->
+<style>
+body {
+  background-color: var(--pink);
+}
+</style>
 
 <style scoped>
-@import '../assets/themes.css';
-body {
-    background-color: pink;
-}
-
 #options {
   display: flex;
   flex-direction: row;
@@ -100,4 +98,4 @@ body {
   width: 95%;
   bottom: 0px;
 }
-</style
+</style>
