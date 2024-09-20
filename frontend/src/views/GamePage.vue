@@ -11,16 +11,16 @@
             </TabPanels>
         </Tabs>
     </div>
-    <div id="content">
-        <div id="options">
-            <Image :src="img" preview />
-            <p>or</p>
-            <Image :src="img" preview />
-        </div>
-        <Button label="Submit" @click="visible = true"></Button>
+    <div id="options">
+        <Image :src="img" preview />
+        <p>or</p>
+        <Image :src="img" preview />
+    </div>
+    <div style="width: 100%; display: flex; justify-content: center;">
+        <Button label="Submit" @click="visible = true" style="align-self: center"></Button>
     </div>
     <div id="result">
-        <Dialog v-model:visible="visible">
+        <Dialog v-model:visible="visible" modal>
             <p>your answer is correct / incorrect or whatever</p>
             <Button label="Try Again?" @click="visible = false"></Button>
         </Dialog>
@@ -33,9 +33,12 @@
             <p>COMBO: {{ combo }}</p>
         </template>
         <template #end>
-            <Button>Help</Button>
+            <Button @click="helpButton = true" >Help</Button>
         </template>
     </Toolbar>
+    <Dialog v-model:visible="helpButton" modal>
+        <p>Help / Instructions</p>
+    </Dialog>
 </template>
 
 <script setup lang="ts">
@@ -55,6 +58,7 @@ import { ref } from 'vue'
 const tabs = [{ name: "Randomized", value: "0" }, { name: "Realistic", value: "1" }, { name: "Anime", value: "2" }, { name: "Photogtaphy", value: "3" },  { name: "Still Life", value: "4" }, ]
 
 const visible = ref(false)
+const helpButton = ref(false)
 const combo = ref(0)
 const img = "https://th.bing.com/th/id/OIP.R7mawz2gXi7lPv7YigIZhAHaIl?w=186&h=216&c=7&r=0&o=5&pid=1.7"
 
@@ -69,12 +73,9 @@ body {
 #options {
     display: flex;
     flex-direction: row;
+    width: 100%;
+    justify-content: center;
     align-items: center;
-    width: 100%;
-}
-#content {
-    width: 100%;
-    justify-content: space-around;
 }
 
 #themes {
