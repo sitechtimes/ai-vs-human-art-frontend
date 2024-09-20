@@ -14,11 +14,10 @@
           <span class="ml-2">{{ item.label }}</span>
         </a>
       </template>
+
       <template #end>
-        <div class="flex items-center gap-2">
-          <img src="../assets/nagi.jpg" alt="placeholder avatar" id="header-avatar" />
-        </div>
-      </template>
+        <img src="../assets/nagi.jpg" alt="placeholder avatar" id="header-avatar"
+      /></template>
     </Menubar>
   </div>
 </template>
@@ -59,6 +58,10 @@ const items = ref([
     label: 'Sign In'
   }
 ])
+
+const user = ref({
+  avatar: '../assets/nagi.jpg'
+})
 </script>
 
 <style>
@@ -70,11 +73,22 @@ const items = ref([
   height: 40px;
 }
 .p-menubar-end {
-  margin: 0 !important;
+  margin: 0;
+  display: flex;
 }
 #header-avatar {
   width: 40px;
   height: 40px;
   border-radius: 50%;
+  align-self: center;
+}
+
+@media screen and (max-width: 600px) {
+  .p-menubar-end {
+    margin-right: 0 !important;
+  }
+  #header-logo {
+    display: none;
+  }
 }
 </style>
