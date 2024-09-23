@@ -73,7 +73,7 @@ const user = ref({
   height: 40px;
 }
 .p-menubar-end {
-  margin: 0;
+  margin-left: 0;
   display: flex;
 }
 #header-avatar {
@@ -83,12 +83,9 @@ const user = ref({
   align-self: center;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 960px) {
   .p-menubar-end {
-    margin-right: 0 !important;
-  }
-  #header-logo {
-    display: none;
+    margin-left: auto !important;
   }
 }
 </style>
