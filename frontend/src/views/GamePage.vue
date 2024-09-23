@@ -12,9 +12,9 @@
         </Tabs>
     </div>
     <div id="options">
-        <Image :src="img" preview />
+        <Image :src="img"  class="image" preview />
         <p>or</p>
-        <Image :src="img" preview />
+        <Image :src="img" class="image" preview />
     </div>
     <div style="width: 100%; display: flex; justify-content: center;">
         <Button label="Submit" @click="visible = true" style="align-self: center"></Button>
@@ -67,9 +67,7 @@ const img = "https://th.bing.com/th/id/OIP.R7mawz2gXi7lPv7YigIZhAHaIl?w=186&h=21
 <style scoped>
 @import '../assets/themes.css';
 
-body {
-    background-color: var(pink);
-}
+
 #options {
     display: flex;
     flex-direction: row;
@@ -90,5 +88,10 @@ body {
     position: absolute;
     width: 95%;
     bottom: 0px;
+}
+
+.image {
+    margin: 30px;
+    height: 30vw;
 }
 </style>
