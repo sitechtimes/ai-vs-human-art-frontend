@@ -18,6 +18,11 @@ const router = createRouter({
       component: () => import('../views/AboutView.vue')
     },
     {
+      path: '/game',
+      name: 'game',
+      component: () => import('../views/GameView.vue')
+    },
+    {
       path: '/:pathMatch(.*)*',
       name: '404',
       // route level code-splitting
