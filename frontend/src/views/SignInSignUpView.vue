@@ -3,22 +3,22 @@
     <div v-if="SignUp">
       <div id="pass-user-container">
         <h1 id="title">Sign Up</h1>
-        <div class="card flex justify-center">
+        <div class="card flex justify-center input">
           <FloatLabel>
             <label for="username">Username</label>
             <InputText id="username" v-model="usernameValue" />
           </FloatLabel>
         </div>
-        <div class="card flex justify-center" id="email-input">
+        <div class="card flex justify-center input" id="email-input">
           <FloatLabel>
             <label for="email">Email</label>
             <InputText id="email" v-model="emailValue" />
           </FloatLabel>
         </div>
-        <div class="card flex justify-center">
+        <div class="card flex justify-center input">
           <FloatLabel>
+            <Password v-model="passwordValue" inputId="password" />
             <label for="password">Password</label>
-            <Password v-model="passwordValue" :feedback="false" id="password" />
           </FloatLabel>
         </div>
         <div class="card flex justify-center">
@@ -29,20 +29,20 @@
     <div v-if="!SignUp">
       <div id="pass-user-container">
         <h1 id="title">Sign In</h1>
-        <div class="card flex justify-center">
+        <div class="card flex justify-center input" id="sign-in-username">
           <FloatLabel>
             <label for="username">Username/Email</label>
             <InputText id="username" v-model="usernameValue" />
           </FloatLabel>
         </div>
-        <div class="card flex justify-center">
+        <div class="card flex justify-center input">
           <FloatLabel>
+            <Password v-model="passwordValue" inputId="password" :feedback="false" />
             <label for="password">Password</label>
-            <Password v-model="passwordValue" :feedback="false" id="password" />
           </FloatLabel>
         </div>
         <div class="card flex justify-center">
-          <Button label="Submit" @click="registerInfo" />
+          <Button label="Submit" @click="signIn" />
         </div>
       </div>
     </div>
@@ -59,6 +59,7 @@
 </template>
 
 <script setup lang="ts">
+import FloatLabel from 'primevue/floatlabel'
 import InputText from 'primevue/inputtext'
 import Password from 'primevue/password'
 import Button from 'primevue/button'
@@ -78,7 +79,12 @@ function toggleSignView() {
 }
 async function registerInfo() {
   await userStore.register(usernameValue.value, emailValue.value, passwordValue.value)
-  console.log('this should work properly lololol')
+  console.log('ur registered!')
+}
+
+async function signIn() {
+  await userStore.login(usernameValue.value, passwordValue.value)
+  console.log('u signed in!')
 }
 </script>
 
@@ -96,10 +102,10 @@ label {
 }
 .card {
   display: flex;
-  padding: 0.5rem;
   justify-content: center;
+  padding: 0.5rem;
 }
-#email-input {
-  padding-left: 2rem;
+.input {
+  padding: 0.5rem 0.5rem 1.5rem 0.5rem;
 }
 </style>

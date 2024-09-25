@@ -4,8 +4,8 @@ export const useUserStore = defineStore({
   id: 'user',
   state: () => ({
     currentUser: null,
-    userId: null,
-    token: null,
+    userId: '',
+    token: '',
     isAuthenticated: false
   }),
   actions: {
@@ -17,9 +17,7 @@ export const useUserStore = defineStore({
       }
       try {
         const res = await fetch('http://localhost:3000/register', requestOptions)
-        if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`)
-        }
+        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
         console.log('success!! registered')
       } catch (error) {
         console.error('problem', error)
@@ -36,12 +34,10 @@ export const useUserStore = defineStore({
       }
       try {
         const res = await fetch('http://localhost:3000/login', requestOptions)
-        if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`)
-        }
+        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
         const data = await res.json()
         this.currentUser = data.user
-        this.token = data.token
+        this.token = data.refresh_token
         this.userId = data.user._id
         localStorage.setItem('token', this.token)
         localStorage.setItem('userId', this.userId)
@@ -56,10 +52,9 @@ export const useUserStore = defineStore({
         headers: { Authorization: `Bearer ${localStorage.token}` }
       }
       try {
-        const res = await fetch('http://localhost:8000/protected', requestOptions)
-        if (!res.ok) {
-          throw new Error(`HTTP error status: ${res.status}`)
-        }
+        const res = await fetch('http://localhost:3000/api/auth', requestOptions)
+        if (!res.ok) throw new Error(`HTTP error status: ${res.status}`)
+
         this.isAuthenticated = true
       } catch (error) {
         console.error('problem', error)
@@ -68,7 +63,7 @@ export const useUserStore = defineStore({
     },
     logout() {
       this.currentUser = null
-      this.token = null
+      this.token = ''
       this.isAuthenticated = false
       localStorage.removeItem('token')
       localStorage.removeItem('userId')
