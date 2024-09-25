@@ -1,7 +1,11 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import frontpage from '@/components/frontpage.vue';
+</script>
 
 <template>
-  <div></div>
+  <div>
+    <frontpage></frontpage>
+  </div>
 </template>
 
 <script setup lang="ts"></script>
