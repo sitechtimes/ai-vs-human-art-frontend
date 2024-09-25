@@ -111,9 +111,9 @@ function toggleHelpButton() {
 
 #footer {
   position: absolute;
-  width: 100%;
+  width: 95%;
   bottom: 0px;
-  left: 0%;
+  left: 2.5%;
   height: 6rem;
 }
 
