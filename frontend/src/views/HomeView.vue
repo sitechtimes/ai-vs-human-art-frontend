@@ -1,9 +1,13 @@
-<script setup lang="ts">
-import TheWelcome from '../components/TheWelcome.vue'
-</script>
+<script setup lang="ts"></script>
 
 <template>
-  <main>
-    <TheWelcome />
-  </main>
+  <div></div>
 </template>
+
+<script setup lang="ts"></script>
+
+<style scoped>
+* {
+  font-family: 'Comic Sans MS', sans-serif;
+}
+</style>
