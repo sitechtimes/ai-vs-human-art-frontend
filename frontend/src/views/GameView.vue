@@ -25,7 +25,12 @@
       <Dialog v-model:visible="isVisible" modal header="You failed!">
         <!-- i think v-model:visible is the only way to toggle visibility with this primevue component, so unfortunately were going to have to break an eslint rule -->
         <!-- skill issue above -->
-        <p>your answer is correct / incorrect or whatever</p>
+        <p style="display: flex; gap: 1rem">
+          Correct answer:
+          <img src="/thefunny.png" />
+        </p>
+
+        <p>Your answer: 17</p>
         <Button label="Try Again?" @click="toggleIsVisible"></Button>
       </Dialog>
     </div>
@@ -43,8 +48,8 @@
         <Button @click="toggleHelpButton">Help</Button>
       </template>
     </Toolbar>
-    <Dialog v-model:visible="helpButton" modal>
-      <p>Help / Instructions</p>
+    <Dialog v-model:visible="helpButton" modal header="Help/Instructions">
+      <p>find the impostor 📮</p>
     </Dialog>
   </div>
 </template>
@@ -106,15 +111,22 @@ function toggleHelpButton() {
 
 #footer {
   position: absolute;
-  width: 95%;
+  width: 100%;
   bottom: 0px;
-  left: 2.5%;
+  left: 0%;
+  height: 6rem;
 }
 
 #combo {
   display: flex;
   flex-direction: column;
   align-items: center;
+  /* primevue's definition of center is stupid */
+  position: absolute;
+  left: 0;
+  right: 0;
+  width: min-content;
+  margin: 0 auto;
 }
 
 #combo span {
