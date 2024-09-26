@@ -3,8 +3,8 @@ body {
 }
 
 :root {
-    --white: #FFFCFE
-    --pink: #FFABDB
-    --purple: #545AFE
-    --dark-purple: #231892
+    --white: #FFFCFE;
+    --pink: #FFABDB;
+    --purple: #545AFE;
+    --dark-purple: #231892;
 }
