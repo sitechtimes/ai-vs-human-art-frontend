@@ -17,7 +17,7 @@
         </div>
         <div class="card flex justify-center input">
           <FloatLabel>
-            <Password v-model="passwordValue" inputId="password" />
+            <Password v-model="passwordValue" id="password" toggleMask />
             <label for="password">Password</label>
           </FloatLabel>
         </div>
@@ -37,7 +37,7 @@
         </div>
         <div class="card flex justify-center input">
           <FloatLabel>
-            <Password v-model="passwordValue" inputId="password" :feedback="false" />
+            <Password v-model="passwordValue" id="password" :feedback="false" toggleMask />
             <label for="password">Password</label>
           </FloatLabel>
         </div>
@@ -104,6 +104,9 @@ label {
   display: flex;
   justify-content: center;
   padding: 0.5rem;
+}
+#username {
+  padding-right: 2.5rem;
 }
 .input {
   padding: 0.5rem 0.5rem 1.5rem 0.5rem;
