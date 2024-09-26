@@ -1,18 +1,32 @@
 <template>
   <div>
-    <div v-if="SignUp">
+    <h1 id="title">
+      Sign
+      <select v-model="signUp" @change="funny">
+        <option :value="true">Up</option>
+        <option :value="false">In</option>
+        <option value="funny">Out</option>
+      </select>
+    </h1>
+
+    <!-- SIGN OUT -->
+    <div v-if="signUp === 'funny'">
+      <p class="card flex justify-center input">You are now signed out.</p>
+    </div>
+
+    <!-- SIGN UP -->
+    <div v-else-if="signUp">
       <div id="pass-user-container">
-        <h1 id="title">Sign Up</h1>
         <div class="card flex justify-center input">
           <FloatLabel>
-            <label for="username">Username</label>
             <InputText id="username" v-model="usernameValue" />
+            <label for="username">Username</label>
           </FloatLabel>
         </div>
         <div class="card flex justify-center input" id="email-input">
           <FloatLabel>
-            <label for="email">Email</label>
             <InputText id="email" v-model="emailValue" />
+            <label for="email">Email</label>
           </FloatLabel>
         </div>
         <div class="card flex justify-center input">
@@ -26,13 +40,14 @@
         </div>
       </div>
     </div>
-    <div v-if="!SignUp">
+
+    <!-- SIGN IN -->
+    <div v-else>
       <div id="pass-user-container">
-        <h1 id="title">Sign In</h1>
         <div class="card flex justify-center input" id="sign-in-username">
           <FloatLabel>
-            <label for="username">Username/Email</label>
             <InputText id="username" v-model="usernameValue" />
+            <label for="username">Username/Email</label>
           </FloatLabel>
         </div>
         <div class="card flex justify-center input">
@@ -44,15 +59,6 @@
         <div class="card flex justify-center">
           <Button label="Submit" @click="signIn" />
         </div>
-      </div>
-    </div>
-    <div class="card flex justify-center">
-      <div v-if="SignUp">
-        <Button label="Sign In" @click="toggleSignView" />
-      </div>
-
-      <div v-if="!SignUp">
-        <Button label="Sign Up" @click="toggleSignView" />
       </div>
     </div>
   </div>
@@ -67,15 +73,15 @@ import Button from 'primevue/button'
 import { ref } from 'vue'
 import { useUserStore } from '../stores/user'
 
-const SignUp = ref(false)
-const usernameValue = ref(null)
-const emailValue = ref(null)
-const passwordValue = ref(null)
+const signUp = ref<boolean | 'funny'>(false)
+const usernameValue = ref('')
+const emailValue = ref('')
+const passwordValue = ref('')
 
 const userStore = useUserStore()
 
 function toggleSignView() {
-  SignUp.value = !SignUp.value
+  signUp.value = !signUp.value
 }
 async function registerInfo() {
   await userStore.register(usernameValue.value, emailValue.value, passwordValue.value)
@@ -85,6 +91,10 @@ async function registerInfo() {
 async function signIn() {
   await userStore.login(usernameValue.value, passwordValue.value)
   console.log('u signed in!')
+}
+
+async function funny() {
+  if (signUp.value === 'funny') await userStore.logout()
 }
 </script>
 

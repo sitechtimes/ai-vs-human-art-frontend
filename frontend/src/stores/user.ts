@@ -9,7 +9,7 @@ export const useUserStore = defineStore({
     isAuthenticated: false
   }),
   actions: {
-    async register(username: null, email: null, password: null) {
+    async register(username: string, email: string, password: string) {
       const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -23,7 +23,7 @@ export const useUserStore = defineStore({
         console.error('problem', error)
       }
     },
-    async login(username: null, password: null) {
+    async login(username: string, password: string) {
       const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -61,12 +61,13 @@ export const useUserStore = defineStore({
         this.isAuthenticated = false
       }
     },
-    logout() {
+    async logout() {
       this.currentUser = null
       this.token = ''
       this.isAuthenticated = false
       localStorage.removeItem('token')
       localStorage.removeItem('userId')
+      console.log('signed out,,')
     }
   }
 })
