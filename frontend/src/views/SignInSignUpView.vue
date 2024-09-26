@@ -105,7 +105,8 @@ label {
   justify-content: center;
   padding: 0.5rem;
 }
-#username {
+#username,
+#email {
   padding-right: 2.5rem;
 }
 .input {
