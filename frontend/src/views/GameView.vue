@@ -83,7 +83,6 @@ function toggleHelpButton() {
 </script>
 
 <style scoped>
-@import '../assets/themes.css';
 
 #options {
   display: flex;
@@ -102,7 +101,7 @@ function toggleHelpButton() {
 }
 
 #footer {
-  position: absolute;
+  position: fixed;
   width: 95%;
   bottom: 0px;
 }

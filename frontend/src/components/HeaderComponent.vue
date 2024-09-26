@@ -22,11 +22,34 @@
       </template>
     </Menubar>
   </div>
+  <div>
+    <Button type="button" label="Change Theme" @click="toggle" aria-haspopup="true" aria-controls="overlay_tmenu" />
+        <TieredMenu ref="themes" id="overlay_tmenu" :model="allThemes" popup>
+        </TieredMenu>
+  </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
 import Menubar from 'primevue/menubar'
+import TieredMenu from 'primevue/tieredmenu';
+import Button from 'primevue/button'
+
+const toggle = (event) => {
+    themes.value.toggle(event);
+};
+
+const allThemes = ref([
+  {
+    label: 'Default'
+  },
+  {
+    label: 'Dark'
+  },
+  {
+    label: 'Light'
+  }
+]);
 
 const items = ref([
   {
