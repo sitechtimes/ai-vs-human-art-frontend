@@ -2,7 +2,7 @@
   <div>
     <h1 id="title">
       Sign
-      <select v-model="SignUp" @change="funny">
+      <select v-model="signUp" @change="funny">
         <option :value="true">Up</option>
         <option :value="false">In</option>
         <option value="funny">Out</option>
@@ -10,12 +10,12 @@
     </h1>
 
     <!-- SIGN OUT -->
-    <div v-if="SignUp === 'funny'">
+    <div v-if="signUp === 'funny'">
       <p class="card flex justify-center input">You are now signed out.</p>
     </div>
 
     <!-- SIGN UP -->
-    <div v-else-if="SignUp">
+    <div v-else-if="signUp">
       <div id="pass-user-container">
         <div class="card flex justify-center input">
           <FloatLabel>
@@ -73,7 +73,7 @@ import Button from 'primevue/button'
 import { ref } from 'vue'
 import { useUserStore } from '../stores/user'
 
-const SignUp = ref<boolean | 'funny'>(false)
+const signUp = ref<boolean | 'funny'>(false)
 const usernameValue = ref('')
 const emailValue = ref('')
 const passwordValue = ref('')
@@ -81,7 +81,7 @@ const passwordValue = ref('')
 const userStore = useUserStore()
 
 function toggleSignView() {
-  SignUp.value = !SignUp.value
+  signUp.value = !signUp.value
 }
 async function registerInfo() {
   await userStore.register(usernameValue.value, emailValue.value, passwordValue.value)
@@ -94,7 +94,7 @@ async function signIn() {
 }
 
 async function funny() {
-  if (SignUp.value === 'funny') await userStore.logout()
+  if (signUp.value === 'funny') await userStore.logout()
 }
 </script>
 
