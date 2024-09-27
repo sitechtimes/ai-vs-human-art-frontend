@@ -38,7 +38,7 @@ import { onMounted, ref } from 'vue'
 import Button from 'primevue/button'
 import Popover from 'primevue/popover'
 import ToggleSwitch from 'primevue/toggleswitch'
-import { updatePreset } from '@primevue/themes'
+import { updatePrimaryPalette } from '@primevue/themes'
 // use primevue's palettes
 const themeList = [
   'red',
@@ -61,7 +61,7 @@ const themeList = [
 ]
 // not including 'slate', 'gray', 'zinc', 'neutral', 'stone' because they are all just gray and boring
 
-//showing popover
+// showing popover
 const themes = ref()
 const toggle = (event: Event) => {
   themes.value.toggle(event)
@@ -69,34 +69,43 @@ const toggle = (event: Event) => {
 
 const dark = ref(false)
 
-onMounted(() => {
-  const element = document.querySelector('html')
-  if (element && element.classList.contains('dark')) dark.value = true
+onMounted(async () => {
+  if (localStorage.getItem('dark') === 'true') dark.value = true
+  toggleDarkMode()
+  await null
+  /* 
+  theme WILL NOT APPLY on page load without the await above!!
+  however, this is the least serious await ever.
+  you don't have to put a promise in there:
+  - i've put a console.log() there
+  - i've put (1 - 1) there
+  - i've put null there
+  anything will work. except nothing. nothing won't work
+   */
+  changePrimaryColor(localStorage.getItem('theme') ?? 'emerald')
 })
 
 function toggleDarkMode() {
   const element = document.querySelector('html')
   if (element) element.classList[dark.value ? 'add' : 'remove']('dark')
+  localStorage.setItem('dark', String(dark.value))
 }
 
 function changePrimaryColor(color: string) {
-  updatePreset({
-    semantic: {
-      primary: {
-        50: `{${color}.50}`,
-        100: `{${color}.100}`,
-        200: `{${color}.200}`,
-        300: `{${color}.300}`,
-        400: `{${color}.400}`,
-        500: `{${color}.500}`,
-        600: `{${color}.600}`,
-        700: `{${color}.700}`,
-        800: `{${color}.800}`,
-        900: `{${color}.900}`,
-        950: `{${color}.950}`
-      }
-    }
+  updatePrimaryPalette({
+    50: `{${color}.50}`,
+    100: `{${color}.100}`,
+    200: `{${color}.200}`,
+    300: `{${color}.300}`,
+    400: `{${color}.400}`,
+    500: `{${color}.500}`,
+    600: `{${color}.600}`,
+    700: `{${color}.700}`,
+    800: `{${color}.800}`,
+    900: `{${color}.900}`,
+    950: `{${color}.950}`
   })
+  localStorage.setItem('theme', color)
 }
 </script>
 
