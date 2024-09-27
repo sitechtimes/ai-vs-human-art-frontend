@@ -24,7 +24,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
 import Menubar from 'primevue/menubar'
 
@@ -66,9 +66,6 @@ const items = ref([
 img {
   width: 40px;
   height: 40px;
-}
-#header {
-  background-color: var(--main-color);
 }
 
 #header-logo {

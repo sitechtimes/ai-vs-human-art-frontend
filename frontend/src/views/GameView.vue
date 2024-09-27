@@ -83,7 +83,6 @@ function toggleHelpButton() {
 </script>
 
 <style scoped>
-
 #options {
   display: flex;
   flex-direction: row;
@@ -104,7 +103,7 @@ function toggleHelpButton() {
   position: fixed;
   width: 95%;
   bottom: 0px;
-  background-color: var(--main-color);
+  background-color: var(--);
 }
 
 .image {
