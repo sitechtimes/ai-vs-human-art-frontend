@@ -104,6 +104,7 @@ function toggleHelpButton() {
   position: fixed;
   width: 95%;
   bottom: 0px;
+  background-color: var(--main-color);
 }
 
 .image {

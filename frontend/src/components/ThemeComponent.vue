@@ -1,7 +1,7 @@
 <template>
   <div>
     <!--Get icon for the change theme button or smth & move button to bottom right-->
-    <Button type="button" label="Change Theme" @click="toggle" aria-haspopup="true" aria-controls="overlay_tmenu" />
+    <Button type="button" class="button" label="Change Theme" @click="toggle" aria-haspopup="true" aria-controls="overlay_tmenu" />
     <Popover ref="themes">
         <span>Current: {{ selectedTheme }} Theme</span>
         <ul>
@@ -26,12 +26,12 @@ const toggle = (event:Event) => {
 };
 
 function changeTheme(theme:Theme) {
-    const currentStylesheet= document.getElementById('stylesheet') as HTMLLinkElement;
+    const currentStylesheet = document.getElementById('stylesheet') as HTMLLinkElement;
     selectedTheme.value = theme.label 
     if (currentStylesheet) {
-        currentStylesheet.href = `./public/themes/${theme.link}/theme.css`
+        currentStylesheet.href = `./public/themes/${theme.link}.css`
     } else {
-        return ':( element not found'
+        return currentStylesheet
     }
 }
 
@@ -49,5 +49,10 @@ const allThemes = ref<Theme[]>([
 </script>
 
 <style scoped>
+.button {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+}
 
 </style>

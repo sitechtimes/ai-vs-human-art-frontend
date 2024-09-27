@@ -1,0 +1,15 @@
+body {
+    background-color: var(--background-color);
+}
+
+:root {
+    --white: #FFFCFE;
+    --pink: #FFABDB;
+    --purple: #545AFE;
+    --dark-purple: #231892;
+
+    --background-color: var(--white);
+    --main-color: var(--pink);
+    --accent1: var(--purple);
+    --accent2: var(--dark-purple);
+}

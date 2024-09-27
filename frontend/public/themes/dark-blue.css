@@ -1,0 +1,15 @@
+body {
+    background-color: var(--background-color);
+}
+
+:root {
+    --dark-gray: #242528;
+    --light-blue: #AFD2CF;
+    --blue: #296CB3;
+    --dark-blue: #1A3565;
+
+    --background-color: var(--dark-gray);
+    --main-color: var(--blue);
+    --accent1: var(--light-blue);
+    --accent2: var(--dark-blue);
+}

@@ -22,13 +22,11 @@
       </template>
     </Menubar>
   </div>
-<ThemeComponent/>
 </template>
 
 <script setup>
 import { ref } from 'vue'
 import Menubar from 'primevue/menubar'
-import ThemeComponent from './ThemeComponent.vue';
 
 const items = ref([
   {
@@ -68,6 +66,9 @@ const items = ref([
 img {
   width: 40px;
   height: 40px;
+}
+#header {
+  background-color: var(--main-color);
 }
 
 #header-logo {
