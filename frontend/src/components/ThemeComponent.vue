@@ -9,7 +9,7 @@
       aria-haspopup="true"
       aria-controls="overlay_tmenu"
     />
-    <Popover ref="themes" id="popover">
+    <Popover ref="themes" id="popover" @show="open = true" @hide="open = false">
       <div id="popped-over">
         <label id="dark">
           Dark mode:
@@ -18,14 +18,22 @@
         <div id="color">
           Choose a color:
           <div id="colors">
-            <div
-              v-for="color in themeList"
+            <output :style="`background-color: var(--p-${hover}-${dark ? 700 : 300});`">{{
+              hover
+            }}</output>
+            <button
+              v-for="(color, index) in themeList"
               :key="color"
               class="circle"
-              :style="`background-image: linear-gradient(30deg, var(--p-${color}-300), var(--p-${color}-700));`"
-              v-tooltip.left="`${color}`"
+              :style="`
+              background-image: linear-gradient(30deg, var(--p-${color}-300), var(--p-${color}-700)); 
+              transform: translate(calc(-50% - ${Math.sin((index / themeList.length) * 2 * Math.PI) * 300 * Number(open)}%), calc(-50% - ${Math.cos((index / themeList.length) * 2 * Math.PI) * 300 * Number(open)}%)); 
+              transition-delay: ${index ** 1.2 * 40}ms; 
+              z-index: ${themeList.length - index + 5}; 
+              ${color === selected ? 'box-shadow: 0 0 8px var(--p-primary-' + (dark ? '700' : '300') + '); border-color: var(--p-primary-' + (dark ? '300' : '700') : ''}`"
               @click="changePrimaryColor(color)"
-            ></div>
+              @mouseenter="hover = color"
+            ></button>
           </div>
         </div>
       </div>
@@ -60,11 +68,15 @@ const themeList = [
   'rose'
 ]
 // not including 'slate', 'gray', 'zinc', 'neutral', 'stone' because they are all just gray and boring
+const hover = ref('')
+const selected = ref('')
 
 // showing popover
 const themes = ref()
-const toggle = (event: Event) => {
+const open = ref(false)
+function toggle(event: Event) {
   themes.value.toggle(event)
+  hover.value = selected.value ?? 'emerald'
 }
 
 const dark = ref(false)
@@ -73,7 +85,7 @@ onMounted(async () => {
   if (localStorage.getItem('dark') === 'true') dark.value = true
   toggleDarkMode()
   await null
-  /* 
+  /*
   theme WILL NOT APPLY on page load without the await above!!
   however, this is the least serious await ever.
   you don't have to put a promise in there:
@@ -82,7 +94,8 @@ onMounted(async () => {
   - i've put null there
   anything will work. except nothing. nothing won't work
    */
-  changePrimaryColor(localStorage.getItem('theme') ?? 'emerald')
+  selected.value = localStorage.getItem('theme') ?? 'emerald'
+  changePrimaryColor(selected.value)
 })
 
 function toggleDarkMode() {
@@ -105,6 +118,7 @@ function changePrimaryColor(color: string) {
     900: `{${color}.900}`,
     950: `{${color}.950}`
   })
+  selected.value = color
   localStorage.setItem('theme', color)
 }
 </script>
@@ -117,7 +131,8 @@ function changePrimaryColor(color: string) {
 }
 
 #popped-over {
-  width: 20ch;
+  min-width: 20ch;
+  width: min-content;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -135,24 +150,42 @@ function changePrimaryColor(color: string) {
 }
 
 #popped-over #colors {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 1ch;
+  width: 100%;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  contain: layout;
 }
 
-.circle {
+#popped-over #colors output {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  border-radius: 50%;
+  aspect-ratio: 1/1;
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#popped-over #colors .circle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   border: 1px solid var(--p-text-color);
   border-radius: 50%;
-  width: 2ch;
-  height: 2ch;
+  width: 15%;
+  aspect-ratio: 1/1;
   cursor: pointer;
-  transition: transform 10ms linear;
+  transition: transform 0.5s ease-out;
 }
 
 @media (hover: hover) {
-  .circle:hover {
-    transform: scale(1.2);
+  #popped-over #colors .circle:hover {
+    border-width: 2px;
   }
 }
 </style>
