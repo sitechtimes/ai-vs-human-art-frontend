@@ -1,3 +1,5 @@
-body {
+:root {
   font-family: 'Comic Sans MS', sans-serif;
+  transition-property: background-color color;
+  transition: 200ms linear;
 }

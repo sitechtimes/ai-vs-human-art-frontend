@@ -20,9 +20,11 @@
           <div id="colors" @mouseleave="hover = selected">
             <div
               id="color-text"
-              :style="`background-color: var(--p-${hover}-${dark ? 700 : 300});`"
+              :style="`background-color: var(--p-${hover}-${dark ? 400 : 500});`"
             >
-              <span v-if="hover !== selected">(preview)</span>
+              <Transition>
+                <span v-if="hover !== selected">(preview)</span>
+              </Transition>
               <output>{{ hover }}</output>
             </div>
 
@@ -31,11 +33,11 @@
               :key="color"
               class="circle"
               :style="`
-              background-image: linear-gradient(30deg, var(--p-${color}-300), var(--p-${color}-700)); 
-              transform: translate(calc(-50% - ${Math.sin((index / themeList.length) * 2 * Math.PI) * 300 * Number(open)}%), calc(-50% - ${Math.cos((index / themeList.length) * 2 * Math.PI) * 300 * Number(open)}%)); 
-              transition-delay: ${50 + index ** 1.2 * 20}ms; 
-              z-index: ${themeList.length - index + 5}; 
-              ${color === selected ? 'border-width: 3px; box-shadow: 0 0 8px var(--p-primary-' + (dark ? '700' : '300') + '); border-color: var(--p-primary-' + (dark ? '300' : '700') : ''}`"
+              background-image: linear-gradient(${(index / themeList.length) * -2 * Math.PI}rad, var(--p-${color}-200), var(--p-${color}-600)); 
+              transform: translate(calc(-50% - ${Math.sin((index / themeList.length) * 2 * Math.PI) * 290 * Number(open)}%), calc(-50% - ${Math.cos((index / themeList.length) * 2 * Math.PI) * 290 * Number(open)}%));
+              transition-delay: ${100 + index ** 1.2 * 10}ms;
+              z-index: ${themeList.length - index + 5};
+              ${color === selected ? 'border-width: 3px; box-shadow: 0 0 8px var(--p-primary-' + (dark ? '600' : '200') + '); border-color: var(--p-primary-' + (dark ? '100' : '600') : ''}`"
               @click="changePrimaryColor(color)"
               @mouseenter="hover = color"
             ></button>
@@ -136,7 +138,7 @@ function changePrimaryColor(color: string) {
 }
 
 #popped-over {
-  min-width: 20ch;
+  min-width: 20rem;
   width: min-content;
   display: flex;
   flex-direction: column;
@@ -174,13 +176,21 @@ function changePrimaryColor(color: string) {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  transition: background-color 200ms linear;
 }
 
 #color-text span {
-  font-size: small;
+  font-size: 1em;
+  position: absolute;
+  top: 25%;
 }
 #color-text output {
-  font-size: large;
+  font-size: 2em;
+}
+
+#color-text span,
+#color-text output {
+  text-shadow: 0 0 8px var(--p-primary-contrast-color);
 }
 
 .circle {
@@ -190,15 +200,25 @@ function changePrimaryColor(color: string) {
   transform: translate(-50%, -50%);
   border: 1px solid var(--p-text-color);
   border-radius: 50%;
-  width: 15%;
+  width: 14%;
   aspect-ratio: 1/1;
   cursor: pointer;
-  transition: transform 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: transform 1s cubic-bezier(0.375, 0.885, 0.5, 1.275);
 }
 
 @media (hover: hover) {
   .circle:hover {
     border-width: 2px;
   }
+}
+
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 200ms linear;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
 }
 </style>
