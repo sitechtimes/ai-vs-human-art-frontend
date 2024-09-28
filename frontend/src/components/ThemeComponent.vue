@@ -17,10 +17,15 @@
         </label>
         <div id="color">
           Choose a color:
-          <div id="colors">
-            <output :style="`background-color: var(--p-${hover}-${dark ? 700 : 300});`">{{
-              hover
-            }}</output>
+          <div id="colors" @mouseleave="hover = selected">
+            <div
+              id="color-text"
+              :style="`background-color: var(--p-${hover}-${dark ? 700 : 300});`"
+            >
+              <span v-if="hover !== selected">(preview)</span>
+              <output>{{ hover }}</output>
+            </div>
+
             <button
               v-for="(color, index) in themeList"
               :key="color"
@@ -30,7 +35,7 @@
               transform: translate(calc(-50% - ${Math.sin((index / themeList.length) * 2 * Math.PI) * 300 * Number(open)}%), calc(-50% - ${Math.cos((index / themeList.length) * 2 * Math.PI) * 300 * Number(open)}%)); 
               transition-delay: ${index ** 1.2 * 40}ms; 
               z-index: ${themeList.length - index + 5}; 
-              ${color === selected ? 'box-shadow: 0 0 8px var(--p-primary-' + (dark ? '700' : '300') + '); border-color: var(--p-primary-' + (dark ? '300' : '700') : ''}`"
+              ${color === selected ? 'border-width: 3px; box-shadow: 0 0 8px var(--p-primary-' + (dark ? '700' : '300') + '); border-color: var(--p-primary-' + (dark ? '300' : '700') : ''}`"
               @click="changePrimaryColor(color)"
               @mouseenter="hover = color"
             ></button>
@@ -156,7 +161,7 @@ function changePrimaryColor(color: string) {
   contain: layout;
 }
 
-#popped-over #colors output {
+#color-text {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -166,11 +171,19 @@ function changePrimaryColor(color: string) {
   aspect-ratio: 1/1;
   width: 50%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-#popped-over #colors .circle {
+#color-text span {
+  font-size: small;
+}
+#color-text output {
+  font-size: large;
+}
+
+.circle {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -184,7 +197,7 @@ function changePrimaryColor(color: string) {
 }
 
 @media (hover: hover) {
-  #popped-over #colors .circle:hover {
+  .circle:hover {
     border-width: 2px;
   }
 }
