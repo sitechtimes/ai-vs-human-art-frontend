@@ -33,7 +33,7 @@
               :style="`
               background-image: linear-gradient(30deg, var(--p-${color}-300), var(--p-${color}-700)); 
               transform: translate(calc(-50% - ${Math.sin((index / themeList.length) * 2 * Math.PI) * 300 * Number(open)}%), calc(-50% - ${Math.cos((index / themeList.length) * 2 * Math.PI) * 300 * Number(open)}%)); 
-              transition-delay: ${index ** 1.2 * 40}ms; 
+              transition-delay: ${50 + index ** 1.2 * 20}ms; 
               z-index: ${themeList.length - index + 5}; 
               ${color === selected ? 'border-width: 3px; box-shadow: 0 0 8px var(--p-primary-' + (dark ? '700' : '300') + '); border-color: var(--p-primary-' + (dark ? '300' : '700') : ''}`"
               @click="changePrimaryColor(color)"
@@ -193,7 +193,7 @@ function changePrimaryColor(color: string) {
   width: 15%;
   aspect-ratio: 1/1;
   cursor: pointer;
-  transition: transform 0.5s ease-out;
+  transition: transform 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 @media (hover: hover) {
