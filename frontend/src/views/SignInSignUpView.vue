@@ -1,23 +1,24 @@
 <template>
   <div>
     <div v-if="SignUp">
-      <div id="pass-user-container">
-        <h1 id="title">Sign Up</h1>
-        <div class="card flex justify-center input">
+      <div class="flex flex-col justify-center">
+        <h1 class="text-center">Sign Up</h1>
+        <div>
           <FloatLabel>
-            <label for="username">Username</label>
             <InputText id="username" v-model="usernameValue" />
+            <label for="username">Username</label>
           </FloatLabel>
         </div>
-        <div class="card flex justify-center input" id="email-input">
+        <!-- card flex justify-center input -->
+        <div>
           <FloatLabel>
-            <label for="email">Email</label>
             <InputText id="email" v-model="emailValue" />
+            <label for="email">Email</label>
           </FloatLabel>
         </div>
-        <div class="card flex justify-center input">
+        <div>
           <FloatLabel>
-            <Password v-model="passwordValue" id="password" toggleMask />
+            <Password id="password" v-model="passwordValue" toggleMask />
             <label for="password">Password</label>
           </FloatLabel>
         </div>
@@ -89,14 +90,6 @@ async function signIn() {
 </script>
 
 <style scoped>
-#title {
-  text-align: center;
-}
-#pass-user-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
 label {
   padding-right: 0.5rem;
 }
