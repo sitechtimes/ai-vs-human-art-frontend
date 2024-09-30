@@ -8,9 +8,9 @@
       </Tabs>
     </div>
     <div class="flex flex-row w-full justify-center items-center">
-      <Image :src="img" class="image" preview />
+      <Image :src="img" class="image m-7 h-[30vw]" preview />
       <p>or</p>
-      <Image :src="img" class="image" preview />
+      <Image :src="img" class="image m-7 h-[30vw]" preview />
     </div>
     <div class="w-full flex justify-center">
       <Button label="Submit" @click="toggleIsVisible"></Button>
@@ -76,11 +76,4 @@ function toggleHelpButton() {
 }
 </script>
 
-<style scoped>
-@import '../assets/themes.css';
-
-.image {
-  margin: 30px;
-  height: 30vw;
-}
-</style>
+<style scoped></style>
