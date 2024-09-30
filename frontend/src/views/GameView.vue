@@ -48,10 +48,7 @@ import Dialog from 'primevue/dialog'
 import Tabs from 'primevue/tabs'
 import TabList from 'primevue/tablist'
 import Tab from 'primevue/tab'
-import TabPanels from 'primevue/tabpanels'
-import TabPanel from 'primevue/tabpanel'
 import Image from 'primevue/image'
-//import Sidebar from 'primevue/sidebar';
 import Toolbar from 'primevue/toolbar'
 
 import { ref } from 'vue'
