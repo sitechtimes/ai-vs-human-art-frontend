@@ -1,24 +1,19 @@
 <template>
   <div>
-    <div id="themes">
+    <div class="items-center">
       <Tabs>
-        <TabList class="tabs">
+        <TabList class="tabs self-center">
           <Tab v-for="tab in tabs" :value="tab.value" :key="tab">{{ tab.name }}</Tab>
         </TabList>
-        <TabPanels>
-          <TabPanel v-for="tab in tabs" :value="tab.value" :key="tab">
-            <p>{{ tab.name }}</p>
-          </TabPanel>
-        </TabPanels>
       </Tabs>
     </div>
-    <div id="options">
-      <Image :src="img" class="image" preview />
+    <div class="flex flex-row w-full justify-center items-center">
+      <Image :src="img" class="image m-7 h-[30vw]" preview />
       <p>or</p>
-      <Image :src="img" class="image" preview />
+      <Image :src="img" class="image m-7 h-[30vw]" preview />
     </div>
-    <div style="width: 100%; display: flex; justify-content: center">
-      <Button label="Submit" @click="toggleIsVisible" style="align-self: center"></Button>
+    <div class="w-full flex justify-center">
+      <Button label="Submit" @click="toggleIsVisible"></Button>
     </div>
     <div id="result">
       <!-- eslint-disable vue/no-v-model-argument -->
@@ -28,9 +23,11 @@
         <Button label="Try Again?" @click="toggleIsVisible"></Button>
       </Dialog>
     </div>
-    <Toolbar id="footer">
+    <Toolbar class="absolute w-full bottom-0">
       <template #start>
-        <Button as="router-link" label="Router" to="/" id="game-home-button">Home</Button>
+        <Button as="router-link" label="Router" to="/" id="game-home-button" class="no-underline"
+          >Home</Button
+        >
       </template>
       <template #center>
         <p>COMBO: {{ combo }}</p>
@@ -51,10 +48,7 @@ import Dialog from 'primevue/dialog'
 import Tabs from 'primevue/tabs'
 import TabList from 'primevue/tablist'
 import Tab from 'primevue/tab'
-import TabPanels from 'primevue/tabpanels'
-import TabPanel from 'primevue/tabpanel'
 import Image from 'primevue/image'
-//import Sidebar from 'primevue/sidebar';
 import Toolbar from 'primevue/toolbar'
 
 import { ref } from 'vue'
@@ -82,37 +76,4 @@ function toggleHelpButton() {
 }
 </script>
 
-<style scoped>
-@import '../assets/themes.css';
-
-#options {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-}
-
-#themes {
-  align-items: center;
-}
-
-.tabs {
-  align-self: center;
-}
-
-#footer {
-  position: absolute;
-  width: 95%;
-  bottom: 0px;
-}
-
-.image {
-  margin: 30px;
-  height: 30vw;
-}
-
-#game-home-button {
-  text-decoration: none;
-}
-</style>
+<style scoped></style>
