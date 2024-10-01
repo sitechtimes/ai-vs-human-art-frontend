@@ -2,7 +2,7 @@
   <div>
     <Menubar id="header" :model="items">
       <template #start>
-        <img src="/fatfatpankocat-panko.gif" alt="placeholder logo" id="header-logo" />
+        <img src="/fatfatpankocat-panko.gif" alt="placeholder logo" class="mr-0" />
       </template>
       <template #item="{ item, props }">
         <router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
@@ -16,8 +16,8 @@
         </a>
       </template>
       <template #end>
-        <div id="header-avatar">
-          <img src="/nagi.jpg" alt="placeholder avatar" />
+        <div class="flex items-center gap-0.5">
+          <img src="/nagi.jpg" alt="placeholder avatar" class="rounded-full" />
         </div>
       </template>
     </Menubar>
@@ -66,23 +66,5 @@ const items = ref([
 img {
   width: 40px;
   height: 40px;
-}
-
-#header-logo {
-  margin-right: 1rem;
-}
-
-#header-avatar {
-  display: flex;
-  align-items: center;
-  gap: 2px;
-}
-
-#header-avatar img {
-  border-radius: 50%;
-}
-
-.p-menubar-root-list {
-  margin: 0 0 0 auto !important;
 }
 </style>
