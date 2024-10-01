@@ -1,13 +1,13 @@
 <template>
   <div>
-    <TabsComponent/>
+    <TabsComponent />
     <div id="options">
       <Image :src="img" class="image" preview />
       <p>or</p>
-      <Image :src="img" class="image" preview />
+      <Image :src="img" class="image m-7 h-[30vw]" preview />
     </div>
-    <div style="width: 100%; display: flex; justify-content: center">
-      <Button label="Submit" @click="toggleIsVisible" style="align-self: center"></Button>
+    <div class="w-full flex justify-center">
+      <Button label="Submit" @click="toggleIsVisible"></Button>
     </div>
     <div id="result">
       <!-- eslint-disable vue/no-v-model-argument -->
@@ -17,7 +17,7 @@
         <Button label="Try Again?" @click="toggleIsVisible"></Button>
       </Dialog>
     </div>
-    <GameFooter/>
+    <GameFooter />
   </div>
 </template>
 
@@ -38,11 +38,9 @@ const img =
 function toggleIsVisible() {
   isVisible.value = !isVisible.value
 }
-
 </script>
 
 <style scoped>
-
 #options {
   display: flex;
   flex-direction: row;
