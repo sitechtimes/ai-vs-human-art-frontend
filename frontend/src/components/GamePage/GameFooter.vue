@@ -1,6 +1,6 @@
 <template>
-    <div>
-    <Toolbar id="footer">
+  <div>
+    <Toolbar class="fixed w-screen bottom-0">
       <template #start>
         <Button as="router-link" label="Router" to="/" id="game-home-button">Home</Button>
       </template>
@@ -11,17 +11,18 @@
         <Button @click="toggleHelpButton">Help</Button>
       </template>
     </Toolbar>
+    <!-- eslint-disable vue/no-v-model-argument -->
     <Dialog v-model:visible="helpButton" modal>
       <p>Help / Instructions</p>
     </Dialog>
-    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
 import Toolbar from 'primevue/toolbar'
 import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
-import { ref } from 'vue';
+import { ref } from 'vue'
 
 const combo = ref(0)
 const helpButton = ref(false)
@@ -31,11 +32,4 @@ function toggleHelpButton() {
 }
 </script>
 
-<style scoped>
-#footer {
-  position: fixed;
-  width: 95%;
-  bottom: 0px;
-}
-
-</style>
+<style scoped></style>

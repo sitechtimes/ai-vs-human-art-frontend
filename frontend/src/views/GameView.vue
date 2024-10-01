@@ -1,8 +1,8 @@
 <template>
   <div>
     <TabsComponent />
-    <div id="options">
-      <Image :src="img" class="image" preview />
+    <div class="flex flex-row w-full justify-center items-center">
+      <Image :src="img" class="image m-7 h-[30vw]" preview />
       <p>or</p>
       <Image :src="img" class="image m-7 h-[30vw]" preview />
     </div>
@@ -22,8 +22,8 @@
 </template>
 
 <script setup lang="ts">
-import GameFooter from '@/components/GamePage/GameFooter.vue'
-import TabsComponent from '@/components/GamePage/TabsComponent.vue'
+import GameFooter from '../components/GamePage/GameFooter.vue'
+import TabsComponent from '../components/GamePage/TabsComponent.vue'
 
 import Button from 'primevue/button'
 import Dialog from 'primevue/dialog'
@@ -40,25 +40,4 @@ function toggleIsVisible() {
 }
 </script>
 
-<style scoped>
-#options {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-}
-
-#themes {
-  align-items: center;
-}
-
-.image {
-  margin: 30px;
-  height: 30vw;
-}
-
-#game-home-button {
-  text-decoration: none;
-}
-</style>
+<style scoped></style>
