@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="SignUp">
-      <div class="flex flex-col justify-center">
+      <form action="submit" class="flex flex-col justify-center">
         <h1 class="text-center">Sign Up</h1>
         <div>
           <FloatLabel>
@@ -25,7 +25,7 @@
         <div class="card flex justify-center">
           <Button label="Submit" @click="registerInfo" />
         </div>
-      </div>
+      </form>
     </div>
     <div v-if="!SignUp">
       <div id="pass-user-container">
@@ -92,11 +92,6 @@ async function signIn() {
 <style scoped>
 label {
   padding-right: 0.5rem;
-}
-.card {
-  display: flex;
-  justify-content: center;
-  padding: 0.5rem;
 }
 #username,
 #email {
