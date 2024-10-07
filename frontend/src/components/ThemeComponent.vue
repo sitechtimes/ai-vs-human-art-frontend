@@ -22,9 +22,6 @@
               id="color-text"
               :style="`background-color: var(--p-${hover}-${dark ? 400 : 500});`"
             >
-              <Transition>
-                <span v-if="hover !== selected">(preview)</span>
-              </Transition>
               <output>{{ hover }}</output>
             </div>
 
@@ -113,6 +110,7 @@ function toggleDarkMode() {
 
 function changePrimaryColor(color: string) {
 const palettes = {
+    0: `{${color}.200}`,
     50: `{${color}.50}`,
     100: `{${color}.100}`,
     200: `{${color}.200}`,
