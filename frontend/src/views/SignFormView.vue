@@ -33,8 +33,8 @@
       </form>
     </div>
     <div class="flex justify-center">
-      <Button v-if="SignUp" label="Sign In" link @click="toggleSignView" class="m-2" />
-      <Button v-if="!SignUp" label="Sign Up" link @click="toggleSignView" class="m-2" />
+      <Button v-if="SignUp" label="Switch to Sign In" link @click="toggleSignView" class="m-2" />
+      <Button v-if="!SignUp" label="Switch to Sign Up" link @click="toggleSignView" class="m-2" />
     </div>
   </div>
 </template>
