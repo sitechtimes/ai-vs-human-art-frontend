@@ -1,40 +1,42 @@
 <template>
   <div>
-    <div class="text-center mt-10">
-      <h1 v-if="SignUp" class="m-2">Sign Up</h1>
-      <h1 v-if="!SignUp" class="m-2">Sign In</h1>
+    <h1 class="my-2 text-center text-2xl font-bold">Sign {{ signUp ? 'Up' : 'In' }}</h1>
+    <div class="flex flex-col items-center">
+      <label for="switcher">
+        <span class="italic">
+          {{ signUp ? `Already have an account?` : `Don't have an account?` }}
+        </span>
+      </label>
+      <button id="switcher" @click="signUp = !signUp">
+        <span class="underline">
+          {{ signUp ? 'Sign in' : 'Sign up' }}
+        </span>
+      </button>
     </div>
-    <div class="flex justify-center">
-      <form action="submit">
-        <div v-if="SignUp" class="flex flex-col">
-          <InputText v-model="usernameValue" placeholder="Username" class="m-2" />
-          <InputText v-model="emailValue" placeholder="Email" class="m-2" />
-        </div>
-        <div v-if="!SignUp">
+    <div class="flex flex-col items-center gap-2">
+      <form action="submit" class="flex flex-col gap-2">
+        <TransitionGroup>
+          <label for="username">Username</label>
           <InputText
             id="username"
             v-model="usernameValue"
-            placeholder="Username/Email"
-            class="m-2 !pr-10"
+            :placeholder="signUp ? 'Username' : 'Username/Email'"
           />
-        </div>
-        <Password
-          v-model="passwordValue"
-          id="password"
-          :feedback="false"
-          toggleMask
-          placeholder="Password"
-          class="m-2"
-        />
-        <div class="card flex justify-center">
-          <Button label="Sign In" @click="signIn" v-if="SignUp" class="m-2" />
-          <Button label="Sign Up" @click="registerInfo" v-if="!SignUp" class="m-2" />
-        </div>
+          <div v-if="signUp" class="flex flex-col gap-2">
+            <label for="email">Email</label>
+            <InputText id="email" v-model="emailValue" placeholder="Email" />
+          </div>
+          <label for="password">Password</label>
+          <Password
+            v-model="passwordValue"
+            inputId="password"
+            :feedback="false"
+            toggleMask
+            placeholder="Password"
+          />
+          <Button :label="signUp ? 'Sign Up' : 'Sign In'" @click="signUp ? registerInfo : signIn" />
+        </TransitionGroup>
       </form>
-    </div>
-    <div class="flex justify-center">
-      <Button v-if="SignUp" label="Switch to Sign In" link @click="toggleSignView" class="m-2" />
-      <Button v-if="!SignUp" label="Switch to Sign Up" link @click="toggleSignView" class="m-2" />
     </div>
   </div>
 </template>
@@ -47,16 +49,13 @@ import Button from 'primevue/button'
 import { ref } from 'vue'
 import { useUserStore } from '../stores/user'
 
-const SignUp = ref(false)
+const signUp = ref(false)
 const usernameValue = ref(null)
 const emailValue = ref(null)
 const passwordValue = ref(null)
 
 const userStore = useUserStore()
 
-function toggleSignView() {
-  SignUp.value = !SignUp.value
-}
 async function registerInfo() {
   await userStore.register(usernameValue.value, emailValue.value, passwordValue.value)
   console.log('ur registered!')
@@ -68,4 +67,21 @@ async function signIn() {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.v-move,
+.v-enter-active {
+  transition: all 0.3s ease-out;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+  transform: translateY(-100%);
+}
+
+.v-leave-active {
+  transition: all 0.1s ease-in;
+  position: absolute;
+  transform: translateY(1rem);
+}
+</style>
