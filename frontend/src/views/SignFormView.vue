@@ -1,17 +1,22 @@
 <template>
   <div>
-    <div class="text-center">
-      <h1 v-if="SignUp">Sign Up</h1>
-      <h1 v-if="!SignUp">Sign In</h1>
+    <div class="text-center mt-10">
+      <h1 v-if="SignUp" class="m-2">Sign Up</h1>
+      <h1 v-if="!SignUp" class="m-2">Sign In</h1>
     </div>
-    <div>
+    <div class="flex justify-center">
       <form action="submit">
-        <div v-if="SignUp">
-          <InputText id="username" v-model="usernameValue" placeholder="Username" />
-          <InputText id="email" v-model="emailValue" placeholder="Email" />
+        <div v-if="SignUp" class="flex flex-col">
+          <InputText v-model="usernameValue" placeholder="Username" class="m-2" />
+          <InputText v-model="emailValue" placeholder="Email" class="m-2" />
         </div>
         <div v-if="!SignUp">
-          <InputText id="username" v-model="usernameValue" placeholder="Username/Email" />
+          <InputText
+            id="username"
+            v-model="usernameValue"
+            placeholder="Username/Email"
+            class="m-2 !pr-10"
+          />
         </div>
         <Password
           v-model="passwordValue"
@@ -19,15 +24,17 @@
           :feedback="false"
           toggleMask
           placeholder="Password"
+          class="m-2"
         />
         <div class="card flex justify-center">
-          <Button label="Submit" @click="signIn" />
+          <Button label="Sign In" @click="signIn" v-if="SignUp" class="m-2" />
+          <Button label="Sign Up" @click="registerInfo" v-if="!SignUp" class="m-2" />
         </div>
       </form>
     </div>
-    <div>
-      <Button v-if="SignUp" label="Sign In" link @click="toggleSignView" />
-      <Button v-if="!SignUp" label="Sign Up" link @click="toggleSignView" />
+    <div class="flex justify-center">
+      <Button v-if="SignUp" label="Sign In" link @click="toggleSignView" class="m-2" />
+      <Button v-if="!SignUp" label="Sign Up" link @click="toggleSignView" class="m-2" />
     </div>
   </div>
 </template>
