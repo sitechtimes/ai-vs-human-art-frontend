@@ -1,6 +1,6 @@
 <template>
   <div id="themes">
-    <Tabs>
+    <Tabs value="0">
       <TabList class="tabs self-center">
         <Tab v-for="tab in tabs" :value="tab.value" :key="tab">{{ tab.name }}</Tab>
       </TabList>
