@@ -53,7 +53,7 @@ import { onMounted, ref } from 'vue'
 import Button from 'primevue/button'
 import Popover from 'primevue/popover'
 import ToggleSwitch from 'primevue/toggleswitch'
-import { updatePrimaryPalette } from '@primevue/themes'
+import { updatePrimaryPalette, updateSurfacePalette } from '@primevue/themes'
 // use primevue's palettes
 const themeList = [
   'red',
@@ -112,7 +112,7 @@ function toggleDarkMode() {
 }
 
 function changePrimaryColor(color: string) {
-  updatePrimaryPalette({
+const palettes = {
     50: `{${color}.50}`,
     100: `{${color}.100}`,
     200: `{${color}.200}`,
@@ -124,7 +124,10 @@ function changePrimaryColor(color: string) {
     800: `{${color}.800}`,
     900: `{${color}.900}`,
     950: `{${color}.950}`
-  })
+  }
+  updatePrimaryPalette(palettes);
+  updateSurfacePalette(palettes);
+
   selected.value = color
   localStorage.setItem('theme', color)
 }
