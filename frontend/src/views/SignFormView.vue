@@ -70,7 +70,7 @@ async function signIn() {
 <style scoped>
 .v-move,
 .v-enter-active {
-  transition: all 0.3s ease-out;
+  transition: all 0.2s ease-out;
 }
 
 .v-enter-from,
@@ -80,7 +80,7 @@ async function signIn() {
 }
 
 .v-leave-active {
-  transition: all 0.1s ease-in;
+  transition: all 0.2s ease-in;
   position: absolute;
   transform: translateY(1rem);
 }
