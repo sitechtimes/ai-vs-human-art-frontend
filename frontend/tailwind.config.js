@@ -5,8 +5,12 @@ export default {
     "./src/**/*.{vue,js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        'home-page': "url('/concept1.png')",
+      }
+    },
   },
-  plugins: [],
+  plugins: [require('tailwindcss-primeui')],
 }
 
