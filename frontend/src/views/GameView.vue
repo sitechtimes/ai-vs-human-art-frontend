@@ -1,6 +1,8 @@
 <template>
   <div>
-    <TabsComponent />
+    <div class="w-full bg-[var(--p-content-background)]">
+      <TabsComponent class="w-min mx-auto" />
+    </div>
     <div class="flex flex-row w-full justify-center items-center">
       <Image :src="img" class="image m-7 h-[30vw]" preview />
       <p>or</p>
