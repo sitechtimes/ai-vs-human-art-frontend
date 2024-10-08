@@ -15,6 +15,11 @@ const router = createRouter({
       component: () => import('../views/GameView.vue')
     },
     {
+      path: '/signupin',
+      name: 'signupsignin',
+      component: () => import('../views/SignFormView.vue')
+    },
+    {
       path: '/:pathMatch(.*)*',
       name: '404',
       // route level code-splitting
