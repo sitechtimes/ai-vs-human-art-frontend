@@ -198,13 +198,12 @@ const palettes = {
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%);
   border: 1px solid var(--p-text-color);
   border-radius: 50%;
   width: 14%;
   aspect-ratio: 1/1;
   cursor: pointer;
-  transition: transform 1s cubic-bezier(0.375, 0.885, 0.5, 1.275);
+  
 }
 
 @media (hover: hover) {
