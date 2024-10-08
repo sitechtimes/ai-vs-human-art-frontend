@@ -48,7 +48,7 @@ const items = ref([
       {
         route: '/submit',
         label: 'Submit Your Art'
-      },
+      }, //make this into its own button
       {
         route: '/credits',
         label: 'Acknowledgements'

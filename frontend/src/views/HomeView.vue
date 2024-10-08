@@ -13,10 +13,10 @@ import HeaderComponent from '@/components/HeaderComponent.vue';
     <!-- <div :style="styleObject">  -->
     <div class="bg-[url('/concept1.png')] h-svh"> <!-- h = height -->
         <!-- <HeaderComponent/> -->
-        <div class="grid grid-cols-6 space-y-8 ms-96">
-            <Button class="col-start-3 col-span-3" label="j"/>
-            <Button class="col-start-3 col-span-3" label="j"/>
-            <Button class="col-start-3 col-span-3" label="j"/>
+        <div class="grid grid-cols-6 space-y-8 ms-96 -rotate-6"> fix heights/widths for buttons
+            <Button as="router-link" class="col-start-3 col-span-3 h-16" label="gaym" to="/game" />
+            <Button as="router-link" class="col-start-3 col-span-3" label="submit your art" to="/submit"/> make submit into own thing
+            <Button as="router-link" class="col-start-3 col-span-3" label="acknowledgments (to the world)" to="/credits"/>
         </div>
     </div>
 </template>
