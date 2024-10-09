@@ -35,8 +35,9 @@
               transition-delay: ${100 + index ** 1.2 * 10}ms;
               z-index: ${themeList.length - index + 5};
               ${color === selected ? 'border-width: 3px; box-shadow: 0 0 8px var(--p-primary-' + (dark ? '600' : '200') + '); border-color: var(--p-primary-' + (dark ? '100' : '600') : ''}`"
-              @click="changePrimaryColor(color)"
+              @click="changeColors(color)"
               @mouseenter="hover = color"
+              :aria-label="color"
             ></button>
           </div>
         </div>
@@ -99,7 +100,7 @@ onMounted(async () => {
   anything will work. except nothing. nothing won't work
    */
   selected.value = localStorage.getItem('theme') ?? 'emerald'
-  changePrimaryColor(selected.value)
+  changeColors(selected.value)
 })
 
 function toggleDarkMode() {
@@ -108,7 +109,7 @@ function toggleDarkMode() {
   localStorage.setItem('dark', String(dark.value))
 }
 
-function changePrimaryColor(color: string) {
+function changeColors(color: string) {
 const palettes = {
     0: `{${color}.200}`,
     50: `{${color}.50}`,
@@ -203,7 +204,6 @@ const palettes = {
   width: 14%;
   aspect-ratio: 1/1;
   cursor: pointer;
-  
 }
 
 @media (hover: hover) {
