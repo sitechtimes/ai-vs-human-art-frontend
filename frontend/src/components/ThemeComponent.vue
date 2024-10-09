@@ -20,7 +20,7 @@
           <div id="colors" @mouseleave="hover = selected">
             <div
               id="color-text"
-              :style="`background-color: var(--p-${hover}-${dark ? 400 : 500});`"
+              :style="`background-color: var(--p-${hover}-${dark ? 400 : 500}); color: ${dark ? 'white' : 'black'};`"
             >
               <output>{{ hover }}</output>
             </div>
@@ -32,7 +32,6 @@
               :style="`
               background-image: linear-gradient(${(index / themeList.length) * -2 * Math.PI}rad, var(--p-${color}-200), var(--p-${color}-600)); 
               transform: translate(calc(-50% - ${Math.sin((index / themeList.length) * 2 * Math.PI) * 290 * Number(open)}%), calc(-50% - ${Math.cos((index / themeList.length) * 2 * Math.PI) * 290 * Number(open)}%));
-              transition-delay: ${100 + index ** 1.2 * 10}ms;
               z-index: ${themeList.length - index + 5};
               ${color === selected ? 'border-width: 3px; box-shadow: 0 0 8px var(--p-primary-' + (dark ? '600' : '200') + '); border-color: var(--p-primary-' + (dark ? '100' : '600') : ''}`"
               @click="changeColors(color)"
@@ -110,7 +109,7 @@ function toggleDarkMode() {
 }
 
 function changeColors(color: string) {
-const palettes = {
+  const palettes = {
     0: `{${color}.200}`,
     50: `{${color}.50}`,
     100: `{${color}.100}`,
@@ -124,8 +123,8 @@ const palettes = {
     900: `{${color}.900}`,
     950: `{${color}.950}`
   }
-  updatePrimaryPalette(palettes);
-  updateSurfacePalette(palettes);
+  updatePrimaryPalette(palettes)
+  updateSurfacePalette(palettes)
 
   selected.value = color
   localStorage.setItem('theme', color)
@@ -190,11 +189,6 @@ const palettes = {
   font-size: 2em;
 }
 
-#color-text span,
-#color-text output {
-  text-shadow: 0 0 8px var(--p-primary-contrast-color);
-}
-
 .circle {
   position: absolute;
   left: 50%;
@@ -204,6 +198,9 @@ const palettes = {
   width: 14%;
   aspect-ratio: 1/1;
   cursor: pointer;
+  /* transition: transform 1s cubic-bezier(0.375, 0.885, 0.5, 1.275); tina is a hater 😒😒😒😒 */
+  /* also leaving this here */
+  /* transition-delay: ${100 + index ** 1.2 * 10}ms; */
 }
 
 @media (hover: hover) {
