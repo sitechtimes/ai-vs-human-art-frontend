@@ -16,25 +16,48 @@
     <div class="flex flex-col items-center gap-2">
       <form action="submit" class="flex flex-col gap-2">
         <TransitionGroup>
-          <label for="username">Username</label>
+          <label for="username" v-if="signUp" :key="'username.label'">Username</label>
+          <label for="username" v-if="!signUp" :key="'useremail.label'">Username/Email</label>
           <InputText
             id="username"
             v-model="usernameValue"
             :placeholder="signUp ? 'Username' : 'Username/Email'"
+            :key="'useremail.input'"
           />
           <div v-if="signUp" class="flex flex-col gap-2">
-            <label for="email">Email</label>
-            <InputText id="email" v-model="emailValue" placeholder="Email" />
+            <label for="firstName" v-if="signUp" :key="'firstName.label'">First Name</label>
+            <InputText
+              id="firstName"
+              v-model="firstNameValue"
+              placeholder="First Name"
+              :key="'firstName.input'"
+            />
+            <label for="lastName" v-if="signUp" :key="'lastName.label'">Last Name</label>
+            <InputText
+              id="lastName"
+              v-model="lastNameValue"
+              placeholder="Last Name"
+              :key="'lastName.input'"
+            />
           </div>
-          <label for="password">Password</label>
+          <div v-if="signUp" class="flex flex-col gap-2">
+            <label for="email" :key="'email.label'">Email</label>
+            <InputText id="email" v-model="emailValue" placeholder="Email" :key="'email.input'" />
+          </div>
+          <label for="password" :key="'password.label'">Password</label>
           <Password
             v-model="passwordValue"
             inputId="password"
             :feedback="false"
             toggleMask
             placeholder="Password"
+            :key="'password.input'"
           />
-          <Button :label="signUp ? 'Sign Up' : 'Sign In'" @click="signUp ? registerInfo : signIn" />
+          <Button
+            :label="signUp ? 'Sign Up' : 'Sign In'"
+            @click="signUp ? registerInfo() : signIn()"
+            :key="'button'"
+          />
         </TransitionGroup>
       </form>
     </div>
@@ -51,17 +74,21 @@ import { useUserStore } from '../stores/user'
 
 const signUp = ref(false)
 const usernameValue = ref(null)
+const firstNameValue = ref(null)
+const lastNameValue = ref(null)
 const emailValue = ref(null)
 const passwordValue = ref(null)
 
 const userStore = useUserStore()
 
 async function registerInfo() {
+  console.log('resigerting')
   await userStore.register(usernameValue.value, emailValue.value, passwordValue.value)
   console.log('ur registered!')
 }
 
 async function signIn() {
+  console.log('logging in')
   await userStore.login(usernameValue.value, passwordValue.value)
   console.log('u signed in!')
 }

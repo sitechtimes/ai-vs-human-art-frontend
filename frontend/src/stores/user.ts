@@ -6,7 +6,8 @@ export const useUserStore = defineStore({
     currentUser: null,
     userId: '',
     token: '',
-    isAuthenticated: false
+    isAuthenticated: false,
+    isAdmin: false
   }),
   actions: {
     async register(username: null, email: null, password: null) {
@@ -16,11 +17,11 @@ export const useUserStore = defineStore({
         body: JSON.stringify({ username: username, email: email, password: password })
       }
       try {
-        const res = await fetch('http://localhost:3000/register', requestOptions)
+        const res = await fetch('http://localhost:3000/api/auth/register', requestOptions)
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
         console.log('success!! registered')
       } catch (error) {
-        console.error('problem', error)
+        console.error('registration problem', error)
       }
     },
     async login(username: null, password: null) {
@@ -37,13 +38,13 @@ export const useUserStore = defineStore({
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
         const data = await res.json()
         this.currentUser = data.user
-        this.token = data.refresh_token
-        this.userId = data.user._id
+        this.token = data.refreshToken
+        this.userId = data.user.id
         localStorage.setItem('token', this.token)
         localStorage.setItem('userId', this.userId)
         console.log('success!! logged in')
       } catch (error) {
-        console.error('problem', error)
+        console.error('login problem', error)
       }
     },
     async auth() {
@@ -57,16 +58,27 @@ export const useUserStore = defineStore({
 
         this.isAuthenticated = true
       } catch (error) {
-        console.error('problem', error)
+        console.error('authentication problem', error)
         this.isAuthenticated = false
       }
     },
-    logout() {
-      this.currentUser = null
-      this.token = ''
-      this.isAuthenticated = false
-      localStorage.removeItem('token')
-      localStorage.removeItem('userId')
+    async logout() {
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'appliation/json' }
+      }
+      try {
+        const res = await fetch('http://localhost:3000/api/logout', requestOptions)
+        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
+        const data = await res.json()
+        this.currentUser = data.user
+        this.token = data.refreshToken
+        this.isAuthenticated = false
+        localStorage.removeItem('token')
+        localStorage.removeItem('userId')
+      } catch (error) {
+        console.error('logout problem', error)
+      }
     }
   }
 })
