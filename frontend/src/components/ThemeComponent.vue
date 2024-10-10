@@ -123,6 +123,10 @@ function changeColors(color: string) {
     900: `{${color}.900}`,
     950: `{${color}.950}`
   }
+  //fixes all the contrast errors dealing with wave 
+  palettes[500] = palettes[800] //tabmenu text
+  palettes[700] = palettes[800] //menubar text
+
   updatePrimaryPalette(palettes)
   updateSurfacePalette(palettes)
 
