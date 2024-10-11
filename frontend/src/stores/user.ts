@@ -10,14 +10,19 @@ export const useUserStore = defineStore({
     isAdmin: false
   }),
   actions: {
-    async register(username: null, email: null, password: null) {
+    async register(username: null, email: null, password: null, passwordConfirm: null) {
       const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: username, email: email, password: password })
+        body: JSON.stringify({
+          username: username,
+          email: email,
+          password: password,
+          password_confirm: passwordConfirm
+        })
       }
       try {
-        const res = await fetch('http://localhost:3000/api/auth/register', requestOptions)
+        const res = await fetch('http://localhost:3000/routes/api/auth/register', requestOptions)
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
         console.log('success!! registered')
       } catch (error) {
