@@ -7,7 +7,15 @@
           {{ signUp ? `Already have an account?` : `Don't have an account?` }}
         </span>
       </label>
-      <button id="switcher" @click="signUp = !signUp">
+      <button
+        id="switcher"
+        @click="
+          () => {
+            signUp = !signUp
+            notMatch = false
+          }
+        "
+      >
         <span class="underline">
           {{ signUp ? 'Sign in' : 'Sign up' }}
         </span>
@@ -17,41 +25,43 @@
       <form action="submit" class="flex flex-col gap-2">
         <TransitionGroup>
           <div v-if="signUp" class="flex flex-col gap-2">
-            <label for="username" key="'username.label'">Username</label>
+            <label for="username" key="username.label">Username</label>
             <InputText
               id="username"
               v-model="username"
               placeholder="Username"
-              key="'useremail.input'"
+              key="username.input"
             />
           </div>
-          <label for="email" key="'email.label'">Email</label>
-          <InputText id="email" v-model="email" placeholder="Email" key="'email.input'" />
-          <label for="password" key="'password.label'">Password</label>
+          <label for="email" key="email.label">Email</label>
+          <InputText id="email" v-model="email" placeholder="Email" key="email.input" />
+          <label for="password" key="password.label">Password</label>
           <Password
             v-model="password"
             inputId="password"
             :feedback="false"
             toggleMask
             placeholder="Password"
-            key="'password.input'"
+            key="password.input"
           />
-          <p v-if="notMatch" class="text-rose-600 font-bold" key="notMatchNotif">
-            Your passwords do not match!
-          </p>
           <div v-if="signUp" class="flex flex-col gap-2">
-            <label for="passwordConfirm" key="'passwordConfirm.label'">Confirm Password</label>
+            <label for="password-confirm" key="password-confirm.label">Confirm Password</label>
             <Password
-              inputId="passwordConfirm"
+              inputId="password-confirm"
               v-model="passwordConfirm"
               placeholder="Confirm Password"
               :feedback="false"
               toggleMask
-              key="'passwordConfirm.input'"
+              key="password-confirm.input"
             />
           </div>
+          <p v-if="notMatch" class="text-rose-600 font-bold" key="not-match-notif">
+            Your passwords do not match!
+          </p>
           <Button
             :label="signUp ? 'Sign Up' : 'Sign In'"
+            :disabled="notMatch"
+            :class="notMatch ? '!cursor-not-allowed' : 'cursor-pointer'"
             @click="signUp ? registerInfo() : signIn()"
             key="'button'"
           />
@@ -67,7 +77,7 @@ import Password from 'primevue/password'
 import Button from 'primevue/button'
 import { useRouter } from 'vue-router'
 
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useUserStore } from '../stores/user'
 
 const router = useRouter()
@@ -81,11 +91,7 @@ const notMatch = ref(false)
 const userStore = useUserStore()
 
 async function registerInfo() {
-  if (password.value != passwordConfirm.value) {
-    notMatch.value = true
-  } else {
-    notMatch.value = false
-  }
+  if (evilMatch()) return
   console.log('resigerting')
   await userStore.register(username.value, email.value, password.value, passwordConfirm.value)
 }
@@ -95,9 +101,22 @@ async function signIn() {
   try {
     await userStore.login(email.value, password.value)
   } catch (error) {
-    console.log(error)
+    console.error(error)
   }
 }
+
+function evilMatch() {
+  return (notMatch.value = password.value !== passwordConfirm.value)
+}
+
+// clear an existing warning if user matches password
+// will not add warning as user types out password, because that's annoying
+watch(password, () => {
+  if (notMatch.value) evilMatch()
+})
+watch(passwordConfirm, () => {
+  if (notMatch.value) evilMatch()
+})
 </script>
 
 <style scoped>
