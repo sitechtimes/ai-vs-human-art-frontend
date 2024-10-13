@@ -10,7 +10,7 @@ export const useUserStore = defineStore({
     isAdmin: false
   }),
   actions: {
-    async register(username: null, email: null, password: null, passwordConfirm: null) {
+    async register(username: string, email: string, password: string, passwordConfirm: string) {
       const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -22,29 +22,31 @@ export const useUserStore = defineStore({
         })
       }
       try {
-        const res = await fetch('http://localhost:3000/routes/api/auth/register', requestOptions)
-        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
+        const res = await fetch('http://localhost:3000/api/auth/register', requestOptions)
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`)
+        }
         console.log('success!! registered')
       } catch (error) {
         console.error('registration problem', error)
       }
     },
-    async login(username: null, password: null) {
+    async login(email: string, password: string) {
       const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          username: username,
+          email: email,
           password: password
         })
       }
       try {
-        const res = await fetch('http://localhost:3000/login', requestOptions)
+        const res = await fetch('http://localhost:3000/api/auth/login', requestOptions)
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
         const data = await res.json()
-        this.currentUser = data.user
-        this.token = data.refreshToken
-        this.userId = data.user.id
+        this.currentUser = data
+        this.token = data.refresh_token
+        this.userId = data._id
         localStorage.setItem('token', this.token)
         localStorage.setItem('userId', this.userId)
         console.log('success!! logged in')
@@ -73,7 +75,7 @@ export const useUserStore = defineStore({
         headers: { 'Content-Type': 'appliation/json' }
       }
       try {
-        const res = await fetch('http://localhost:3000/api/logout', requestOptions)
+        const res = await fetch('http://localhost:3000/api/auth/logout', requestOptions)
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
         const data = await res.json()
         this.currentUser = data.user

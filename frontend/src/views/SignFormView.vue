@@ -16,18 +16,17 @@
     <div class="flex flex-col items-center gap-2">
       <form action="submit" class="flex flex-col gap-2">
         <TransitionGroup>
-          <label for="username" v-if="signUp" key="'username.label'">Username</label>
-          <label for="username" v-if="!signUp" key="'useremail.label'">Username/Email</label>
-          <InputText
-            id="username"
-            v-model="username"
-            :placeholder="signUp ? 'Username' : 'Username/Email'"
-            key="'useremail.input'"
-          />
           <div v-if="signUp" class="flex flex-col gap-2">
-            <label for="email" key="'email.label'">Email</label>
-            <InputText id="email" v-model="email" placeholder="Email" key="'email.input'" />
+            <label for="username" key="'username.label'">Username</label>
+            <InputText
+              id="username"
+              v-model="username"
+              placeholder="Username"
+              key="'useremail.input'"
+            />
           </div>
+          <label for="email" key="'email.label'">Email</label>
+          <InputText id="email" v-model="email" placeholder="Email" key="'email.input'" />
           <label for="password" key="'password.label'">Password</label>
           <Password
             v-model="password"
@@ -43,7 +42,7 @@
           <div v-if="signUp" class="flex flex-col gap-2">
             <label for="passwordConfirm" key="'passwordConfirm.label'">Confirm Password</label>
             <Password
-              id="passwordConfirm"
+              inputId="passwordConfirm"
               v-model="passwordConfirm"
               placeholder="Confirm Password"
               :feedback="false"
@@ -66,34 +65,38 @@
 import InputText from 'primevue/inputtext'
 import Password from 'primevue/password'
 import Button from 'primevue/button'
+import { useRouter } from 'vue-router'
 
 import { ref } from 'vue'
 import { useUserStore } from '../stores/user'
 
+const router = useRouter()
 const signUp = ref(false)
-const username = ref(null)
-const email = ref(null)
-const password = ref(null)
-const passwordConfirm = ref(null)
+const username = ref('')
+const email = ref('')
+const password = ref('')
+const passwordConfirm = ref('')
 const notMatch = ref(false)
 
 const userStore = useUserStore()
 
 async function registerInfo() {
   if (password.value != passwordConfirm.value) {
-    return (notMatch.value = true)
+    notMatch.value = true
   } else {
     notMatch.value = false
   }
   console.log('resigerting')
   await userStore.register(username.value, email.value, password.value, passwordConfirm.value)
-  console.log('ur registered!')
 }
 
 async function signIn() {
   console.log('logging in')
-  await userStore.login(username.value, password.value)
-  console.log('u signed in!')
+  try {
+    await userStore.login(email.value, password.value)
+  } catch (error) {
+    console.log(error)
+  }
 }
 </script>
 
