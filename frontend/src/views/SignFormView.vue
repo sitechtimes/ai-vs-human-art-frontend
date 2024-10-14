@@ -90,22 +90,22 @@ const notMatch = ref(false)
 
 const userStore = useUserStore()
 
-async function registerInfo() {
+const registerInfo = async () => {
   if (evilMatch()) return
   console.log('resigerting')
   await userStore.register(username.value, email.value, password.value, passwordConfirm.value)
 }
 
-async function signIn() {
+const signIn = async () => {
   console.log('logging in')
   try {
     await userStore.login(email.value, password.value)
   } catch (error) {
-    console.error(error)
+    console.error('this is an error')
   }
 }
 
-function evilMatch() {
+const evilMatch = () => {
   return (notMatch.value = password.value !== passwordConfirm.value)
 }
 
