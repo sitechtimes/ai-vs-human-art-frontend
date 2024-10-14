@@ -10,20 +10,14 @@ export const useUserStore = defineStore('user', () => {
   const isAdmin = ref(false)
 
   // actions
-  const register = async (
-    username: string,
-    email: string,
-    password: string,
-    passwordConfirm: string
-  ) => {
+  const register = async (username: string, email: string, password: string) => {
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         username: username,
         email: email,
-        password: password,
-        password_confirm: passwordConfirm
+        password: password
       })
     }
     try {
@@ -79,7 +73,7 @@ export const useUserStore = defineStore('user', () => {
   const logout = async () => {
     const requestOptions = {
       method: 'POST',
-      headers: { 'Content-Type': 'appliation/json' }
+      headers: { 'Content-Type': 'application/json' }
     }
     try {
       const res = await fetch('http://localhost:3000/api/auth/logout', requestOptions)

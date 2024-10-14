@@ -93,7 +93,7 @@ const userStore = useUserStore()
 const registerInfo = async () => {
   if (evilMatch()) return
   console.log('resigerting')
-  await userStore.register(username.value, email.value, password.value, passwordConfirm.value)
+  await userStore.register(username.value, email.value, password.value)
 }
 
 const signIn = async () => {
