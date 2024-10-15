@@ -56,7 +56,7 @@ const items = ref([
     ]
   },
   {
-    route: '/signupin',
+    route: '/sign',
     label: 'Sign In'
   }
 ])
