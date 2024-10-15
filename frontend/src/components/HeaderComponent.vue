@@ -17,7 +17,7 @@
       </template>
       <template #end>
         <div class="flex items-center gap-0.5">
-          <img src="/nagi.jpg" alt="placeholder avatar" class="rounded-full" />
+          <img v-if="signedIn" src="/nagi.jpg" alt="placeholder avatar" class="rounded-full" />
         </div>
       </template>
     </Menubar>
@@ -27,6 +27,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import Menubar from 'primevue/menubar'
+import { useUserStore } from '../stores/user'
+
+const userStore = useUserStore()
+const signedIn = ref(false)
 
 const items = ref([
   {
@@ -60,6 +64,10 @@ const items = ref([
     label: 'Sign In'
   }
 ])
+
+if (userStore.currentUser) {
+  !signedIn.value
+}
 </script>
 
 <style scoped>
