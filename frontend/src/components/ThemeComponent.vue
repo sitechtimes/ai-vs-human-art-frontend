@@ -59,7 +59,6 @@ const themeList = [
   'green',
   'emerald',
   'teal',
-  'cyan',
   'sky',
   'blue',
   'indigo',
