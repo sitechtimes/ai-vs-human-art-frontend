@@ -92,8 +92,15 @@ const userStore = useUserStore()
 
 const registerInfo = async () => {
   if (evilMatch()) return
-  // console.log('resigerting')
-  await userStore.register(username.value, email.value, password.value)
+  try {
+    // console.log('resigerting')
+    const res = await userStore.register(username.value, email.value, password.value)
+    if (res) {
+      signUp.value = !signUp.value
+    }
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 const signIn = async () => {
