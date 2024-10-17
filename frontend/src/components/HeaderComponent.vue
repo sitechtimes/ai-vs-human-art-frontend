@@ -25,12 +25,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import Menubar from 'primevue/menubar'
 import { useUserStore } from '../stores/user'
 
 const userStore = useUserStore()
-const signedIn = ref(false)
 
 const items = ref([
   {
@@ -65,9 +64,7 @@ const items = ref([
   }
 ])
 
-if (userStore.currentUser) {
-  !signedIn.value
-}
+const signedIn = computed(() => !!userStore.currentUser)
 </script>
 
 <style scoped>
