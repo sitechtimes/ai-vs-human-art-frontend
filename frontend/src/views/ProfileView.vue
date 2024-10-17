@@ -5,15 +5,15 @@
     </div>
     <div>
         <label for="username">Username</label>
-        <InputText id="username" v-model="username"  variant="filled"></InputText>
+        <InputText id="username" v-model="username"  variant="filled" disabled></InputText>
     </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import InputText from 'primevue/inputtext';
+import InputText from 'primevue/inputtext'
 
-const username = ref('');
+const username = ref('')
 </script>
 
 <style scoped>

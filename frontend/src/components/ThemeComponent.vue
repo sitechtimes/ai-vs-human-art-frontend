@@ -127,7 +127,7 @@ function changeColors(color: string) {
   palettes[500] = palettes[800] //tabmenu text
   palettes[700] = palettes[800] //menubar text
 
-  palettes[400] = dark.value ? palettes[200] : palettes[400];
+  if(dark.value)  palettes[400] = palettes[200]
 
   updatePrimaryPalette(palettes)
   updateSurfacePalette(palettes)
