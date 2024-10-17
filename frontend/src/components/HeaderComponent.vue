@@ -17,7 +17,9 @@
       </template>
       <template #end>
         <div class="flex items-center gap-0.5">
-          <img src="/nagi.jpg" alt="placeholder avatar" class="rounded-full" />
+          <router-link to="/profile">
+            <img src="/nagi.jpg" alt="placeholder avatar" class="rounded-full" />
+          </router-link>
         </div>
       </template>
     </Menubar>
