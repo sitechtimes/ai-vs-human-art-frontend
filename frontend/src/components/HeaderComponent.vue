@@ -40,6 +40,10 @@ const items = ref([
     label: 'Game'
   },
   {
+    route: '/about',
+    label: 'About Us'
+  },
+/*   {
     route: false,
     label: 'About Us',
     items: [
@@ -55,8 +59,9 @@ const items = ref([
         route: '/credits',
         label: 'Acknowledgements'
       }
-    ]
+    ] 
   },
+  */
   {
     route: '/sign',
     label: 'Sign In'

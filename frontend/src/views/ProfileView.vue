@@ -11,8 +11,12 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useUserStore } from '../stores/user'
 import InputText from 'primevue/inputtext'
 
+const userStore = useUserStore()
+const user = userStore.currentUser
+console.log(user)
 const username = ref('')
 </script>
 
