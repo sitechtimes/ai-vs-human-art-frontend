@@ -26,9 +26,9 @@ export const useUserStore = defineStore('user', () => {
         throw new Error(`HTTP error! status: ${res.status}`)
       }
       // console.log('success!! registered')
-      return true
     } catch (error) {
       console.error('Registration Error', error)
+      // gonna have to do more than console log this later
     }
   }
 
