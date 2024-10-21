@@ -95,7 +95,7 @@ const registerInfo = async () => {
   try {
     // console.log('resigerting')
     const res = await userStore.register(username.value, email.value, password.value)
-    if (res) {
+    if (res !== null) {
       signUp.value = !signUp.value
     }
   } catch (error) {
