@@ -64,7 +64,7 @@ const themeList = [
   'indigo',
   'violet',
   'purple',
-  'pink',
+  'pink'
 ]
 // not including 'slate', 'gray', 'zinc', 'neutral', 'stone' because they are all just gray and boring
 const hover = ref('')
@@ -119,12 +119,15 @@ function changeColors(color: string) {
     950: `{${color}.950}`
   }
 
-  //fixes all the contrast errors dealing with wave 
+  //fixes all the contrast errors dealing with wave
+
   palettes[500] = palettes[800] //tabmenu text
   palettes[700] = palettes[800] //menubar text
 
-  if(dark.value){
+  if (dark.value) {
     palettes[400] = palettes[200]
+    palettes[600] = palettes[200]
+    palettes[800] = palettes[200]
   }
   updatePrimaryPalette(palettes)
   updateSurfacePalette(palettes)
