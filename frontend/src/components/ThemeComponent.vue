@@ -127,7 +127,6 @@ function changeColors(color: string) {
   if (dark.value) {
     palettes[400] = palettes[200]
     palettes[600] = palettes[200]
-    palettes[800] = palettes[200]
   }
   updatePrimaryPalette(palettes)
   updateSurfacePalette(palettes)
