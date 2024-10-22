@@ -22,7 +22,7 @@
       </button>
     </div>
     <div class="flex flex-col items-center gap-2">
-      <form action="submit" class="flex flex-col gap-2">
+      <form @submit.prevent="signUp ? registerInfo() : signIn()" class="flex flex-col gap-2">
         <TransitionGroup>
           <div v-if="signUp" class="flex flex-col gap-2">
             <label for="username" key="username.label">Username</label>
@@ -62,8 +62,8 @@
             :label="signUp ? 'Sign Up' : 'Sign In'"
             :disabled="notMatch"
             :class="notMatch ? '!cursor-not-allowed' : 'cursor-pointer'"
-            @click="signUp ? registerInfo() : signIn()"
-            key="'button'"
+            key="button"
+            type="submit"
           />
         </TransitionGroup>
       </form>
