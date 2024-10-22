@@ -6,6 +6,7 @@ export const useUserStore = defineStore('user', () => {
   const currentUser = ref(null)
   const userId = ref('')
   const token = ref('')
+  const userEmail = ref('')
   const isAuthenticated = ref(false)
   const isAdmin = ref(false)
 
@@ -44,9 +45,11 @@ export const useUserStore = defineStore('user', () => {
       const res = await fetch('http://localhost:3000/api/auth/login', requestOptions)
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
       const data = await res.json()
-      currentUser.value = data
+      currentUser.value = data.user
       token.value = data.refresh_token
       userId.value = data._id
+      //lawrence pls dont kill me ill fix it later :( i am aware thsi is ass
+      userEmail.value = emai
       localStorage.setItem('token', token.value)
       localStorage.setItem('userId', userId.value)
       console.log('success!! logged in')
@@ -93,6 +96,7 @@ export const useUserStore = defineStore('user', () => {
     currentUser,
     userId,
     token,
+    userEmail,
     isAuthenticated,
     isAdmin,
     register,
