@@ -2,13 +2,12 @@
   <div>
     <h1 class="my-2 text-center text-2xl font-bold">Sign {{ signUp ? 'Up' : 'In' }}</h1>
     <div class="flex flex-col items-center">
-      <label for="switcher">
-        <span class="italic">
-          {{ signUp ? `Already have an account?` : `Don't have an account?` }}
-        </span>
-      </label>
+      <span class="italic">
+        {{ signUp ? `Already have an account?` : `Don't have an account?` }}
+      </span>
       <button
         id="switcher"
+        class="underline"
         @click="
           () => {
             signUp = !signUp
@@ -16,9 +15,7 @@
           }
         "
       >
-        <span class="underline">
-          {{ signUp ? 'Sign in' : 'Sign up' }}
-        </span>
+        {{ signUp ? 'Sign in' : 'Sign up' }}
       </button>
     </div>
     <div class="flex flex-col items-center gap-2">
