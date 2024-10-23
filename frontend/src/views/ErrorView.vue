@@ -1,24 +1,24 @@
 <template>
-  <div class="w-full flex flex-col items-center pt-5">
-    <h1 class="font-black text-6xl pt-2">404 Page</h1>
-    <div class="flex text-2xl pt-2">
+  <div class="w-full flex flex-col gap-2 items-center pt-5">
+    <h1 class="font-black text-6xl">404 Page</h1>
+    <div class="flex text-2xl pt-2 gap-2">
       <p>Sorry you've attempted to reach a page that doesn't exist</p>
-      <p class="pl-2 cursor-pointer" v-if="sad" @click="catAppear()">:C</p>
-      <p class="pl-2" v-else>:Ɔ</p>
+      <span class="cursor-pointer whitespace-nowrap flex flex-nowrap" @click="sad = false">
+        :
+        <span class="block transition-transform" :class="{ 'rotate-180': !sad }">C</span>
+      </span>
     </div>
-    <p class="text-2xl pt-2">Please try again or try a different page.</p>
+    <p class="text-2xl">Please try again or try a different page.</p>
+    <RouterLink class="underline text-xl" to="/">Go home</RouterLink>
     <img src="/fatfatpankocat-panko.gif" v-if="!sad" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { RouterLink } from 'vue-router'
 
 const sad = ref(true)
-
-const catAppear = () => {
-  sad.value = !sad.value
-}
 </script>
 
 <style scoped></style>
