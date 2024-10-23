@@ -1,5 +1,4 @@
 <template>
-    <p>Profile Page</p>
     <div class="border-2 w-48">
         <img src="/nagi.jpg" alt="placeholder avatar" class="rounded-full h-36 m-3 ..."/>
     </div>
@@ -25,10 +24,23 @@ import InputText from 'primevue/inputtext'
 import Button from 'primevue/button'
 
 const userStore = useUserStore()
+const user = userStore.currentUser
 const username = ref('')
-console.log(userStore.currentUser)
-const email = userStore.userEmail
-console.log(email)
+const email = ref('')
+
+function getData(user) {
+    if(user != null) {
+        console.log(user)
+        username.value = user.username
+        email.value = user.email
+    } else {
+        console.log('womp')
+    }
+}
+getData(user)
+
+
+
 
 function logout() {
     userStore.logout()

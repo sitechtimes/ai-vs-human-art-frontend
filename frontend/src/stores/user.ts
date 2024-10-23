@@ -6,7 +6,6 @@ export const useUserStore = defineStore('user', () => {
   const currentUser = ref(null)
   const userId = ref('')
   const token = ref('')
-  const userEmail = ref('')
   const isAuthenticated = ref(false)
   const isAdmin = ref(false)
 
@@ -94,7 +93,6 @@ export const useUserStore = defineStore('user', () => {
     currentUser,
     userId,
     token,
-    userEmail,
     isAuthenticated,
     isAdmin,
     register,
