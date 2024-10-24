@@ -4,9 +4,9 @@
       <TabsComponent class="w-min mx-auto" />
     </div>
     <div class="flex flex-row w-full justify-center items-center">
-      <Image :src="img" class="image m-7 h-[30vw]" preview aria-label="Option 1"/>
+      <Image :src="img" class="image m-7 h-[30vw]" preview aria-label="Option 1" />
       <p>or</p>
-      <Image :src="img" class="image m-7 h-[30vw]" preview aria-label="Option 2"/>
+      <Image :src="img" class="image m-7 h-[30vw]" preview aria-label="Option 2" />
     </div>
     <div class="w-full flex justify-center">
       <Button label="Submit" @click="toggleIsVisible"></Button>

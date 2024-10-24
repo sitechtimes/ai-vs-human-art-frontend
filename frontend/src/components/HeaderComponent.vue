@@ -7,10 +7,10 @@
       <template #item="{ item, props }">
         <router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
           <a :href="href" v-bind="props.action" @click="navigate">
-            <span class="ml-2">{{ item.label }}</span>
+            <span>{{ item.label }}</span>
           </a>
         </router-link>
-<!--         <a v-else :href="item.url" :target="item.target" v-bind="props.action">
+        <!--         <a v-else :href="item.url" :target="item.target" v-bind="props.action">
           <span class="ml-2">{{ item.label }}</span>
            put something here to indicate that this is a dropdown i don't know
         </a> -->
@@ -43,7 +43,7 @@ const items = ref([
     route: '/about',
     label: 'About Us'
   },
-/*   {
+  /*   {
     route: false,
     label: 'About Us',
     items: [

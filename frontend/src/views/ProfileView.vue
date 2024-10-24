@@ -1,23 +1,23 @@
 <template>
-    <Message severity="warn" v-if="visible">You are NOT logged in</Message>
-    <div class="flex justify-center items-center">
-        <img src="/nagi.jpg" alt="placeholder avatar" class="rounded-full h-36 m-3"/>
-    </div>
-    <div class="content-center">
-        <div>
-            <Fieldset legend="Username">
-                <p>{{ username }}</p>
-            </Fieldset>
-        </div>
-        <div>
-            <Fieldset legend="Email">
-                <p>{{ email }}</p>
-            </Fieldset>
-        </div>
+  <Message severity="error" v-if="visible">You are NOT logged in</Message>
+  <div class="flex justify-center items-center">
+    <img src="/nagi.jpg" alt="placeholder avatar" class="rounded-full h-36 m-3" />
+  </div>
+  <div class="flex-col space-y-2.5 w-96">
+    <div>
+      <Fieldset legend="Username">
+        <p>{{ username }}</p>
+      </Fieldset>
     </div>
     <div>
-        <Button @click="logout">Log Out</Button>
+      <Fieldset legend="Email">
+        <p>{{ email }}</p>
+      </Fieldset>
     </div>
+  </div>
+  <div class="mt-1">
+    <Button @click="logout">Log Out</Button>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -35,17 +35,15 @@ const visible = ref(true)
 
 const logout = () => userStore.logout()
 
-function getData(user: { username: string, email: string }) {
-    visible.value = false
-    console.log(user)
-    username.value = user.username
-    email.value = user.email
+function getData(user: { username: string; email: string }) {
+  visible.value = false
+  console.log(user)
+  username.value = user.username
+  email.value = user.email
 }
 if (user) {
-    getData(user)
+  getData(user)
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
