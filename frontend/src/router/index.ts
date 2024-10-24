@@ -15,6 +15,11 @@ const router = createRouter({
       component: () => import('../views/GameView.vue')
     },
     {
+      path: '/about',
+      name: 'aboutus',
+      component: () => import('../views/AboutView.vue')
+    },
+    {
       path: '/sign',
       name: 'signupsignin',
       component: () => import('../views/SignFormView.vue')
