@@ -80,7 +80,7 @@ export const useUserStore = defineStore('user', () => {
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
       const data = await res.json()
       currentUser.value = data.user
-      token.value = data.refreshToken
+      token.value = data.user.refreshToken
       isAuthenticated.value = false
       localStorage.removeItem('token')
       localStorage.removeItem('userId')

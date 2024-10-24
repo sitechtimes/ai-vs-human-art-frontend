@@ -1,49 +1,48 @@
 <template>
-    <div class="border-2 w-48">
-        <img src="/nagi.jpg" alt="placeholder avatar" class="rounded-full h-36 m-3 ..."/>
+    <Message severity="warn" v-if="visible">You are NOT logged in</Message>
+    <div class="flex justify-center items-center">
+        <img src="/nagi.jpg" alt="placeholder avatar" class="rounded-full h-36 m-3"/>
     </div>
     <div class="content-center">
         <div>
-            <label for="username">Username</label>
-            <InputText id="username" v-model="username"  variant="filled" disabled></InputText>
+            <Fieldset legend="Username">
+                <p>{{ username }}</p>
+            </Fieldset>
         </div>
         <div>
-            <label for="email">Email</label>
-            <InputText id="email" v-model="email" variant="filled" disabled></InputText>
+            <Fieldset legend="Email">
+                <p>{{ email }}</p>
+            </Fieldset>
         </div>
     </div>
     <div>
-        <Button @click="logout()">Log Out</Button>
+        <Button @click="logout">Log Out</Button>
     </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useUserStore } from '../stores/user'
-import InputText from 'primevue/inputtext'
+import Fieldset from 'primevue/fieldset'
 import Button from 'primevue/button'
+import Message from 'primevue/message'
 
 const userStore = useUserStore()
 const user = userStore.currentUser
 const username = ref('')
 const email = ref('')
+const visible = ref(true)
 
-function getData(user) {
-    if(user != null) {
-        console.log(user)
-        username.value = user.username
-        email.value = user.email
-    } else {
-        console.log('womp')
-    }
+const logout = () => userStore.logout()
+
+function getData(user: { username: string, email: string }) {
+    visible.value = false
+    console.log(user)
+    username.value = user.username
+    email.value = user.email
 }
-getData(user)
-
-
-
-
-function logout() {
-    userStore.logout()
+if (user) {
+    getData(user)
 }
 </script>
 
