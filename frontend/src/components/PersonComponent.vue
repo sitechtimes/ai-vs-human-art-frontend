@@ -1,32 +1,19 @@
 <template>
-  <div
-    class="w-full flex flex-row items-center gap-2 rounded-xl p-2 bg-slate-200 dark:bg-zinc-800 border-2"
-    :style="{
-      borderColor: color,
-      backgroundColor: `color-mix(in srgb, ${color}, transparent 80%)`
-    }"
-  >
-    <div class="opacity-100">
-      <img class="size-40 rounded-xl" :src="image" :alt="name" />
-      <div class="flex flex-col justify-center p-2">
-        <div class="w-min">
-          <h2 class="xl:text-3xl text-2xl">
-            {{ name }}
-          </h2>
-        </div>
-        <p class="xl:text-base text-sm" v-html="yap"></p>
-      </div>
+  <div class="flex p-5 w-2/5">
+    <img class="object-contain w-52 h-80" src="/mizuki.png" alt="mizukis fifth focus event." />
+    <div class="flex flex-col justify-center p-5">
+      <h3 class="text-2xl">Mizuki Akiyama</h3>
+      <p class="text-sm">
+        nani sono me yappa sono me/hajimemashite ja nai ne/nani sono me mou yamete/kawaii dake nano
+        ni tsumi no aji/zureru zureru kuzureru/zureru ki ga fureru/himitsu hitotsu de
+        kuzureru/kowareru, gomen/minai de rikai dekinai deshou?/marude saite shimatta bake no
+        hana/nani mo ienai kakikesenai/donna ni minikuku utsuru keshou/minai de rikai dekinai
+        deshou?/marude saite shimatta bake no hana/tsubomi ni wa mou modorenai
+      </p>
     </div>
   </div>
 </template>
 
-<script setup lang="ts">
-defineProps<{
-  name: string
-  image: string
-  yap: string
-  color: string
-}>()
-</script>
+<script setup lang="ts"></script>
 
 <style scoped></style>
