@@ -4,11 +4,11 @@
     <div class="flex flex-col justify-center p-5">
       <h3 class="text-2xl">Mizuki Akiyama</h3>
       <p class="text-sm">
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-        ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-        cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        nani sono me yappa sono me/hajimemashite ja nai ne/nani sono me mou yamete/kawaii dake nano
+        ni tsumi no aji/zureru zureru kuzureru/zureru ki ga fureru/himitsu hitotsu de
+        kuzureru/kowareru, gomen/minai de rikai dekinai deshou?/marude saite shimatta bake no
+        hana/nani mo ienai kakikesenai/donna ni minikuku utsuru keshou/minai de rikai dekinai
+        deshou?/marude saite shimatta bake no hana/tsubomi ni wa mou modorenai
       </p>
     </div>
   </div>
