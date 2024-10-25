@@ -1,22 +1,28 @@
 <template>
-  <Message severity="error" v-if="visible">You are NOT logged in</Message>
-  <div class="flex justify-center items-center">
-    <img src="/nagi.jpg" alt="placeholder avatar" class="rounded-full h-36 m-3" />
-  </div>
-  <div class="flex-col space-y-2.5 w-96">
-    <div>
-      <Fieldset legend="Username">
-        <p>{{ username }}</p>
-      </Fieldset>
+  <Message severity="error" v-if="visible"
+    >You are not
+    <RouterLink to="/sign" class="underline">logged in</RouterLink>
+  </Message>
+  <div v-if="user">
+    <div class="flex justify-center items-center">
+      <img src="/nagi.jpg" alt="placeholder avatar" class="rounded-full h-36 m-3" />
+      <Button>Change Photo</Button>
     </div>
-    <div>
-      <Fieldset legend="Email">
-        <p>{{ email }}</p>
-      </Fieldset>
+    <div class="flex-col space-y-2.5 w-96 place-items-center place-self-center">
+      <div>
+        <Fieldset legend="Username" class="w-96">
+          <p>{{ username }}</p>
+        </Fieldset>
+      </div>
+      <div>
+        <Fieldset legend="Email" class="w-96">
+          <p>{{ email }}</p>
+        </Fieldset>
+      </div>
     </div>
-  </div>
-  <div class="mt-1">
-    <Button @click="logout">Log Out</Button>
+    <div class="mt-1">
+      <Button @click="logout">Log Out</Button>
+    </div>
   </div>
 </template>
 
