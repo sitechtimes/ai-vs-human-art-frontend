@@ -20,6 +20,11 @@ const router = createRouter({
       component: () => import('../views/AboutView.vue')
     },
     {
+      path: '/egg',
+      name: 'egg',
+      component: () => import('../views/EasterEggView.vue')
+    },
+    {
       path: '/sign',
       name: 'signupsignin',
       component: () => import('../views/SignFormView.vue')

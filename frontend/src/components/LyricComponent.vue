@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-full flex flex-row items-center gap-2 rounded-xl p-2 bg-slate-200 dark:bg-zinc-800 border-2"
+    class="w-fit flex flex-row items-center gap-2 rounded-xl p-2 bg-slate-200 dark:bg-zinc-800 border-2"
     :style="{
       borderColor: color,
       backgroundColor: `color-mix(in srgb, ${color}, transparent 80%)`
