@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h1>The Team</h1>
-    <PersonComponent />
+    <h1 class="text-5xl text-center pt-5">The Team</h1>
+    <div class="flex flex-row flex-wrap"><PersonComponent /> <PersonComponent /></div>
   </div>
 </template>
 

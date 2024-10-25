@@ -1,9 +1,9 @@
 <template>
-  <div>
-    <img class="w-1/4" src="/mizu5.jpg" alt="mizukis fifth focus event." />
-    <div>
-      <h3>Name</h3>
-      <p>
+  <div class="flex p-5 w-2/4">
+    <img class="object-contain w-52 h-80" src="/mizu5.png" alt="mizukis fifth focus event." />
+    <div class="flex flex-col justify-center p-5">
+      <h3 class="text-2xl">Mizuki Akiyama</h3>
+      <p class="text-sm">
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
         ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
         laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in

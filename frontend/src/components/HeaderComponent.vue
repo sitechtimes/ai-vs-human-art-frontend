@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Menubar id="header" :model="items">
+    <Menubar id="header" :model="items" class="!rounded-none">
       <template #start>
         <img src="/fatfatpankocat-panko.gif" alt="placeholder logo" class="mr-0" />
       </template>
