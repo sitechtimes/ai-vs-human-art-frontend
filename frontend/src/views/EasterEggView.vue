@@ -5,7 +5,7 @@
     <div class="flex flex-col mx-auto px-0 xl:w-11/12">
       <div class="flex flex-col pt-4" v-for="time in Object.keys(lyrics)" :key="time">
         <div class="flex flex-row gap-2 w-11/12 flex-wrap justify-between pb-4 mx-auto">
-          <LawrenceComponent
+          <LyricComponent
             v-for="line in lyrics[Number(time)]"
             class="w-fit grow"
             :key="time + line.singer + line.line"
@@ -13,7 +13,7 @@
             :color="singerColor[line.singer]"
             :yap="line.line"
             :image="`/${line.singer}.png`"
-          ></LawrenceComponent>
+          ></LyricComponent>
         </div>
         <hr class="border-2 rounded-full w-full" />
       </div>
@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import LawrenceComponent from '../components/LyricComponent.vue'
+import LyricComponent from '../components/LyricComponent.vue'
 type Line = {
   line: string
   singer: string
