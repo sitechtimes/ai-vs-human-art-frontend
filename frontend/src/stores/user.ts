@@ -78,6 +78,8 @@ export const useUserStore = defineStore('user', () => {
     try {
       const res = await fetch('http://localhost:3000/api/auth/logout', requestOptions)
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
+      currentUser.value = null
+      token.value = ''
       isAuthenticated.value = false
       localStorage.removeItem('token')
       localStorage.removeItem('userId')
