@@ -56,6 +56,8 @@ const themeList = [
   'red',
   'orange',
   'amber',
+  //'yellow',
+  //'lime',
   'green',
   'emerald',
   'teal',
@@ -64,7 +66,9 @@ const themeList = [
   'indigo',
   'violet',
   'purple',
+  //  'fuchsia',
   'pink'
+  //  'rose'
 ]
 // not including 'slate', 'gray', 'zinc', 'neutral', 'stone' because they are all just gray and boring
 const hover = ref('')
@@ -120,14 +124,11 @@ function changeColors(color: string) {
   }
 
   //fixes all the contrast errors dealing with wave
-
   palettes[500] = palettes[800] //tabmenu text
   palettes[700] = palettes[800] //menubar text
 
-  if (dark.value) {
-    palettes[400] = palettes[200]
-    palettes[600] = palettes[200]
-  }
+  if (dark.value) palettes[400] = palettes[200]
+
   updatePrimaryPalette(palettes)
   updateSurfacePalette(palettes)
 

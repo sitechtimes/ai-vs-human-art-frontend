@@ -7,17 +7,19 @@
       <template #item="{ item, props }">
         <router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
           <a :href="href" v-bind="props.action" @click="navigate">
-            <span class="ml-2">{{ item.label }}</span>
+            <span>{{ item.label }}</span>
           </a>
         </router-link>
-        <a v-else :href="item.url" :target="item.target" v-bind="props.action">
+        <!--         <a v-else :href="item.url" :target="item.target" v-bind="props.action">
           <span class="ml-2">{{ item.label }}</span>
-          <!-- put something here to indicate that this is a dropdown i don't know -->
-        </a>
+           put something here to indicate that this is a dropdown i don't know
+        </a> -->
       </template>
       <template #end>
         <div class="flex items-center gap-0.5">
-          <img v-if="signedIn" src="/nagi.jpg" alt="placeholder avatar" class="rounded-full" />
+          <router-link to="/profile">
+            <img v-if="signedIn" src="/nagi.jpg" alt="placeholder avatar" class="rounded-full" />
+          </router-link>
         </div>
       </template>
     </Menubar>
@@ -41,6 +43,10 @@ const items = ref([
     label: 'Game'
   },
   {
+    route: '/about',
+    label: 'About Us'
+  },
+  /*   {
     route: false,
     label: 'About Us',
     items: [
@@ -56,8 +62,9 @@ const items = ref([
         route: '/credits',
         label: 'Acknowledgements'
       }
-    ]
+    ] 
   },
+  */
   {
     route: '/sign',
     label: 'Sign In'
