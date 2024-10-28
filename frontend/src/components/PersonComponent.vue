@@ -1,6 +1,6 @@
 <template>
-  <div class="flex p-5 w-2/5">
-    <img class="object-contain w-52 h-80" src="/mizuki.png" alt="mizukis fifth focus event." />
+  <div class="flex w-3/5 p-10 bg-primary-200">
+    <img class="object-contain w-52 h-80" src="/mizu_5.png" alt="mizukis fifth focus event." />
     <div class="flex flex-col justify-center p-5">
       <h3 class="text-2xl">{{ person.name }}</h3>
       <p class="text-sm">
