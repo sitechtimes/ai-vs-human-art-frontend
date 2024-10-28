@@ -2,7 +2,7 @@
   <div class="flex p-5 w-2/5">
     <img class="object-contain w-52 h-80" src="/mizuki.png" alt="mizukis fifth focus event." />
     <div class="flex flex-col justify-center p-5">
-      <h3 class="text-2xl">Mizuki Akiyama</h3>
+      <h3 class="text-2xl">{{ person.name }}</h3>
       <p class="text-sm">
         nani sono me yappa sono me/hajimemashite ja nai ne/nani sono me mou yamete/kawaii dake nano
         ni tsumi no aji/zureru zureru kuzureru/zureru ki ga fureru/himitsu hitotsu de
