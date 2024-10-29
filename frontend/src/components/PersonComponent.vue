@@ -4,6 +4,7 @@
     <div class="flex flex-col justify-center p-5">
       <h3 class="text-2xl">{{ person.name }}</h3>
       <p class="text-sm">
+        {{ person.blurb }}
         nani sono me yappa sono me/hajimemashite ja nai ne/nani sono me mou yamete/kawaii dake nano
         ni tsumi no aji/zureru zureru kuzureru/zureru ki ga fureru/himitsu hitotsu de
         kuzureru/kowareru, gomen/minai de rikai dekinai deshou?/marude saite shimatta bake no
@@ -14,6 +15,6 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup></script>
 
 <style scoped></style>
