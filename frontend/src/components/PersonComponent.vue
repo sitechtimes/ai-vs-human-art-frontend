@@ -15,6 +15,10 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+defineProps({
+  person: Object
+})
+</script>
 
 <style scoped></style>
