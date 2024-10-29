@@ -1,6 +1,6 @@
 <template>
   <div class="grid grid-cols-2 grid-rows-2 justify-items-center m-7">
-    <PersonComponent v-for="person in persons" :key="person" :person="person" />
+    <PersonComponent v-for="person in persons" :key="person.name" :person="person" />
   </div>
 </template>
 
