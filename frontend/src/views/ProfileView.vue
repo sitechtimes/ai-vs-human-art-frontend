@@ -6,7 +6,7 @@
   <div v-if="user">
     <div class="flex justify-center items-center">
       <img src="/nagi.jpg" alt="placeholder avatar" class="rounded-full h-36 m-3" />
-      <Button>Change Photo</Button>
+      <Button @click="changePfp">Change Photo</Button>
     </div>
     <div class="flex-col space-y-2.5 w-96 place-items-center place-self-center">
       <div>
@@ -49,6 +49,10 @@ function getData(user: { username: string; email: string }) {
 }
 if (user) {
   getData(user)
+}
+
+function changePfp() {
+  //whatever stuff goes here tbd
 }
 </script>
 
