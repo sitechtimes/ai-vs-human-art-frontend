@@ -8,10 +8,10 @@
 import PersonComponent from '../components/PersonComponent.vue'
 
 const persons = [
-  { name: 'Katherine Zeng', blurb: null },
-  { name: 'Tina Guo', blurb: null },
-  { name: 'Richard Masak', blurb: null },
-  { name: 'Yifan Zhang', blurb: null }
+  { name: 'Katherine Zeng', blurb: null, image: null },
+  { name: 'Tina Guo', blurb: null, image: null },
+  { name: 'Richard Masak', blurb: null, image: null },
+  { name: 'Yifan Zhang', blurb: null, image: null }
 ]
 </script>
 
