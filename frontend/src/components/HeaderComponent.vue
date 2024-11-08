@@ -1,23 +1,23 @@
 <template>
   <div>
-    <Menubar id="header" :model="items">
+    <Menubar id="header" :model="items" class="!rounded-none">
       <template #start>
         <img src="/fatfatpankocat-panko.gif" alt="placeholder logo" class="mr-0" />
       </template>
       <template #item="{ item, props }">
         <router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
           <a :href="href" v-bind="props.action" @click="navigate">
-            <span class="ml-2">{{ item.label }}</span>
+            <span>{{ item.label }}</span>
           </a>
         </router-link>
         <a v-else :href="item.url" :target="item.target" v-bind="props.action">
-          <span class="ml-2">{{ item.label }}</span>
+          <span>{{ item.label }}</span>
           <!-- put something here to indicate that this is a dropdown i don't know -->
         </a>
       </template>
       <template #end>
         <div class="flex items-center gap-0.5">
-          <img src="/nagi.jpg" alt="placeholder avatar" class="rounded-full" />
+          <img v-if="signedIn" src="/nagi.jpg" alt="placeholder avatar" class="rounded-full" />
         </div>
       </template>
     </Menubar>
@@ -25,8 +25,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import Menubar from 'primevue/menubar'
+import { useUserStore } from '../stores/user'
+
+const userStore = useUserStore()
 
 const items = ref([
   {
@@ -56,10 +59,12 @@ const items = ref([
     ]
   },
   {
-    route: '/signupin',
+    route: '/sign',
     label: 'Sign In'
   }
 ])
+
+const signedIn = computed(() => !!userStore.currentUser)
 </script>
 
 <style scoped>
