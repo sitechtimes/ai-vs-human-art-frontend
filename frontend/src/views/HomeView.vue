@@ -1,9 +1,13 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div></div>
+  <div>
+    <GameArt />
+  </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup>
+import GameArt from '../components/GamePage/GameArt.vue'
+</script>
 
 <style scoped></style>

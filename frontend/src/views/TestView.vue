@@ -1,11 +1,12 @@
 <template>
   <div>
-    <GameImages />
+    <GameArt />
+    <p>hi</p>
   </div>
 </template>
 
-<script setup lang="ts">
-import GameImages from '../components/GamePage/GameImages.vue'
+<script setup>
+import GameArt from '../components/GamePage/GameArt.vue'
 </script>
 
 <style lang="scss" scoped></style>

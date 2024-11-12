@@ -25,19 +25,16 @@ export const useArt = defineStore('image', () => {
   }
 
   const getRandomAI = async () => {
-    const requestOptions = {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }
     try {
       const res = await fetch('http://localhost:3000/routes/random?type=ai')
-      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`)
+      }
       const data = await res.json()
       aiArt.value = data
+      console.log(data)
     } catch (error) {
-      console.error('Human Art Error', error)
+      console.error('AI Art Error', error)
     }
   }
 })
