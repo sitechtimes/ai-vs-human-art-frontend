@@ -15,10 +15,10 @@ export const useArt = defineStore('image', () => {
       }
     }
     try {
-      const res = await fetch('http://localhost:3000/routes/random?type=human')
+      const res = await fetch('http://localhost:3000/items/random?type=human', requestOptions)
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
-      const data = res.json()
-      return data
+      const data = await res.json()
+      humanArt.value = data
     } catch (error) {
       console.error('Human Art Error', error)
     }
@@ -32,13 +32,12 @@ export const useArt = defineStore('image', () => {
       }
     }
     try {
-      const res = await fetch('http://localhost:3000/routes/random?type=ai')
+      const res = await fetch('http://localhost:3000/items/random?type=ai', requestOptions)
       if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`)
       }
       const data = await res.json()
       aiArt.value = data
-      console.log(data)
     } catch (error) {
       console.error('AI Art Error', error)
     }
