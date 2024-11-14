@@ -1,64 +1,84 @@
 <template>
   <div>
-    <Fieldset legend="Submit your own art!">
-      <h2>TOS</h2>
-      <ScrollPanel class="min-h-64">
-        <p>{{ idol }}</p>
-      </ScrollPanel>
-      <p>Check the box below to accept the TOS</p>
-      <Checkbox v-model="checked" :binary="true" />
-      <div>
-        <FileUpload
-          ref="fileupload"
-          mode="basic"
-          url="/api/upload"
-          accept="image/*"
-          :maxFileSize="1000000"
-          @upload="onUpload"
-        />
-        <Button v-if="checked" @click="uploadFile" aria-label="Upload Button">Upload</Button>
-      </div>
-    </Fieldset>
-    <p>{{ message }}</p>
+    <form @submit.prevent="submit">
+      <Fieldset legend="Submit your own art!">
+        <div class="flex flex-col gap-2">
+          <h2 class="text-xl">TOS</h2>
+          <ScrollPanel>
+            <p>{{ idol }}</p>
+          </ScrollPanel>
+          <div class="flex items-center gap-2">
+            <label id="tos-label">I confirm that I have read and agree to these terms.</label>
+            <Checkbox ariaLabelledby="tos-label" v-model="checked" :binary="true" />
+          </div>
+          <div class="flex flex-col gap-4 items-start">
+            <div class="flex items-center gap-2">
+              <label id="link-label">Link to art source:</label>
+              <InputText aria-labelledby="link-label" v-model="link" />
+            </div>
+            <FileUpload
+              mode="basic"
+              :disabled="!checked"
+              accept="image/*"
+              :maxFileSize="1024 * 1024 * 15"
+              customUpload
+              @select="uploadedFile"
+              aria-label="Upload an image"
+            />
+
+            <Button
+              :disabled="!ok"
+              type="submit"
+              :class="`${checked ? 'cursor-pointer' : '!cursor-not-allowed'}`"
+              >Submit</Button
+            >
+          </div>
+        </div>
+      </Fieldset>
+    </form>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import Fieldset from 'primevue/fieldset'
-import FileUpload from 'primevue/fileupload'
+import InputText from 'primevue/inputtext'
+import FileUpload, { type FileUploadSelectEvent } from 'primevue/fileupload'
 import Checkbox from 'primevue/checkbox'
 import ScrollPanel from 'primevue/scrollpanel'
 import Button from 'primevue/button'
 import { useImageStore } from '../stores/images'
 
-const checked = ref(false)
-const file = ref()
 const imageStore = useImageStore()
+const checked = ref(false)
 const type = ref('human')
-const message = ref('')
-async function onUpload(event) {
-  file.value = event.files[0]
-  console.log(file.value)
+const link = ref('')
+const file = ref<File>()
+const uploading = ref(false)
+const ok = computed(() => checked.value && file.value && !uploading.value)
+
+async function uploadedFile(e: FileUploadSelectEvent) {
+  file.value = e.files[0]
 }
 
-async function uploadFile() {
-  if (!file.value) {
-    message.value = 'hey bro you forgot image or type or whatever haha.. just me tho lol..'
-    return
-  }
+async function submit() {
   try {
+    uploading.value = true
+
+    if (!file.value) throw new Error('there is no file in ba sing se')
+
     const formData = new FormData()
     formData.append('type', type.value)
-    formData.append('link', file.value)
+    formData.append('link', link.value)
+    formData.append('image', file.value)
+
     const res = await imageStore.uploadImage(formData)
-    if (res) {
-      message.value = `Image uploaded at ${res.url}`
-    }
+    if (res?.ok) console.log('yippee')
+    else throw new Error((await res.json()).error)
   } catch (error) {
     console.error(error)
-    message.value = 'we have encountered an error'
   }
+  uploading.value = false
 }
 
 //obviously the most important part of the code...
