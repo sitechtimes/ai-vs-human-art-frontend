@@ -31,16 +31,15 @@ const getArt = async () => {
   artPieces.value = []
   await getAI()
   await getHuman()
-  const random = Math.floor(Math.random() * 10)
+  const random = Math.round(Math.random())
   console.log(random)
-  console.log(artPieces.value)
-  if (random > 5) {
+  if (random) {
     artPieces.value[1] = firstImage.value
+    artPieces.value[0] = secondImage.value
   } else {
     artPieces.value[0] = firstImage.value
+    artPieces.value[1] = secondImage.value
   }
-
-  console.log(firstImage.value)
 }
 </script>
 
