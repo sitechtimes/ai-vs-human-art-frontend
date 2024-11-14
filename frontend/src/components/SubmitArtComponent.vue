@@ -34,11 +34,15 @@ import { useImageStore } from '../stores/images'
 const checked = ref(false)
 const file = ref()
 const imageStore = useImageStore()
+const type = ref('human')
 
 const uploadFile = async () => {
-  const type = ref('human')
   try {
-    const res = await imageStore.uploadImage(type.value, file.value)
+    const formData = new FormData()
+    formData.append('type', type.value)
+    formData.append('link', file.value)
+
+    const res = await imageStore.uploadImage(formData)
     if (res !== null) {
       console.log('yippee')
     }
