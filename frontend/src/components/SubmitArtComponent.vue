@@ -14,11 +14,12 @@
           url="/api/upload"
           accept="image/*"
           :maxFileSize="1000000"
-          @upload="uploadFile"
+          @upload="onUpload"
         />
         <Button v-if="checked" @click="uploadFile" aria-label="Upload Button">Upload</Button>
       </div>
     </Fieldset>
+    <p>{{ message }}</p>
   </div>
 </template>
 
@@ -35,19 +36,28 @@ const checked = ref(false)
 const file = ref()
 const imageStore = useImageStore()
 const type = ref('human')
+const message = ref('')
+async function onUpload(event) {
+  file.value = event.files[0]
+  console.log(file.value)
+}
 
-const uploadFile = async () => {
+async function uploadFile() {
+  if (!file.value) {
+    message.value = 'hey bro you forgot image or type or whatever haha.. just me tho lol..'
+    return
+  }
   try {
     const formData = new FormData()
     formData.append('type', type.value)
     formData.append('link', file.value)
-
     const res = await imageStore.uploadImage(formData)
-    if (res !== null) {
-      console.log('yippee')
+    if (res) {
+      message.value = `Image uploaded at ${res.url}`
     }
   } catch (error) {
     console.error(error)
+    message.value = 'we have encountered an error'
   }
 }
 
