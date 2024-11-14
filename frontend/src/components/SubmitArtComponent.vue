@@ -25,7 +25,7 @@
               @select="uploadedFile"
               aria-label="Upload an image"
             />
-
+            <p>{{ message }}</p>
             <Button
               :disabled="!ok"
               type="submit"
@@ -53,19 +53,24 @@ const imageStore = useImageStore()
 const checked = ref(false)
 const type = ref('human')
 const link = ref('')
+const message = ref('')
 const file = ref<File>()
 const uploading = ref(false)
 const ok = computed(() => checked.value && file.value && !uploading.value)
 
 async function uploadedFile(e: FileUploadSelectEvent) {
   file.value = e.files[0]
+  message.value = 'File received'
 }
 
 async function submit() {
   try {
     uploading.value = true
 
-    if (!file.value) throw new Error('there is no file in ba sing se')
+    if (!file.value) {
+      message.value = "You didn't attach a file"
+      throw new Error('there is no file in ba sing se')
+    }
 
     const formData = new FormData()
     formData.append('type', type.value)
@@ -73,7 +78,7 @@ async function submit() {
     formData.append('image', file.value)
 
     const res = await imageStore.uploadImage(formData)
-    if (res?.ok) console.log('yippee')
+    if (res?.ok) location.reload()
     else throw new Error((await res.json()).error)
   } catch (error) {
     console.error(error)
