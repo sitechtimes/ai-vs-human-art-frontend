@@ -20,8 +20,9 @@ export const useArt = defineStore('image', () => {
         throw new Error(`HTTP error! status: ${res.status}`)
       }
       const data = await res.json()
-      console.log(data)
+      // console.log(data)
       humanArt.value = data
+      // console.log('hii', humanArt.value)
     } catch (error) {
       console.error('Human Art Error', error)
     }
@@ -40,8 +41,9 @@ export const useArt = defineStore('image', () => {
         throw new Error(`HTTP error! status: ${res.status}`)
       }
       const data = await res.json()
-      console.log(data)
+      // console.log(data)
       aiArt.value = data
+      // console.log('hai', aiArt.value)
     } catch (error) {
       console.error('AI Art Error', error)
     }

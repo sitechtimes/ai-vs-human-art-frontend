@@ -13,32 +13,48 @@ import { ref } from 'vue'
 import { useArt } from '../../stores/image.ts'
 
 const artStore = useArt()
-const artPieces = ref([])
+const artPieces = []
 const firstImage = ref('')
 const secondImage = ref('')
+const art = []
 
 const getAI = async () => {
-  await artStore.getRandomAI()
-  artPieces.value.push(artStore.aiArt)
+  try {
+    await artStore.getRandomAI()
+    artPieces.push(artStore.aiArt)
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 const getHuman = async () => {
-  await artStore.getRandomHuman()
-  artPieces.value.push(artStore.humanArt)
+  try {
+    await artStore.getRandomHuman()
+    console.log(artStore.humanArt)
+    artPieces.push(artStore.humanArt)
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 const getArt = async () => {
-  artPieces.value = []
   await getAI()
   await getHuman()
+  // art = JSON.parse(JSON.stringify(artPieces))
+  console.log(artPieces[1])
   const random = Math.round(Math.random())
+  console.log(artPieces)
   console.log(random)
   if (random) {
-    artPieces.value[1] = firstImage.value
-    artPieces.value[0] = secondImage.value
+    console.log(artPieces[1])
+    artPieces[1] = firstImage.value
+    artPieces[0] = secondImage.value
+    console.log(artPieces[1])
+    console.log(firstImage.value, secondImage.value)
   } else {
-    artPieces.value[0] = firstImage.value
-    artPieces.value[1] = secondImage.value
+    artPieces[0] = firstImage.value
+    artPieces[1] = secondImage.value
+    console.log(firstImage.value, secondImage.value)
   }
 }
 </script>
