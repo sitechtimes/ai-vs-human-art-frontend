@@ -18,7 +18,11 @@
       <template #end>
         <div class="flex items-center gap-0.5">
           <router-link to="/profile">
-            <img src="/nagi.jpg" alt="placeholder avatar" class="rounded-full" />
+            <img
+              src="https://www.apexmedicalresearch.com/wp-content/uploads/2020/06/anonymous-user-300x296.png"
+              alt="placeholder avatar"
+              class="rounded-full"
+            />
           </router-link>
         </div>
       </template>
