@@ -3,11 +3,7 @@
     <div class="w-full bg-[var(--p-content-background)]">
       <TabsComponent class="w-min mx-auto" />
     </div>
-    <div class="flex flex-row w-full justify-center items-center">
-      <Image :src="img" class="image m-7 h-[30vw]" preview aria-label="Option 1"/>
-      <p>or</p>
-      <Image :src="img" class="image m-7 h-[30vw]" preview aria-label="Option 2"/>
-    </div>
+    <GameArt />
     <div class="w-full flex justify-center">
       <Button label="Submit" @click="toggleIsVisible"></Button>
     </div>
@@ -26,6 +22,7 @@
 <script setup lang="ts">
 import GameFooter from '../components/GamePage/GameFooter.vue'
 import TabsComponent from '../components/GamePage/TabsComponent.vue'
+import GameArt from '../components/GamePage/GameArt.vue'
 
 import Button from 'primevue/button'
 import Dialog from 'primevue/dialog'

@@ -26,10 +26,11 @@ const getArt = async () => {
   loading.value = true
   artPieces.value = [await artStore.getRandomArt('human'), await artStore.getRandomArt('ai')]
   if (artPieces.value.some((el) => el === null)) {
-    alert('failed to fetch (womp womp)')
+    alert('Failed to fetch art, please ')
     artPieces.value = []
-  } else if (Math.random() < 0.5) artPieces.value.reverse()
-
+  } else if (Math.random() < 0.5) {
+    artPieces.value.reverse()
+  }
   loading.value = false
 }
 </script>
