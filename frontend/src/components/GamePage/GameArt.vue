@@ -16,6 +16,7 @@
         </div>
 
         <span>vs</span>
+
         <div class="flex flex-col">
           <Image
             :src="artPieces[1]"
@@ -33,7 +34,7 @@
           <Dialog v-model:visible="isVisible" modal>
             <!-- i think v-model:visible is the only way to toggle visibility with this primevue component, so unfortunately were going to have to break an eslint rule -->
             <p v-if="correct">Your answer is correct!</p>
-            <p v-if="!correct">Your answer is incorrect!</p>
+            <p v-else>Your answer is incorrect!</p>
             <Button label="Try Again?" class="flex self-center" @click="getArt"></Button>
           </Dialog>
         </div>
@@ -53,7 +54,7 @@ import { useArtStore } from '../../stores/art.ts'
 const artStore = useArtStore()
 const artPieces = ref([])
 const isVisible = ref(false)
-const answer = ref(1)
+const answer = ref(1) // which one is ai
 const correct = ref(false)
 
 // const loading = ref(false)
@@ -62,10 +63,10 @@ const getArt = async () => {
   // loading.value = true
   isVisible.value = false
   artPieces.value = [await artStore.getRandomArt('human'), await artStore.getRandomArt('ai')]
+  answer.value = 1
   if (artPieces.value.some((el) => el === null)) {
-    alert('Failed to fetch art, please ')
+    alert('Failed to fetch art (boowomp)')
     artPieces.value = []
-    answer.value = 1
   } else if (Math.random() < 0.5) {
     artPieces.value.reverse()
     answer.value = 0
@@ -76,12 +77,11 @@ const checkAnswer = (e) => {
   if (e != answer.value) {
     correct.value = false
     console.log('wrong')
-    isVisible.value = !isVisible.value
   } else {
     correct.value = true
     console.log('right')
-    isVisible.value = !isVisible.value
   }
+  isVisible.value = !isVisible.value
 }
 
 onMounted(() => {
