@@ -14,7 +14,7 @@
           <div class="flex flex-col gap-4 items-start">
             <div class="flex items-center gap-2">
               <label id="link-label">Link to art source:</label>
-              <InputText aria-labelledby="link-label" v-model="link" />
+              <InputText aria-labelledby="link-label" v-model="link" :disabled="!checked" />
             </div>
             <FileUpload
               mode="basic"
@@ -48,6 +48,7 @@ import Checkbox from 'primevue/checkbox'
 import ScrollPanel from 'primevue/scrollpanel'
 import Button from 'primevue/button'
 import { useImageStore } from '../stores/images'
+import { useUserStore } from '@/stores/user'
 
 const imageStore = useImageStore()
 const checked = ref(false)
@@ -58,6 +59,9 @@ const file = ref<File>()
 const uploading = ref(false)
 const ok = computed(() => checked.value && file.value && !uploading.value)
 
+const userStore = useUserStore()
+const user = userStore.currentUser
+
 async function uploadedFile(e: FileUploadSelectEvent) {
   file.value = e.files[0]
   message.value = 'File received'
@@ -66,6 +70,9 @@ async function uploadedFile(e: FileUploadSelectEvent) {
 async function submit() {
   try {
     uploading.value = true
+    if (!user) {
+      message.value = 'YOUR ASS IS NOT LOGGED IN'
+    }
 
     if (!file.value) {
       message.value = "You didn't attach a file"
