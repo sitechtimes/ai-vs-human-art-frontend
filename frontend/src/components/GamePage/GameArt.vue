@@ -1,8 +1,6 @@
 <template>
   <div class="flex flex-col gap-2">
-    <!-- <Button label="Fetch" @click="getArt" :disabled="loading" /> -->
     <div v-if="artPieces.length" class="flex flex-col items-center max-w-screen">
-      <!-- <h1 class="text-8xl font-extrabold italic font-serif">WHO WOULD WIN</h1> -->
       <div class="flex flex-row gap-2 w-full justify-between items-center">
         <div class="flex flex-col">
           <Image
@@ -57,10 +55,7 @@ const isVisible = ref(false)
 const answer = ref(1) // which one is ai
 const correct = ref(false)
 
-// const loading = ref(false)
-
 const getArt = async () => {
-  // loading.value = true
   isVisible.value = false
   artPieces.value = [await artStore.getRandomArt('human'), await artStore.getRandomArt('ai')]
   answer.value = 1
@@ -71,7 +66,6 @@ const getArt = async () => {
     artPieces.value.reverse()
     answer.value = 0
   }
-  // loading.value = false
 }
 const checkAnswer = (e) => {
   if (e != answer.value) {
