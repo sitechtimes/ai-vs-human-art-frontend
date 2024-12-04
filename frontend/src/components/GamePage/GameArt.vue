@@ -1,12 +1,42 @@
 <template>
   <div class="flex flex-col gap-2">
     <!-- <Button label="Fetch" @click="getArt" :disabled="loading" /> -->
-    <div v-if="!loading && artPieces.length" class="flex flex-col items-center max-w-screen">
+    <div v-if="artPieces.length" class="flex flex-col items-center max-w-screen">
       <!-- <h1 class="text-8xl font-extrabold italic font-serif">WHO WOULD WIN</h1> -->
       <div class="flex flex-row gap-2 w-full justify-between items-center">
-        <img :src="artPieces[0]" alt="" class="w-5/12" />
+        <div class="flex flex-col">
+          <Image
+            :src="artPieces[0]"
+            alt=""
+            class="flex m-7 h-[30vw]"
+            preview
+            aria-label="Image 1"
+          />
+          <Button label="Image 1" class="flex self-center" @click="checkAnswer(0)"></Button>
+        </div>
+
         <span>vs</span>
-        <img :src="artPieces[1]" alt="" class="w-5/12" />
+        <div class="flex flex-col">
+          <Image
+            :src="artPieces[1]"
+            alt=""
+            class="flex m-7 h-[30vw]"
+            preview
+            aria-label="Image 2"
+          />
+          <Button label="Image 2" class="flex self-center" @click="checkAnswer(1)"></Button>
+        </div>
+      </div>
+      <div>
+        <div id="result">
+          <!-- eslint-disable vue/no-v-model-argument -->
+          <Dialog v-model:visible="isVisible" modal>
+            <!-- i think v-model:visible is the only way to toggle visibility with this primevue component, so unfortunately were going to have to break an eslint rule -->
+            <p v-if="correct">Your answer is correct!</p>
+            <p v-if="!correct">Your answer is incorrect!</p>
+            <Button label="Try Again?" class="flex self-center" @click="getArt"></Button>
+          </Dialog>
+        </div>
       </div>
     </div>
   </div>
@@ -14,24 +44,44 @@
 
 <script setup>
 import Button from 'primevue/button'
+import Dialog from 'primevue/dialog'
+import Image from 'primevue/image'
 
 import { ref, onMounted } from 'vue'
 import { useArtStore } from '../../stores/art.ts'
 
 const artStore = useArtStore()
 const artPieces = ref([])
+const isVisible = ref(false)
+const answer = ref(1)
+const correct = ref(false)
+
 // const loading = ref(false)
 
 const getArt = async () => {
   // loading.value = true
+  isVisible.value = false
   artPieces.value = [await artStore.getRandomArt('human'), await artStore.getRandomArt('ai')]
   if (artPieces.value.some((el) => el === null)) {
     alert('Failed to fetch art, please ')
     artPieces.value = []
+    answer.value = 1
   } else if (Math.random() < 0.5) {
     artPieces.value.reverse()
+    answer.value = 0
   }
   // loading.value = false
+}
+const checkAnswer = (e) => {
+  if (e != answer.value) {
+    correct.value = false
+    console.log('wrong')
+    isVisible.value = !isVisible.value
+  } else {
+    correct.value = true
+    console.log('right')
+    isVisible.value = !isVisible.value
+  }
 }
 
 onMounted(() => {
