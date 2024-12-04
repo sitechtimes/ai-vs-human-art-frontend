@@ -7,7 +7,15 @@
           {{ signUp ? `Already have an account?` : `Don't have an account?` }}
         </span>
       </label>
-      <button id="switcher" @click="signUp = !signUp">
+      <button
+        id="switcher"
+        @click="
+          () => {
+            signUp = !signUp
+            notMatch = false
+          }
+        "
+      >
         <span class="underline">
           {{ signUp ? 'Sign in' : 'Sign up' }}
         </span>
@@ -16,25 +24,47 @@
     <div class="flex flex-col items-center gap-2">
       <form action="submit" class="flex flex-col gap-2">
         <TransitionGroup>
-          <label for="username">Username</label>
-          <InputText
-            id="username"
-            v-model="usernameValue"
-            :placeholder="signUp ? 'Username' : 'Username/Email'"
-          />
           <div v-if="signUp" class="flex flex-col gap-2">
-            <label for="email">Email</label>
-            <InputText id="email" v-model="emailValue" placeholder="Email" />
+            <label for="username" key="username.label">Username</label>
+            <InputText
+              id="username"
+              v-model="username"
+              placeholder="Username"
+              key="username.input"
+            />
           </div>
-          <label for="password">Password</label>
+          <label for="email" key="email.label">Email</label>
+          <InputText id="email" v-model="email" placeholder="Email" key="email.input" />
+          <label for="password" key="password.label">Password</label>
           <Password
-            v-model="passwordValue"
+            v-model="password"
             inputId="password"
             :feedback="false"
             toggleMask
             placeholder="Password"
+            key="password.input"
           />
-          <Button :label="signUp ? 'Sign Up' : 'Sign In'" @click="signUp ? registerInfo : signIn" />
+          <div v-if="signUp" class="flex flex-col gap-2">
+            <label for="password-confirm" key="password-confirm.label">Confirm Password</label>
+            <Password
+              inputId="password-confirm"
+              v-model="passwordConfirm"
+              placeholder="Confirm Password"
+              :feedback="false"
+              toggleMask
+              key="password-confirm.input"
+            />
+          </div>
+          <p v-if="notMatch" class="text-rose-600 font-bold" key="not-match-notif">
+            Your passwords do not match!
+          </p>
+          <Button
+            :label="signUp ? 'Sign Up' : 'Sign In'"
+            :disabled="notMatch"
+            :class="notMatch ? '!cursor-not-allowed' : 'cursor-pointer'"
+            @click="signUp ? registerInfo() : signIn()"
+            key="'button'"
+          />
         </TransitionGroup>
       </form>
     </div>
@@ -45,26 +75,54 @@
 import InputText from 'primevue/inputtext'
 import Password from 'primevue/password'
 import Button from 'primevue/button'
+import { useRouter } from 'vue-router'
 
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useUserStore } from '../stores/user'
 
+const router = useRouter()
 const signUp = ref(false)
-const usernameValue = ref(null)
-const emailValue = ref(null)
-const passwordValue = ref(null)
+const username = ref('')
+const email = ref('')
+const password = ref('')
+const passwordConfirm = ref('')
+const notMatch = ref(false)
 
 const userStore = useUserStore()
 
-async function registerInfo() {
-  await userStore.register(usernameValue.value, emailValue.value, passwordValue.value)
-  console.log('ur registered!')
+const registerInfo = async () => {
+  if (evilMatch()) return
+  try {
+    // console.log('resigerting')
+    const res = await userStore.register(username.value, email.value, password.value)
+    if (res !== null) {
+      signUp.value = !signUp.value
+    }
+  } catch (error) {
+    console.error(error)
+  }
 }
 
-async function signIn() {
-  await userStore.login(usernameValue.value, passwordValue.value)
-  console.log('u signed in!')
+const signIn = async () => {
+  // console.log('logging in')
+  await userStore.login(email.value, password.value)
+  if (userStore.currentUser) {
+    router.push({ path: '/' })
+  }
 }
+
+const evilMatch = () => {
+  return (notMatch.value = password.value !== passwordConfirm.value)
+}
+
+// clear an existing warning if user matches password
+// will not add warning as user types out password, because that's annoying
+watch(password, () => {
+  if (notMatch.value) evilMatch()
+})
+watch(passwordConfirm, () => {
+  if (notMatch.value) evilMatch()
+})
 </script>
 
 <style scoped>
