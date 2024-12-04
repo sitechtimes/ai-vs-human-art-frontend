@@ -46,7 +46,7 @@ import Button from 'primevue/button'
 import Dialog from 'primevue/dialog'
 import Image from 'primevue/image'
 
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUpdated } from 'vue'
 import { useArtStore } from '../../stores/art.ts'
 
 const artStore = useArtStore()
@@ -54,6 +54,7 @@ const artPieces = ref([])
 const isVisible = ref(false)
 const answer = ref(1) // which one is ai
 const correct = ref(false)
+const combo = ref(0)
 
 const getArt = async () => {
   isVisible.value = false
@@ -70,16 +71,20 @@ const getArt = async () => {
 const checkAnswer = (e) => {
   if (e != answer.value) {
     correct.value = false
-    console.log('wrong')
+    combo.value = 0
   } else {
     correct.value = true
-    console.log('right')
+    combo.value++
   }
   isVisible.value = !isVisible.value
 }
 
 onMounted(() => {
   getArt()
+})
+
+onUpdated(()=> {
+  this.$emit(combo.value, )
 })
 </script>
 

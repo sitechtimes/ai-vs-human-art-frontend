@@ -19,7 +19,6 @@ export const useArtStore = defineStore('art', () => {
       const res = await fetch(`http://localhost:3000/items/random?type=${type}`, requestOptions)
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
       const data = await res.json()
-      console.log(data)
       return data
     } catch (error) {
       console.error('failed to fetch art 💥', error)
