@@ -50,9 +50,9 @@ export const useUserStore = defineStore('user', () => {
       userId.value = data.user._id
       localStorage.setItem('token', token.value)
       localStorage.setItem('userId', userId.value)
-      // console.log('success!! logged in')
     } catch (error) {
-      console.error('Login Error', error)
+      console.error(error)
+      console.log(error.response)
     }
   }
 

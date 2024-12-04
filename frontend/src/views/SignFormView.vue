@@ -21,6 +21,7 @@
         </span>
       </button>
     </div>
+    <p v-if="errMsg">{{ errMsg }}</p>
     <div class="flex flex-col items-center gap-2">
       <form action="submit" class="flex flex-col gap-2">
         <TransitionGroup>
@@ -87,6 +88,7 @@ const email = ref('')
 const password = ref('')
 const passwordConfirm = ref('')
 const notMatch = ref(false)
+const errMsg = ref('')
 
 const userStore = useUserStore()
 
@@ -104,10 +106,15 @@ const registerInfo = async () => {
 }
 
 const signIn = async () => {
-  // console.log('logging in')
-  await userStore.login(email.value, password.value)
-  if (userStore.currentUser) {
-    router.push({ path: '/' })
+  try {
+    await userStore.login(email.value, password.value)
+    if (userStore.currentUser) {
+      router.push({ path: '/' })
+    }
+  } catch (error) {
+    errMsg.value = error
+    console.log(errMsg)
+    console.error(error)
   }
 }
 
