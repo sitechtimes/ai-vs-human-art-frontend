@@ -22,9 +22,15 @@
 import Toolbar from 'primevue/toolbar'
 import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
+import { useArtStore } from '../../stores/art.ts'
 
-const combo = ref(0)
+// const combo = ref(0)
+const artStore = useArtStore()
+const combo = computed(() => {
+  console.log(artStore.combo)
+  return artStore.combo
+})
 const helpButton = ref(false)
 
 function toggleHelpButton() {

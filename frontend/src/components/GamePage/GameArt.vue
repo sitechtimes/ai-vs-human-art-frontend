@@ -54,7 +54,6 @@ const artPieces = ref([])
 const isVisible = ref(false)
 const answer = ref(1) // which one is ai
 const correct = ref(false)
-const combo = ref(0)
 
 const getArt = async () => {
   isVisible.value = false
@@ -71,20 +70,16 @@ const getArt = async () => {
 const checkAnswer = (e) => {
   if (e != answer.value) {
     correct.value = false
-    combo.value = 0
+    artStore.comboCountReset()
   } else {
     correct.value = true
-    combo.value++
+    artStore.comboCountPlus()
   }
   isVisible.value = !isVisible.value
 }
 
 onMounted(() => {
   getArt()
-})
-
-onUpdated(()=> {
-  this.$emit(combo.value, )
 })
 </script>
 
