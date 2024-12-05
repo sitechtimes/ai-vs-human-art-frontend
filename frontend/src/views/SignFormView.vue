@@ -21,7 +21,7 @@
         </span>
       </button>
     </div>
-    <p v-if="errMsg">{{ errMsg }}</p>
+    <p v-if="errMsg" class="my-2 text-center text-2xl font-bold text-red-500">{{ errMsg }}</p>
     <div class="flex flex-col items-center gap-2">
       <form action="submit" class="flex flex-col gap-2">
         <TransitionGroup>
@@ -96,24 +96,27 @@ const registerInfo = async () => {
   if (evilMatch()) return
   try {
     // console.log('resigerting')
+    errMsg.value = ''
     const res = await userStore.register(username.value, email.value, password.value)
     if (res !== null) {
       signUp.value = !signUp.value
     }
   } catch (error) {
+    errMsg.value = error
     console.error(error)
   }
 }
 
 const signIn = async () => {
   try {
-    await userStore.login(email.value, password.value)
+    errMsg.value = ''
+    const res = await userStore.login(email.value, password.value)
     if (userStore.currentUser) {
+      console.log('success' + res)
       router.push({ path: '/' })
     }
   } catch (error) {
     errMsg.value = error
-    console.log(errMsg)
     console.error(error)
   }
 }

@@ -17,7 +17,13 @@
       </template>
       <template #end>
         <div class="flex items-center gap-0.5">
-          <img v-if="signedIn" src="/nagi.jpg" alt="placeholder avatar" class="rounded-full" />
+          <img
+            v-if="signedIn"
+            src="/nagi.jpg"
+            alt="placeholder avatar"
+            class="rounded-full cursor-pointer"
+            @click="router.push('/self')"
+          />
         </div>
       </template>
     </Menubar>
@@ -28,9 +34,9 @@
 import { ref, computed } from 'vue'
 import Menubar from 'primevue/menubar'
 import { useUserStore } from '../stores/user'
-
+import { useRouter } from 'vue-router'
 const userStore = useUserStore()
-
+const router = useRouter()
 const items = ref([
   {
     route: '/',
@@ -63,7 +69,6 @@ const items = ref([
     label: 'Sign In'
   }
 ])
-
 const signedIn = computed(() => !!userStore.currentUser)
 </script>
 

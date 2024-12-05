@@ -20,16 +20,11 @@ export const useUserStore = defineStore('user', () => {
         password: password
       })
     }
-    try {
-      const res = await fetch('http://localhost:3000/api/auth/register', requestOptions)
-      if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`)
-      }
-      // console.log('success!! registered')
-    } catch (error) {
-      console.error('Registration Error', error)
-      // gonna have to do more than console log this later
+    const res = await fetch('http://localhost:3000/api/auth/register', requestOptions)
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`)
     }
+    // console.log('success!! registered')
   }
 
   const login = async (email: string, password: string) => {
@@ -41,19 +36,16 @@ export const useUserStore = defineStore('user', () => {
         password: password
       })
     }
-    try {
-      const res = await fetch('http://localhost:3000/api/auth/login', requestOptions)
-      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
-      const data = await res.json()
-      currentUser.value = data
-      token.value = data.user.refresh_token
-      userId.value = data.user._id
-      localStorage.setItem('token', token.value)
-      localStorage.setItem('userId', userId.value)
-    } catch (error) {
-      console.error(error)
-      console.log(error.response)
-    }
+    const res = await fetch('http://localhost:3000/api/auth/login', requestOptions)
+    if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
+    const data = await res.json()
+    currentUser.value = data
+    token.value = data.user.refresh_token
+    userId.value = data.user._id
+    console.log()
+    localStorage.setItem('token', token.value)
+    localStorage.setItem('userId', userId.value)
+    return data
   }
 
   const auth = async () => {
@@ -76,18 +68,14 @@ export const useUserStore = defineStore('user', () => {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' }
     }
-    try {
-      const res = await fetch('http://localhost:3000/api/auth/logout', requestOptions)
-      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
-      const data = await res.json()
-      currentUser.value = data.user
-      token.value = data.refreshToken
-      isAuthenticated.value = false
-      localStorage.removeItem('token')
-      localStorage.removeItem('userId')
-    } catch (error) {
-      console.error('logout problem', error)
-    }
+    const res = await fetch('http://localhost:3000/api/auth/logout', requestOptions)
+    if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
+    const data = await res.json()
+    currentUser.value = data.user
+    token.value = data.refreshToken
+    isAuthenticated.value = false
+    localStorage.removeItem('token')
+    localStorage.removeItem('userId')
   }
 
   return {
