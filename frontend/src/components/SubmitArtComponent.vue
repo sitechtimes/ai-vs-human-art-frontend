@@ -64,14 +64,15 @@ const user = userStore.currentUser
 
 async function uploadedFile(e: FileUploadSelectEvent) {
   file.value = e.files[0]
-  message.value = 'File received'
+  message.value = 'File successfully uploaded'
 }
 
 async function submit() {
   try {
     uploading.value = true
     if (!user) {
-      message.value = 'YOUR ASS IS NOT LOGGED IN'
+      message.value = `You must be logged in to submit art`
+      throw new Error('not logged in')
     }
 
     if (!file.value) {
