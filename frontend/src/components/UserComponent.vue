@@ -1,10 +1,14 @@
 <template>
   <div>
-    <p>hi this is a test of the self elemenet</p>
+    <p>{{ data }}</p>
+    <img v-bind:src="data" />
   </div>
 </template>
+
 <script setup>
-import { useRouter } from 'vue-router'
+defineProps({
+  data: Object
+})
 </script>
 
 <style scoped></style>

@@ -15,9 +15,9 @@ const router = createRouter({
       component: () => import('../views/GameView.vue')
     },
     {
-      path: '/self',
-      name: 'self',
-      component: () => import('../views/SelfView.vue')
+      path: '/user/:id',
+      name: '',
+      component: () => import('../views/UserView.vue')
     },
     {
       path: '/about',

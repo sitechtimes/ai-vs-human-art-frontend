@@ -26,7 +26,16 @@ export const useUserStore = defineStore('user', () => {
     }
     // console.log('success!! registered')
   }
-
+  const getUser = async (id: Number) => {
+    const requestOptions = {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    }
+    const res = await fetch(`http://localhost:3000/api/auth/users/${id}`, requestOptions)
+    if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
+    const data = await res.json()
+    return data
+  }
   const login = async (email: string, password: string) => {
     const requestOptions = {
       method: 'POST',
@@ -87,6 +96,7 @@ export const useUserStore = defineStore('user', () => {
     register,
     login,
     auth,
-    logout
+    logout,
+    getUser
   }
 })
