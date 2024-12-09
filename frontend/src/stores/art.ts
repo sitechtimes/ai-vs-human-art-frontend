@@ -28,21 +28,8 @@ export const useArtStore = defineStore('art', () => {
   }
   // tyr having backend send two images at once to prevent ispecg element network cheating
 
-  const comboCountPlus = () => {
-    combo.value++
-    console.log('add')
-    console.log(combo.value)
-  }
-
-  const comboCountReset = () => {
-    combo.value = 0
-    console.log('oops')
-  }
-
   return {
     combo,
-    getRandomArt,
-    comboCountPlus,
-    comboCountReset
+    getRandomArt
   }
 })

@@ -46,7 +46,7 @@ import Button from 'primevue/button'
 import Dialog from 'primevue/dialog'
 import Image from 'primevue/image'
 
-import { ref, onMounted, onUpdated } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useArtStore } from '../../stores/art.ts'
 
 const artStore = useArtStore()
@@ -70,10 +70,11 @@ const getArt = async () => {
 const checkAnswer = (e) => {
   if (e != answer.value) {
     correct.value = false
-    artStore.comboCountReset()
+    artStore.combo = 0
+    console.log(artStore.combo)
   } else {
     correct.value = true
-    artStore.comboCountPlus()
+    artStore.combo++
   }
   isVisible.value = !isVisible.value
 }
