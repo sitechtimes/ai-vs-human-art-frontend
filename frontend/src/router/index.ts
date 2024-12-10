@@ -15,14 +15,14 @@ const router = createRouter({
       component: () => import('../views/GameView.vue')
     },
     {
-      path: '/about',
-      name: 'aboutus',
-      component: () => import('../views/AboutView.vue')
-    },
-    {
       path: '/egg',
       name: 'egg',
       component: () => import('../views/EasterEggView.vue')
+    },
+    {
+      path: '/team',
+      name: 'The Team',
+      component: () => import('../views/AboutView.vue')
     },
     {
       path: '/test',
