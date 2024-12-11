@@ -16,7 +16,7 @@
         </a> -->
       </template>
       <template #end>
-        <div class="flex items-center gap-0.5">
+        <div class="flex items-center gap-0.5" v-if="userStore.currentUser">
           <router-link to="/profile">
             <img
               src="https://www.apexmedicalresearch.com/wp-content/uploads/2020/06/anonymous-user-300x296.png"
@@ -33,6 +33,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import Menubar from 'primevue/menubar'
+import { useUserStore } from '../stores/user'
+
+const userStore = useUserStore()
 
 const items = ref([
   {

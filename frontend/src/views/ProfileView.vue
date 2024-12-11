@@ -1,18 +1,6 @@
 <template>
-  <Message severity="error" v-if="visible"
-    >You are not
-    <RouterLink to="/sign" class="underline">logged in</RouterLink>
-  </Message>
   <div v-if="user">
-    <div class="flex justify-center items-center">
-      <img
-        src="https://www.apexmedicalresearch.com/wp-content/uploads/2020/06/anonymous-user-300x296.png"
-        alt="placeholder avatar"
-        class="rounded-full h-36 m-3"
-      />
-      <Button @click="changePfp">Change Photo</Button>
-    </div>
-    <div class="flex-col space-y-2.5 w-96 place-items-center place-self-center">
+    <div class="flex-col space-y-2.5 mt-6 w-96 place-items-center place-self-center">
       <div>
         <Fieldset legend="Username" class="w-96">
           <p>{{ username }}</p>
@@ -35,18 +23,15 @@ import { ref } from 'vue'
 import { useUserStore } from '../stores/user'
 import Fieldset from 'primevue/fieldset'
 import Button from 'primevue/button'
-import Message from 'primevue/message'
 
 const userStore = useUserStore()
 const user = userStore.currentUser
 const username = ref('')
 const email = ref('')
-const visible = ref(true)
 
 const logout = () => userStore.logout()
 
 function getData(user: { username: string; email: string }) {
-  visible.value = false
   console.log(user)
   username.value = user.username
   email.value = user.email
