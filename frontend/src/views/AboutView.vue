@@ -1,13 +1,18 @@
 <template>
-  <div>
-    <span>mega page of about us, submit your art, and Acknowledgements</span>
-    <h2>About Us</h2>
-    <h2>The Team</h2>
-    <p>yap yap yap</p>
-    <h2>Submit your art</h2>
+  <div class="grid grid-cols-1 lg:grid-cols-2 justify-items-center">
+    <PersonComponent v-for="person in persons" :key="person.name" :person="person" />
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup>
+import PersonComponent from '../components/PersonComponent.vue'
+
+const persons = [
+  { name: 'Katherine Zeng', blurb: null, image: null },
+  { name: 'Tina Guo', blurb: null, image: null },
+  { name: 'Richard Masak', blurb: null, image: null },
+  { name: 'Yifan Zhang', blurb: null, image: null }
+]
+</script>
 
 <style scoped></style>

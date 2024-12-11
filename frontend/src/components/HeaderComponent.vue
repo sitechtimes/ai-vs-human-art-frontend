@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Menubar id="header" :model="items">
+    <Menubar id="header" :model="items" class="!rounded-none">
       <template #start>
         <img src="/fatfatpankocat-panko.gif" alt="placeholder logo" class="mr-0" />
       </template>
@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import Menubar from 'primevue/menubar'
 import { useUserStore } from '../stores/user'
 
@@ -74,6 +74,8 @@ const items = ref([
     label: 'Sign In'
   }
 ])
+
+const signedIn = computed(() => !!userStore.currentUser)
 </script>
 
 <style scoped>

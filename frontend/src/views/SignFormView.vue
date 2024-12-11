@@ -89,16 +89,22 @@ const userStore = useUserStore()
 
 const registerInfo = async () => {
   if (evilMatch()) return
-  console.log('resigerting')
-  await userStore.register(username.value, email.value, password.value)
+  try {
+    // console.log('resigerting')
+    const res = await userStore.register(username.value, email.value, password.value)
+    if (res !== null) {
+      signUp.value = !signUp.value
+    }
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 const signIn = async () => {
-  console.log('logging in')
-  try {
-    await userStore.login(email.value, password.value)
-  } catch (error) {
-    console.error('this is an error')
+  // console.log('logging in')
+  await userStore.login(email.value, password.value)
+  if (userStore.currentUser) {
+    router.push({ path: '/' })
   }
 }
 

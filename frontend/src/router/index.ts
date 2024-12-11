@@ -15,6 +15,21 @@ const router = createRouter({
       component: () => import('../views/GameView.vue')
     },
     {
+      path: '/about',
+      name: 'aboutus',
+      component: () => import('../views/AboutView.vue')
+    },
+    {
+      path: '/egg',
+      name: 'egg',
+      component: () => import('../views/EasterEggView.vue')
+    },
+    {
+      path: '/test',
+      name: 'test',
+      component: () => import('../views/TestView.vue')
+    },
+    {
       path: '/sign',
       name: 'signupsignin',
       component: () => import('../views/SignFormView.vue')

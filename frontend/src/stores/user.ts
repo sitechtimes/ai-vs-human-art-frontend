@@ -25,9 +25,10 @@ export const useUserStore = defineStore('user', () => {
       if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`)
       }
-      console.log('success!! registered')
+      // console.log('success!! registered')
     } catch (error) {
-      console.error('registration problem', error)
+      console.error('Registration Error', error)
+      // gonna have to do more than console log this later
     }
   }
 
@@ -44,14 +45,14 @@ export const useUserStore = defineStore('user', () => {
       const res = await fetch('http://localhost:3000/api/auth/login', requestOptions)
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
       const data = await res.json()
-      currentUser.value = data.user
+      currentUser.value = data
       token.value = data.user.refresh_token
       userId.value = data.user._id
       localStorage.setItem('token', token.value)
       localStorage.setItem('userId', userId.value)
-      console.log('success!! logged in')
+      // console.log('success!! logged in')
     } catch (error) {
-      console.error('login problem', error)
+      console.error('Login Error', error)
     }
   }
 

@@ -124,11 +124,15 @@ function changeColors(color: string) {
   }
 
   //fixes all the contrast errors dealing with wave
+
   palettes[500] = palettes[800] //tabmenu text
   palettes[700] = palettes[800] //menubar text
 
-  if (dark.value) palettes[400] = palettes[200]
-
+  if (dark.value) {
+    palettes[400] = palettes[200]
+    palettes[600] = palettes[200]
+    palettes[50] = palettes[600]
+  }
   updatePrimaryPalette(palettes)
   updateSurfacePalette(palettes)
 
