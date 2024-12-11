@@ -10,7 +10,11 @@ import PersonComponent from '../components/PersonComponent.vue'
 const persons = [
   { name: 'Katherine Zeng', blurb: null, image: null },
   { name: 'Tina Guo', blurb: null, image: null },
-  { name: 'Richard Masak', blurb: null, image: null },
+  {
+    name: 'Richard Masak',
+    blurb: null,
+    image: 'https://primefaces.org/cdn/primevue/images/organization/walter.jpg'
+  },
   { name: 'Yifan Zhang', blurb: null, image: null }
 ]
 </script>

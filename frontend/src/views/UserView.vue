@@ -3,11 +3,10 @@
     <div
       class="flex flex-row bg-primary-50 dark:bg-primary-950 p-7 m-7 rounded-md border border-primary-700 dark:border-primary-500"
     >
-      <p>{{ userData }}</p>
       <img
-        class="object-contain w-52 h-80 flex self-center"
         :src="userData['profile_picture']"
-        :alt="userData['username']"
+        alt="placeholder avatar"
+        class="clip-circle w-1/2 h-1/2"
       />
       <div class="flex flex-col justify-center p-5">
         <h3 class="text-3xl">{{ userData['username'] }}</h3>
@@ -18,6 +17,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import Avatar from 'primevue/avatar'
 import { useRoute } from 'vue-router'
 const route = useRoute()
 import { useUserStore } from '../stores/user'
