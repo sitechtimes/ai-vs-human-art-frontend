@@ -15,6 +15,11 @@ const router = createRouter({
       component: () => import('../views/GameView.vue')
     },
     {
+      path: '/about',
+      name: 'aboutus',
+      component: () => import('../views/AboutView.vue')
+    },
+    {
       path: '/egg',
       name: 'egg',
       component: () => import('../views/EasterEggView.vue')
@@ -30,11 +35,6 @@ const router = createRouter({
       component: () => import('../views/AboutView.vue')
     },
     {
-      path: '/submit',
-      name: 'submit',
-      component: () => import('../views/SubmitArtView.vue')
-    },
-    {
       path: '/profile',
       name: 'profilepage',
       component: () => import('../views/ProfileView.vue')
@@ -46,7 +46,7 @@ const router = createRouter({
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/ErrorView.vue')
-    }
+    },
   ]
 })
 
