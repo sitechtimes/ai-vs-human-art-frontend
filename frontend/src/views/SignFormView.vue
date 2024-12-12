@@ -2,13 +2,12 @@
   <div>
     <h1 class="my-2 text-center text-2xl font-bold">Sign {{ signUp ? 'Up' : 'In' }}</h1>
     <div class="flex flex-col items-center">
-      <label for="switcher">
-        <span class="italic">
-          {{ signUp ? `Already have an account?` : `Don't have an account?` }}
-        </span>
-      </label>
+      <span class="italic">
+        {{ signUp ? `Already have an account?` : `Don't have an account?` }}
+      </span>
       <button
         id="switcher"
+        class="underline"
         @click="
           () => {
             signUp = !signUp
@@ -16,13 +15,11 @@
           }
         "
       >
-        <span class="underline">
-          {{ signUp ? 'Sign in' : 'Sign up' }}
-        </span>
+        {{ signUp ? 'Sign in' : 'Sign up' }}
       </button>
     </div>
     <div class="flex flex-col items-center gap-2">
-      <form action="submit" class="flex flex-col gap-2">
+      <form @submit.prevent="signUp ? registerInfo() : signIn()" class="flex flex-col gap-2">
         <TransitionGroup>
           <div v-if="signUp" class="flex flex-col gap-2">
             <label for="username" key="username.label">Username</label>
@@ -62,8 +59,8 @@
             :label="signUp ? 'Sign Up' : 'Sign In'"
             :disabled="notMatch"
             :class="notMatch ? '!cursor-not-allowed' : 'cursor-pointer'"
-            @click="signUp ? registerInfo() : signIn()"
-            key="'button'"
+            key="button"
+            type="submit"
           />
         </TransitionGroup>
       </form>
@@ -128,7 +125,7 @@ watch(passwordConfirm, () => {
 <style scoped>
 .v-move,
 .v-enter-active {
-  transition: all 0.3s ease-out;
+  transition: all 0.2s ease-out;
 }
 
 .v-enter-from,
@@ -138,7 +135,7 @@ watch(passwordConfirm, () => {
 }
 
 .v-leave-active {
-  transition: all 0.1s ease-in;
+  transition: all 0.2s ease-in;
   position: absolute;
   transform: translateY(1rem);
 }

@@ -2,7 +2,9 @@
   <div id="themes">
     <Tabs value="0">
       <TabList class="tabs grid items-stretch w-full">
-        <Tab v-for="tab in tabs" :value="tab.value" :key="tab" class="justify-self-auto">{{ tab.name }}</Tab>
+        <Tab v-for="tab in tabs" :value="tab.value" :key="tab.value" class="justify-self-auto">{{
+          tab.name
+        }}</Tab>
       </TabList>
     </Tabs>
   </div>

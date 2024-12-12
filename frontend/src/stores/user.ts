@@ -45,8 +45,9 @@ export const useUserStore = defineStore('user', () => {
       const res = await fetch('http://localhost:3000/api/auth/login', requestOptions)
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
       const data = await res.json()
-      currentUser.value = data
-      token.value = data.user.refresh_token
+      currentUser.value = data.user
+      // token.value = data.user.refresh_token
+      token.value = data.access_token
       userId.value = data.user._id
       localStorage.setItem('token', token.value)
       localStorage.setItem('userId', userId.value)
@@ -79,9 +80,8 @@ export const useUserStore = defineStore('user', () => {
     try {
       const res = await fetch('http://localhost:3000/api/auth/logout', requestOptions)
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
-      const data = await res.json()
-      currentUser.value = data.user
-      token.value = data.refreshToken
+      currentUser.value = null
+      token.value = ''
       isAuthenticated.value = false
       localStorage.removeItem('token')
       localStorage.removeItem('userId')

@@ -17,7 +17,9 @@
       </template>
       <template #end>
         <div class="flex items-center gap-0.5">
-          <img v-if="signedIn" src="/nagi.jpg" alt="placeholder avatar" class="rounded-full" />
+          <router-link to="/profile">
+            <img v-if="signedIn" src="/nagi.jpg" alt="placeholder avatar" class="rounded-full" />
+          </router-link>
         </div>
       </template>
     </Menubar>
@@ -40,6 +42,10 @@ const items = ref([
     route: '/game',
     label: 'Game'
   },
+  // {
+  //   route: '/about',
+  //   label: 'About Us'
+  // },
   {
     route: false,
     label: 'About Us',
