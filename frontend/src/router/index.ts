@@ -35,6 +35,11 @@ const router = createRouter({
       component: () => import('../views/SignFormView.vue')
     },
     {
+      path: '/signout',
+      name: 'signout',
+      component: () => import('../views/SignOutView.vue')
+    },
+    {
       path: '/:pathMatch(.*)*',
       name: '404',
       // route level code-splitting
