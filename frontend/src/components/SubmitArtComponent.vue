@@ -12,19 +12,22 @@
             <Checkbox ariaLabelledby="tos-label" v-model="checked" :binary="true" />
           </div>
           <div class="flex flex-col gap-4 items-start">
-            <div class="flex items-center gap-2">
-              <label id="link-label">Link to art source:</label>
-              <InputText aria-labelledby="link-label" v-model="link" :disabled="!checked" />
+            <div v-for="picture in pictures" :key="picture">
+              <div class="flex items-center gap-2">
+                <label id="link-label">Link to art source:</label>
+                <InputText aria-labelledby="link-label" v-model="link" :disabled="!checked" />
+              </div>
+              <FileUpload
+                mode="basic"
+                :disabled="!checked"
+                accept="image/*"
+                :maxFileSize="1024 * 1024 * 15"
+                customUpload
+                @select="uploadedFile"
+                aria-label="Upload an image"
+              />
             </div>
-            <FileUpload
-              mode="basic"
-              :disabled="!checked"
-              accept="image/*"
-              :maxFileSize="1024 * 1024 * 15"
-              customUpload
-              @select="uploadedFile"
-              aria-label="Upload an image"
-            />
+            <Button v-if="isAdmin" label="Upload More" @click="addUpload()" />
             <p>{{ message }}</p>
             <Button
               :disabled="!ok"
@@ -58,9 +61,13 @@ const message = ref('')
 const file = ref<File>()
 const uploading = ref(false)
 const ok = computed(() => checked.value && file.value && !uploading.value)
+const pictures = ref(1)
 
 const userStore = useUserStore()
 const user = userStore.currentUser
+const isAdmin = userStore.isAdmin
+console.log('user', userStore.isAdmin)
+console.log(isAdmin)
 
 async function uploadedFile(e: FileUploadSelectEvent) {
   file.value = e.files[0]
@@ -96,6 +103,10 @@ async function submit() {
 //obviously the most important part of the code...
 const idol =
   'Muteki no egao de arasu media Shiritai sono himitsu misuteriasu Nuketeru toko sae kanojo no eria Kanpeki de usotsuki na kimi wa Tensaitekina aidoru sama Kyou nani tabeta? Suki na hon wa? Asobi ni iku nara doko ni iku no? Nanimo tabetenai, sore wa naisho Nani wo kikaretemo norari kurari Sou tantan to, dakedo sansan to Miesou de mienai himitsu wa mitsu no aji Are mo nai, nai, nai Kore mo nai, nai, nai Suki na taipu wa? Aite wa? Saa kotaete'
+
+const addUpload = () => {
+  pictures.value++
+}
 </script>
 
 <style scoped></style>

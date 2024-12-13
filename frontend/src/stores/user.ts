@@ -49,6 +49,8 @@ export const useUserStore = defineStore('user', () => {
       // token.value = data.user.refresh_token
       token.value = data.access_token
       userId.value = data.user._id
+      isAdmin.value = "wel nothing for nore"
+      console.log("well noting for now")
       localStorage.setItem('token', token.value)
       localStorage.setItem('userId', userId.value)
       // console.log('success!! logged in')
@@ -83,6 +85,7 @@ export const useUserStore = defineStore('user', () => {
       currentUser.value = null
       token.value = ''
       isAuthenticated.value = false
+      isAdmin.value = false
       localStorage.removeItem('token')
       localStorage.removeItem('userId')
     } catch (error) {
