@@ -4,7 +4,6 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import './assets/index.css'
 
-import primeVue from 'primevue/config';
 import Aura from '@primevue/themes/aura';
 import Ripple from 'primevue/ripple';
 
@@ -22,8 +21,16 @@ app.use(PrimeVue, {
   theme: {
     preset: Aura
   },
+    options: {
+      cssLayer:{
+        name: 'primevue',
+        order: 'tailwind-base, primevue, tailwind-utilities'
+    }
+  },
   ripple: true,
 })
+
+
 
 app.mount('#app')
 

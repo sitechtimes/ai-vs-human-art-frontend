@@ -38,17 +38,21 @@ const items = ref([
     label: 'Game'
   },
   {
+    route: '/submit',
+    label: 'Submit Your Art'
+  },
+  {
     route: false,
-    label: 'About Us',
+    label: 'About',
     items: [
       {
         route: '/team',
         label: 'The Team'
       },
-      {
-        route: '/submit',
-        label: 'Submit Your Art'
-      }, //make this into its own button
+      // {
+      //   route: '/submit',
+      //   label: 'Submit Your Art'
+      // }, //make this into its own button
       {
         route: '/credits',
         label: 'Acknowledgements'
