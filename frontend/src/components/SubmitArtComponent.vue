@@ -28,7 +28,7 @@
               />
             </div>
             <Button v-if="isAdmin" label="Upload More" @click="addUpload()" />
-            <p>{{ message }}</p>
+            <!-- <p>{{ message }}</p> -->
             <Button
               :disabled="!ok"
               type="submit"
@@ -52,16 +52,18 @@ import ScrollPanel from 'primevue/scrollpanel'
 import Button from 'primevue/button'
 import { useImageStore } from '../stores/images'
 import { useUserStore } from '@/stores/user'
+import { useToast } from 'primevue/usetoast'
 
 const imageStore = useImageStore()
 const checked = ref(false)
 const type = ref('unscreened')
-const link = ref('')
+const link = ref([])
 const message = ref('')
-const file = ref<File>()
+const file = ref<File>([])
 const uploading = ref(false)
 const ok = computed(() => checked.value && file.value && !uploading.value)
 const pictures = ref(1)
+const toast = useToast()
 
 const userStore = useUserStore()
 const user = userStore.currentUser
@@ -71,7 +73,8 @@ console.log(isAdmin)
 
 async function uploadedFile(e: FileUploadSelectEvent) {
   file.value = e.files[0]
-  message.value = 'File successfully uploaded'
+  toast.add({ severity: 'success', detail: 'File successfully uploaded.', group: tl, life: 3000 })
+  // message.value = 'File successfully uploaded'
 }
 
 async function submit() {
@@ -89,8 +92,8 @@ async function submit() {
 
     const formData = new FormData()
     formData.append('type', type.value)
-    formData.append('link', link.value)
-    formData.append('image', file.value)
+    formData.append('link', link.value.join(','))
+    file.value.forEach((file) => formData.append('image', file))
 
     const res = await imageStore.uploadImage(formData)
     if (res?.ok) location.reload()
