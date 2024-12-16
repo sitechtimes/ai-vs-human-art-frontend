@@ -8,7 +8,7 @@ import HomeView from './views/HomeView.vue';
 </script>
 
 <template>
-    <!-- <HeaderComponent class=""/> -->
+    <HeaderComponent class=""/>
     <HomeView></HomeView>
 </template>
 

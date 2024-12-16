@@ -15,7 +15,7 @@ import HeaderComponent from '@/components/HeaderComponent.vue';
 <template>
     <!-- <div :style="styleObject">  -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <div class="bg-[url('/concept1animation.gif')] h-svh bg-cover bg-no-repeat"> <!-- h = height -->
+    <div class="bg-[url('/concept1animation.gif')] h-svh bg-cover bg-no-repeat md:bg-center"> <!-- h = height -->
         <!-- <HeaderComponent class="opacity-0 hover:opacity-100"/> -->
         <div class="grid lg:grid-cols-12 grid-cols-6 space-y-9 "> 
             <Button as="router-link" placeholder="Overriden" 
