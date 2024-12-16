@@ -15,6 +15,7 @@
           <!-- put something here to indicate that this is a dropdown i don't know -->
         </a>
       </template>
+      <Button v-if="userStore.isAuthenticated" @click="userStore.logout" label="Logout" />
       <template #end>
         <div class="flex items-center gap-0.5">
           <img
@@ -22,7 +23,7 @@
             src="/nagi.jpg"
             alt="placeholder avatar"
             class="rounded-full cursor-pointer"
-            @click="router.push('/self')"
+            @click="router.push(`/user/${userStore.userid}`)"
           />
         </div>
       </template>
@@ -33,6 +34,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import Menubar from 'primevue/menubar'
+import Button from 'primevue/button'
 import { useUserStore } from '../stores/user'
 import { useRouter } from 'vue-router'
 const userStore = useUserStore()

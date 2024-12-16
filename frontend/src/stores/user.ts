@@ -4,7 +4,8 @@ import { ref } from 'vue'
 export const useUserStore = defineStore('user', () => {
   // state
   const currentUser = ref(null)
-  const userId = ref('')
+  const Id = ref('')
+  const userid = ref('')
   const token = ref('')
   const isAuthenticated = ref(false)
   const isAdmin = ref(false)
@@ -49,10 +50,12 @@ export const useUserStore = defineStore('user', () => {
     const data = await res.json()
     currentUser.value = data
     token.value = data.user.refresh_token
-    userId.value = data.user._id
+    Id.value = data.user._id
+    userid.value = data.user.userid
     console.log()
     localStorage.setItem('token', token.value)
-    localStorage.setItem('userId', userId.value)
+    localStorage.setItem('Id', Id.value)
+    localStorage.setItem('userID', userid.value)
     return data
   }
 
@@ -83,12 +86,14 @@ export const useUserStore = defineStore('user', () => {
     token.value = data.refreshToken
     isAuthenticated.value = false
     localStorage.removeItem('token')
-    localStorage.removeItem('userId')
+    localStorage.removeItem('Id')
+    localStorage.removeItem('userid')
   }
 
   return {
     currentUser,
-    userId,
+    Id,
+    userid,
     token,
     isAuthenticated,
     isAdmin,

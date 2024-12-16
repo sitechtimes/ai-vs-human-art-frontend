@@ -29,6 +29,7 @@ onMounted(() => {
       .getUser(Number(route.params.id))
       .then((response) => response.json())
       .then((data) => (userData.value = data))
+    console.log(userStore)
   } catch (error) {
     console.error(error)
   }

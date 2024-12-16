@@ -1,7 +1,17 @@
 <script setup lang="ts">
+import { onMounted, watch } from 'vue'
 import { RouterView } from 'vue-router'
 import HeaderComponent from './components/HeaderComponent.vue'
 import ThemeComponent from './components/ThemeComponent.vue'
+/* onMounted() {
+    if (localStorage.name) {
+      this.name = localStorage.name;
+    }
+  },
+  watch: {
+    name(newName) {
+      localStorage.name = newName;
+    } */
 </script>
 
 <template>

@@ -88,7 +88,7 @@ const email = ref('')
 const password = ref('')
 const passwordConfirm = ref('')
 const notMatch = ref(false)
-const errMsg = ref('')
+const errMsg = ref<string>('')
 
 const userStore = useUserStore()
 
@@ -100,8 +100,9 @@ const registerInfo = async () => {
     const res = await userStore.register(username.value, email.value, password.value)
     if (res !== null) {
       signUp.value = !signUp.value
+      await userStore.auth()
     }
-  } catch (error) {
+  } catch (error: any) {
     errMsg.value = error
     console.error(error)
   }
@@ -115,7 +116,7 @@ const signIn = async () => {
       console.log('success' + res)
       router.push({ path: '/' })
     }
-  } catch (error) {
+  } catch (error: any) {
     errMsg.value = error
     console.error(error)
   }
