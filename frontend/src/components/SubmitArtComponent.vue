@@ -24,11 +24,13 @@
                 :maxFileSize="1024 * 1024 * 15"
                 customUpload
                 @select="uploadedFile"
-                aria-label="Upload an image"
+                :multiple="true"
+                label="Upload an image"
               />
             </div>
             <Button v-if="isAdmin" label="Upload More" @click="addUpload()" />
             <!-- <p>{{ message }}</p> -->
+            <Toast />
             <Button
               :disabled="!ok"
               type="submit"
@@ -51,7 +53,8 @@ import Checkbox from 'primevue/checkbox'
 import ScrollPanel from 'primevue/scrollpanel'
 import Button from 'primevue/button'
 import { useImageStore } from '../stores/images'
-import { useUserStore } from '@/stores/user'
+import { useUserStore } from '../stores/user'
+import Toast from 'primevue/toast'
 import { useToast } from 'primevue/usetoast'
 
 const imageStore = useImageStore()
@@ -72,9 +75,32 @@ console.log('user', userStore.isAdmin)
 console.log(isAdmin)
 
 async function uploadedFile(e: FileUploadSelectEvent) {
-  file.value = e.files[0]
-  toast.add({ severity: 'success', detail: 'File successfully uploaded.', group: tl, life: 3000 })
-  // message.value = 'File successfully uploaded'
+  const NewFiles = e.files
+  file.value.push(...newFiles)
+  showFile()
+  const updatedLinks = [...link.value]
+  updatedLinks.push('')
+  link.value = updatedLinks
+  console.log(file.value)
+  console.log(link.value)
+}
+
+const showFile = () => {
+  toast.add({
+    severity: 'success',
+    summary: 'Success',
+    detail: 'File successfully uploaded.',
+    life: 3000
+  })
+}
+
+const showSuccess = () => {
+  toast.add({
+    severity: 'success',
+    summary: 'Success',
+    detail: 'Art successfully submitted.',
+    life: 3000
+  })
 }
 
 async function submit() {
@@ -92,11 +118,12 @@ async function submit() {
 
     const formData = new FormData()
     formData.append('type', type.value)
-    formData.append('link', link.value.join(','))
-    file.value.forEach((file) => formData.append('image', file))
+    formData.append('link', link.value.split(','))
+    formData.append('image', file.value)
 
     const res = await imageStore.uploadImage(formData)
-    if (res?.ok) location.reload()
+    // if (res?.ok) location.reload()
+    if (res?.ok) showSuccess()
     else throw new Error((await res.json()).error)
   } catch (error) {
     console.error(error)
