@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
 export const useUserStore = defineStore('user', () => {
   // state
@@ -89,7 +89,14 @@ export const useUserStore = defineStore('user', () => {
     localStorage.removeItem('Id')
     localStorage.removeItem('userid')
   }
-
+  /* watch(
+    pinia.state,
+    (state) => {
+      // persist the whole state to the local storage whenever it changes
+      localStorage.setItem('piniaState', JSON.stringify(state))
+    },
+    { deep: true }
+  ) */
   return {
     currentUser,
     Id,
