@@ -46,7 +46,8 @@ export const useUserStore = defineStore('user', () => {
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
       const data = await res.json()
       currentUser.value = data.user
-      token.value = data.user.refresh_token
+      // token.value = data.user.refresh_token
+      token.value = data.access_token
       userId.value = data.user._id
       localStorage.setItem('token', token.value)
       localStorage.setItem('userId', userId.value)

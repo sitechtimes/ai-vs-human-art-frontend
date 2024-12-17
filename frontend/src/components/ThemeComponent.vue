@@ -124,7 +124,6 @@ function changeColors(color: string) {
   }
 
   //fixes all the contrast errors dealing with wave
-
   palettes[500] = palettes[800] //tabmenu text
   palettes[700] = palettes[800] //menubar text
 
