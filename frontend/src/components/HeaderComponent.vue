@@ -37,8 +37,10 @@ import Menubar from 'primevue/menubar'
 import Button from 'primevue/button'
 import { useUserStore } from '../stores/user'
 import { useRouter } from 'vue-router'
+const signedIn = computed(() => !!userStore.currentUser)
 const userStore = useUserStore()
 const router = useRouter()
+
 const items = ref([
   {
     route: '/',
@@ -67,11 +69,11 @@ const items = ref([
     ]
   },
   {
-    route: '/sign',
-    label: 'Sign In'
+    route: signedIn.value ? false : '/sign',
+    label: signedIn.value ? `Welcome, ${userStore.currentUser}` : 'Sign in'
+    /* add logout */
   }
 ])
-const signedIn = computed(() => !!userStore.currentUser)
 </script>
 
 <style scoped>

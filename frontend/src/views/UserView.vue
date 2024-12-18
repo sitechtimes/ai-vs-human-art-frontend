@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- must add v-if for missing user -->
     <div
       class="flex flex-row bg-primary-50 dark:bg-primary-950 p-7 m-7 rounded-md border border-primary-700 dark:border-primary-500"
     >
