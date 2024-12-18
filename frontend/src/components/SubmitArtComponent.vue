@@ -12,10 +12,14 @@
             <Checkbox ariaLabelledby="tos-label" v-model="checked" :binary="true" />
           </div>
           <div class="flex flex-col gap-4 items-start">
-            <div v-for="picture in pictures" :key="picture">
+            <div v-for="(picture, index) in pictures" :key="index">
               <div class="flex items-center gap-2">
                 <label id="link-label">Link to art source:</label>
-                <InputText aria-labelledby="link-label" v-model="links" :disabled="!checked" />
+                <InputText
+                  aria-labelledby="link-label"
+                  v-model="links[index]"
+                  :disabled="!checked"
+                />
               </div>
               <FileUpload
                 mode="basic"
@@ -29,7 +33,6 @@
               />
             </div>
             <Button v-if="isAdmin" label="Upload More" @click="addUpload()" />
-            <!-- <p>{{ message }}</p> -->
             <Toast />
             <Button
               :disabled="!ok"
@@ -61,19 +64,19 @@ const imageStore = useImageStore()
 const checked = ref(false)
 const type = ref('unscreened')
 const links = ref([''])
-// const message = ref('')
-const file = ref<File>()
+const files: Ref<File[]> = ref([])
 const uploading = ref(false)
-const ok = computed(() => checked.value && file.value && !uploading.value)
+const ok = computed(() => checked.value && files.value && !uploading.value)
 const pictures = ref(1)
 const toast = useToast()
+const forms = ref([])
 
 const userStore = useUserStore()
 const user = userStore.currentUser
 const isAdmin = userStore.isAdmin
 
 async function uploadedFile(e: FileUploadSelectEvent) {
-  file.value = e.files[0]
+  // file.value = e.files[0]
   toast.add({
     severity: 'success',
     summary: 'Success',
@@ -86,7 +89,6 @@ async function submit() {
   try {
     uploading.value = true
     if (!user) {
-      // message.value = `You must be logged in to submit art`
       toast.add({
         severity: 'warn',
         summary: 'Warning',
@@ -96,8 +98,8 @@ async function submit() {
       throw new Error('not logged in')
     }
 
-    if (!file.value) {
-      // message.value = "You didn't attach a file"
+    if (files.value.length != links.value.length) {
+      console.log(files.value.length, links.value.length)
       toast.add({
         severity: 'warn',
         summary: 'Warning',
@@ -107,23 +109,27 @@ async function submit() {
       throw new Error('there is no file in ba sing se')
     }
 
-    const formData = new FormData()
-    formData.append('type', type.value)
-    formData.append('link', link.value)
-    formData.append('image', file.value)
-
-    const res = await imageStore.uploadImage(formData)
-    // if (res?.ok) location.reload()
-    if (res?.ok) {
-      toast.add({
-        severity: 'success',
-        summary: 'Success',
-        detail: 'Art successfully submitted.',
-        life: 3000
-      })
-      link.value = undefined
-      file.value = undefined
-    } else throw new Error((await res.json()).error)
+    for (let i = 0; i < links.value.length; i++) {
+      const formData = new FormData()
+      formData.append('type', type.value)
+      formData.append('link', links.value[i])
+      formData.append('image', files.value[i])
+      forms.value.push(formData)
+    }
+    for (let i = 0; i < forms.value.length; i++) {
+      const res = await imageStore.uploadImage(form)
+      // if (res?.ok) location.reload()
+      if (res?.ok) {
+        toast.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Art successfully submitted.',
+          life: 3000
+        })
+        links.value = []
+        files.value = []
+      } else throw new Error((await res.json()).error)
+    }
   } catch (error) {
     console.error(error)
   }
