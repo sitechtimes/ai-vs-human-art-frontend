@@ -15,7 +15,7 @@
             <div v-for="picture in pictures" :key="picture">
               <div class="flex items-center gap-2">
                 <label id="link-label">Link to art source:</label>
-                <InputText aria-labelledby="link-label" v-model="link" :disabled="!checked" />
+                <InputText aria-labelledby="link-label" v-model="links" :disabled="!checked" />
               </div>
               <FileUpload
                 mode="basic"
@@ -60,9 +60,9 @@ import { useToast } from 'primevue/usetoast'
 const imageStore = useImageStore()
 const checked = ref(false)
 const type = ref('unscreened')
-const link = ref([])
-const message = ref('')
-const file = ref<File>([])
+const links = ref([''])
+// const message = ref('')
+const file = ref<File>()
 const uploading = ref(false)
 const ok = computed(() => checked.value && file.value && !uploading.value)
 const pictures = ref(1)
@@ -71,21 +71,9 @@ const toast = useToast()
 const userStore = useUserStore()
 const user = userStore.currentUser
 const isAdmin = userStore.isAdmin
-console.log('user', userStore.isAdmin)
-console.log(isAdmin)
 
 async function uploadedFile(e: FileUploadSelectEvent) {
-  const NewFiles = e.files
-  file.value.push(...newFiles)
-  showFile()
-  const updatedLinks = [...link.value]
-  updatedLinks.push('')
-  link.value = updatedLinks
-  console.log(file.value)
-  console.log(link.value)
-}
-
-const showFile = () => {
+  file.value = e.files[0]
   toast.add({
     severity: 'success',
     summary: 'Success',
@@ -94,37 +82,48 @@ const showFile = () => {
   })
 }
 
-const showSuccess = () => {
-  toast.add({
-    severity: 'success',
-    summary: 'Success',
-    detail: 'Art successfully submitted.',
-    life: 3000
-  })
-}
-
 async function submit() {
   try {
     uploading.value = true
     if (!user) {
-      message.value = `You must be logged in to submit art`
+      // message.value = `You must be logged in to submit art`
+      toast.add({
+        severity: 'warn',
+        summary: 'Warning',
+        detail: 'You must be logged in to submit art.',
+        life: 3000
+      })
       throw new Error('not logged in')
     }
 
     if (!file.value) {
-      message.value = "You didn't attach a file"
+      // message.value = "You didn't attach a file"
+      toast.add({
+        severity: 'warn',
+        summary: 'Warning',
+        detail: "You didn't attach a file.",
+        life: 3000
+      })
       throw new Error('there is no file in ba sing se')
     }
 
     const formData = new FormData()
     formData.append('type', type.value)
-    formData.append('link', link.value.split(','))
+    formData.append('link', link.value)
     formData.append('image', file.value)
 
     const res = await imageStore.uploadImage(formData)
     // if (res?.ok) location.reload()
-    if (res?.ok) showSuccess()
-    else throw new Error((await res.json()).error)
+    if (res?.ok) {
+      toast.add({
+        severity: 'success',
+        summary: 'Success',
+        detail: 'Art successfully submitted.',
+        life: 3000
+      })
+      link.value = undefined
+      file.value = undefined
+    } else throw new Error((await res.json()).error)
   } catch (error) {
     console.error(error)
   }
