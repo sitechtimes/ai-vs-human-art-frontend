@@ -30,7 +30,7 @@ import Menubar from 'primevue/menubar'
 import { useUserStore } from '../stores/user'
 
 const userStore = useUserStore()
-let signedIn = computed(() => !!userStore.currentUser)
+const signedIn = computed(() => !!userStore.currentUser)
 
 const menuItems = ref([
   {
