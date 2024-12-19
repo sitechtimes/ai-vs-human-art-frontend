@@ -10,11 +10,19 @@
             <span>{{ item.label }}</span>
           </a>
         </router-link>
+        <!--         <a v-else :href="item.url" :target="item.target" v-bind="props.action">
+          <span class="ml-2">{{ item.label }}</span>
+           put something here to indicate that this is a dropdown i don't know
+        </a> -->
       </template>
       <template #end>
         <div class="flex items-center gap-0.5" v-if="userStore.currentUser">
           <router-link to="/profile">
-            <p>Profile</p>
+            <img
+              src="https://www.apexmedicalresearch.com/wp-content/uploads/2020/06/anonymous-user-300x296.png"
+              alt="placeholder avatar"
+              class="rounded-full"
+            />
           </router-link>
         </div>
       </template>
@@ -23,19 +31,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import Menubar from 'primevue/menubar'
 import { useUserStore } from '../stores/user'
 
 const userStore = useUserStore()
-const user = userStore.currentUser
-const signRoute = ref('/sign')
-const signLabel = ref('Sign In')
-
-if (user) {
-  signRoute.value = '/profile'
-  signLabel.value = 'Profile'
-}
 
 const items = ref([
   {
@@ -51,9 +51,9 @@ const items = ref([
   //   label: 'About Us'
   // },
   {
-    route: '/about',
-    label: 'About Us'
-    /*     items: [
+    route: false,
+    label: 'About Us',
+    items: [
       {
         route: '/team',
         label: 'The Team'
@@ -66,13 +66,15 @@ const items = ref([
         route: '/credits',
         label: 'Acknowledgements'
       }
-    ] */
+    ]
   },
   {
-    route: signRoute.value,
-    label: signLabel.value
+    route: '/sign',
+    label: 'Sign In'
   }
 ])
+
+const signedIn = computed(() => !!userStore.currentUser)
 </script>
 
 <style scoped>
