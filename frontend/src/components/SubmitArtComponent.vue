@@ -28,11 +28,11 @@
                 :maxFileSize="1024 * 1024 * 15"
                 customUpload
                 @select="uploadedFile"
-                :multiple="true"
+                :multiple="isAdmin"
                 label="Upload an image"
               />
             </div>
-            <Button v-if="isAdmin" label="Upload More" @click="addUpload()" />
+            <Button v-if="isAdmin" :disabled="!checked" label="Upload More" @click="addUpload()" />
             <Toast />
             <Button
               :disabled="!ok"
@@ -64,19 +64,19 @@ const imageStore = useImageStore()
 const checked = ref(false)
 const type = ref('unscreened')
 const links = ref([''])
-const files: Ref<File[]> = ref([])
+const files = ref<File[]>([])
 const uploading = ref(false)
 const ok = computed(() => checked.value && files.value && !uploading.value)
 const pictures = ref(1)
 const toast = useToast()
-const forms = ref([])
 
 const userStore = useUserStore()
 const user = userStore.currentUser
 const isAdmin = userStore.isAdmin
 
 async function uploadedFile(e: FileUploadSelectEvent) {
-  // file.value = e.files[0]
+  files.value.push(e.files[0])
+  console.log(files.value)
   toast.add({
     severity: 'success',
     summary: 'Success',
@@ -108,17 +108,14 @@ async function submit() {
       })
       throw new Error('there is no file in ba sing se')
     }
+    console.log(links.value.length)
 
     for (let i = 0; i < links.value.length; i++) {
       const formData = new FormData()
       formData.append('type', type.value)
       formData.append('link', links.value[i])
       formData.append('image', files.value[i])
-      forms.value.push(formData)
-    }
-    for (let i = 0; i < forms.value.length; i++) {
-      const res = await imageStore.uploadImage(form)
-      // if (res?.ok) location.reload()
+      const res = await imageStore.uploadImage(formData)
       if (res?.ok) {
         toast.add({
           severity: 'success',
@@ -132,6 +129,12 @@ async function submit() {
     }
   } catch (error) {
     console.error(error)
+    toast.add({
+      severity: 'error',
+      summary: 'Error',
+      detail: 'Failed to submit art.',
+      life: 3000
+    })
   }
   uploading.value = false
 }
