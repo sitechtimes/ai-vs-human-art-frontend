@@ -61,19 +61,13 @@ const menuItems = ref([
   }
 ])
 
-const SignButton = () => {
-  console.log('in')
-  return {
-    route: '/sign',
-    label: 'Sign In'
-  }
-}
-
 const items = computed(() => {
   const itemsValue = [...menuItems.value]
-  if (!signedIn.value) {
-    itemsValue.push(SignButton())
-  }
+  if (!signedIn.value)
+    itemsValue.push({
+      route: '/sign',
+      label: 'Sign In'
+    })
   return itemsValue
 })
 </script>
