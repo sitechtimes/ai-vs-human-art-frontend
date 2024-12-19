@@ -5,7 +5,7 @@
         <Button as="router-link" label="Router" to="/" id="game-home-button">Home</Button>
       </template>
       <template #center>
-        <p>COMBO: {{ combo }}</p>
+        <p>COMBO: {{ artStore.combo }}</p>
       </template>
       <template #end>
         <Button @click="toggleHelpButton">Help</Button>
@@ -23,8 +23,9 @@ import Toolbar from 'primevue/toolbar'
 import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
 import { ref } from 'vue'
+import { useArtStore } from '../../stores/art'
 
-const combo = ref(0)
+const artStore = useArtStore()
 const helpButton = ref(false)
 
 function toggleHelpButton() {
