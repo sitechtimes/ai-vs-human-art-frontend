@@ -70,8 +70,13 @@ const items = ref([
   },
   {
     route: signedIn.value ? false : '/sign',
-    label: signedIn.value ? `Welcome, ${userStore.currentUser}` : 'Sign in'
-    /* add logout */
+    label: signedIn.value ? `Welcome, ${userStore.currentUser}` : 'Sign in',
+    items: [
+      {
+        route: '/logout',
+        label: 'Log Out'
+      }
+    ]
   }
 ])
 </script>

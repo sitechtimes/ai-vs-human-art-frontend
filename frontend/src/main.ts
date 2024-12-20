@@ -7,7 +7,7 @@ import './assets/index.css'
 import App from './App.vue'
 import router from './router'
 import PrimeVue from 'primevue/config'
-import Aura from '@primevue/themes/aura'
+import Aura from '@primevue/themes/aura' // me too I am aura yes. love all my fans iTs time
 
 const app = createApp(App)
 
