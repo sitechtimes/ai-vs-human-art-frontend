@@ -115,6 +115,7 @@ async function submit() {
       formData.append('type', type.value)
       formData.append('link', links.value[i])
       formData.append('image', files.value[i])
+      console.log(formData)
       const res = await imageStore.uploadImage(formData)
       if (res?.ok) {
         toast.add({
@@ -123,10 +124,10 @@ async function submit() {
           detail: 'Art successfully submitted.',
           life: 3000
         })
-        links.value = []
-        files.value = []
       } else throw new Error((await res.json()).error)
     }
+    links.value = []
+    files.value = []
   } catch (error) {
     console.error(error)
     toast.add({
