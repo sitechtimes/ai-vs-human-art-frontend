@@ -112,7 +112,7 @@ const signIn = async () => {
   try {
     errMsg.value = ''
     const res = await userStore.login(email.value, password.value)
-    if (userStore.currentUser) {
+    if (userStore.user) {
       console.log('success' + res)
       router.push({ path: '/' })
     }
