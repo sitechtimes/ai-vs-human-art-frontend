@@ -32,8 +32,9 @@ import Menubar from 'primevue/menubar'
 import { useUserStore } from '../stores/user'
 
 const userStore = useUserStore()
+const signedIn = computed(() => !!userStore.currentUser)
 
-const items = ref([
+const menuItems = ref([
   {
     route: '/',
     label: 'Home'
@@ -63,14 +64,18 @@ const items = ref([
         label: 'Acknowledgements'
       }
     ]
-  },
-  {
-    route: '/sign',
-    label: 'Sign In'
   }
 ])
 
-const signedIn = computed(() => !!userStore.currentUser)
+const items = computed(() => {
+  const itemsValue = [...menuItems.value]
+  if (!signedIn.value)
+    itemsValue.push({
+      route: '/sign',
+      label: 'Sign In'
+    })
+  return itemsValue
+})
 </script>
 
 <style scoped>

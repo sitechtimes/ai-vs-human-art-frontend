@@ -48,6 +48,9 @@ const router = createRouter({
       path: '/profile',
       name: 'profilepage',
       component: () => import('../views/ProfileView.vue')
+      path: '/signout',
+      name: 'signout',
+      component: () => import('../views/SignOutView.vue')
     },
     {
       path: '/:pathMatch(.*)*',
