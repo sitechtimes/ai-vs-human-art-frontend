@@ -5,11 +5,12 @@
         <img src="/fatfatpankocat-panko.gif" alt="placeholder logo" class="mr-0" />
       </template>
       <template #item="{ item, props }">
-        <router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
+        <button v-if="item.route" @click="router.push(item.route)">{{ item.label }}</button>
+        <!-- <router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
           <a :href="href" v-bind="props.action" @click="navigate">
             <span>{{ item.label }}</span>
           </a>
-        </router-link>
+        </router-link> -->
         <a v-else :href="item.url" :target="item.target" v-bind="props.action">
           <span>{{ item.label }}</span>
           <!-- put something here to indicate that this is a dropdown i don't know -->
@@ -23,7 +24,7 @@
             src="/nagi.jpg"
             alt="placeholder avatar"
             class="rounded-full cursor-pointer"
-            @click="router.push(`/user/${userStore.userid}`)"
+            @click="router.push(`/user/${userStore.userID}`)"
           />
         </div>
       </template>
@@ -37,8 +38,9 @@ import Menubar from 'primevue/menubar'
 import Button from 'primevue/button'
 import { useUserStore } from '../stores/user'
 import { useRouter } from 'vue-router'
-const signedIn = computed(() => !!userStore.user)
 const userStore = useUserStore()
+const signedIn = computed(() => !!userStore.user)
+console.log(userStore.user)
 const router = useRouter()
 
 const items = ref([

@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import { useUserStore } from '../stores/user'
-const userStore = useUserStore()
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -45,12 +44,13 @@ const router = createRouter({
     },
     {
       path: '/logout',
-      name: 'logout'
-    }
-    /* beforeEnter: async (to, from) => {
+      name: 'logout',
+      component: HomeView
+      /* async beforeEnter(to, from, next) {
         await userStore.logout
-        return { name: 'home' }
+        return next('/')
       } */
+    }
   ]
 })
 

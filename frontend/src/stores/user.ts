@@ -1,16 +1,18 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 export const useUserStore = defineStore('user', {
-  state: () => ({
-    user: null,
-    Id: null,
-    userid: null,
-    token: null,
-    isAuthenticated: false,
-    isAdmin: false
-  }),
+  state: () => {
+    return {
+      user: localStorage.getItem('user') !== null ? localStorage.getItem('user') : ref(''),
+      ID: localStorage.getItem('ID') !== null ? localStorage.getItem('Id') : ref(''),
+      userID: localStorage.getItem('userID') !== null ? localStorage.getItem('userID') : ref(''),
+      token: localStorage.getItem('token') !== null ? localStorage.getItem('token') : ref(''),
+      isAuthenticated: false,
+      isAdmin: false
+    }
+  },
   actions: {
-    register: async (username: string, email: string, password: string) => {
+    async register(username: string, email: string, password: string) {
       const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -26,16 +28,16 @@ export const useUserStore = defineStore('user', {
       }
       // console.log('success!! registered')
     },
-    getUser: async (id: Number) => {
+    async getUser(ID: Number) {
       const requestOptions = {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
       }
-      const res = await fetch(`http://localhost:3000/api/auth/users/${id}`, requestOptions)
+      const res = await fetch(`http://localhost:3000/api/auth/users/${ID}`, requestOptions)
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
       return res
     },
-    login: async (email: string, password: string) => {
+    async login(email: string, password: string) {
       const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -47,14 +49,21 @@ export const useUserStore = defineStore('user', {
       const res = await fetch('http://localhost:3000/api/auth/login', requestOptions)
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
       const data = await res.json()
-      this.user = data
-      this.token = data.user.refresh_token
-      this.Id = data.user._id
-      this.userID = data.user.userid
+      console.log(data)
+      if (data) {
+        this.user = data
+        this.token = data.user.refresh_token
+        this.ID = data.user._ID
+        this.userID = data.user.userID
+        localStorage.setItem('user', data)
+        localStorage.setItem('token', data.user.refresh_token)
+        localStorage.setItem('ID', data.user._id)
+        localStorage.setItem('userID', data.user.userid)
+      }
       return data
     },
 
-    auth: async () => {
+    async auth() {
       const requestOptions = {
         method: 'GET',
         headers: { Authorization: `Bearer ${localStorage.token}` }
@@ -69,7 +78,7 @@ export const useUserStore = defineStore('user', {
       }
     },
 
-    logout: async () => {
+    async logout() {
       const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' }
@@ -77,11 +86,14 @@ export const useUserStore = defineStore('user', {
       const res = await fetch('http://localhost:3000/api/auth/logout', requestOptions)
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
       const data = await res.json()
-      localStorage.setItem('currentUser', data)
+      localStorage.setItem('user', data)
       this.isAuthenticated = false
       this.token = null
-      this.Id = null
-      this.userid = null
+      this.ID = null
+      this.userID = null
+      localStorage.removeItem('token')
+      localStorage.removeItem('ID')
+      localStorage.removeItem('userID')
     }
   }
 })
