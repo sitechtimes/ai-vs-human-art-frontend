@@ -115,6 +115,7 @@ const signIn = async () => {
     if (userStore.user) {
       console.log('success' + res)
       router.push({ path: '/' })
+      window.location.reload()
     }
   } catch (error: any) {
     errMsg.value = error

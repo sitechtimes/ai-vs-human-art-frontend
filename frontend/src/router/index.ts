@@ -32,7 +32,14 @@ const router = createRouter({
     {
       path: '/sign',
       name: 'signupsignin',
-      component: () => import('../views/SignFormView.vue')
+      component: () => import('../views/SignFormView.vue'),
+      beforeEnter: (to, from, next) => {
+        if (localStorage.getItem('token')) {
+          next('/')
+        } else {
+          next()
+        }
+      }
     },
     {
       path: '/:pathMatch(.*)*',

@@ -5,7 +5,7 @@
         <img src="/fatfatpankocat-panko.gif" alt="placeholder logo" class="mr-0" />
       </template>
       <template #item="{ item, props }">
-        <button v-if="item.route" @click="router.push(item.route)">{{ item.label }}</button>
+        <button v-if="item.route" @click="item.route">{{ item.label }}</button>
         <!-- <router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
           <a :href="href" v-bind="props.action" @click="navigate">
             <span>{{ item.label }}</span>
@@ -16,7 +16,6 @@
           <!-- put something here to indicate that this is a dropdown i don't know -->
         </a>
       </template>
-      <Button v-if="userStore.isAuthenticated" @click="userStore.logout" label="Logout" />
       <template #end>
         <div class="flex items-center gap-0.5">
           <img
@@ -40,16 +39,24 @@ import { useUserStore } from '../stores/user'
 import { useRouter } from 'vue-router'
 const userStore = useUserStore()
 const signedIn = computed(() => !!userStore.user)
-console.log(userStore.user)
+console.log(signedIn.value)
 const router = useRouter()
 
+/* const globalRouter = function (route: String) {
+  router.push(`/${route}`)
+  router.go(0)
+} */
 const items = ref([
   {
-    route: '/',
+    route: function () {
+      router.push('/')
+    },
     label: 'Home'
   },
   {
-    route: '/game',
+    route: function () {
+      router.push('/game')
+    },
     label: 'Game'
   },
   {
@@ -57,28 +64,45 @@ const items = ref([
     label: 'About Us',
     items: [
       {
-        route: '/team',
+        route: function () {
+          router.push('/team')
+        },
         label: 'The Team'
       },
       {
-        route: '/submit',
+        route: function () {
+          router.push('/submit')
+        },
         label: 'Submit Your Art'
       },
       {
-        route: '/credits',
+        route: function () {
+          router.push('/credits')
+        },
         label: 'Acknowledgements'
       }
     ]
   },
   {
-    route: signedIn.value ? false : '/sign',
+    route: signedIn.value
+      ? false
+      : function () {
+          router.push('/sign')
+        },
     label: signedIn.value ? `Welcome, ${userStore.user}` : 'Sign in',
-    items: [
-      {
-        route: '/logout',
-        label: 'Log Out'
-      }
-    ]
+    items: !signedIn.value
+      ? null
+      : [
+          {
+            route: async function () {
+              await userStore.logout().then(() => {
+                router.push('/')
+                router.go(0)
+              })
+            },
+            label: 'Log Out'
+          }
+        ]
   }
 ])
 </script>
