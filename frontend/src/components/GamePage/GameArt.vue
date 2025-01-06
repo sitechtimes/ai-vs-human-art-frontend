@@ -1,12 +1,12 @@
 <template>
   <div class="flex flex-col gap-2 h-[70vh]">
     <div v-if="artPieces.length" class="flex flex-col items-center max-w-screen">
-      <div class="flex flex-row gap-2 w-full justify-between items-center max-h-20%]">
-        <div class="flex flex-col max-w-[40vw] items-center">
+      <div class="flex flex-row gap-x-10 max-w-full justify-between items-center">
+        <div class="flex flex-col items-center max-h-[70vh] max-w-[50vw]">
           <Image
             :src="artPieces[0]"
             alt=""
-            class="flex m-7 max-w-full h-[60vh]"
+            class="flex m-3 max-w-full object-cover"
             preview
             aria-label="Image 1"
           />
@@ -15,8 +15,13 @@
 
         <span>vs</span>
 
-        <div class="flex flex-col max-w-[40vw] items-center">
-          <Image :src="artPieces[1]" alt="" class="flex m-7" preview aria-label="Image 2" />
+        <div class="flex flex-col items-center max-h-[70vh] max-w-[50vw]">
+          <Image
+            :src="artPieces[1]"
+            class="flex m-3 max-w-full object-cover"
+            preview
+            aria-label="Image 2"
+          />
           <Button label="Image 2" class="flex self-center" @click="checkAnswer(1)"></Button>
         </div>
       </div>
