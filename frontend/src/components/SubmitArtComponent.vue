@@ -103,7 +103,7 @@ async function submit() {
       toast.add({
         severity: 'warn',
         summary: 'Warning',
-        detail: "You didn't attach a file.",
+        detail: "You didn't attach a file or link.",
         life: 3000
       })
       throw new Error('there is no file in ba sing se')
