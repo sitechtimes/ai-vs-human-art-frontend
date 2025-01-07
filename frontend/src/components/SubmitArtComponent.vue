@@ -1,11 +1,11 @@
 <template>
   <div>
     <form @submit.prevent="submit">
-      <Fieldset legend="Submit your own art!">
+      <Fieldset legend="Submit your own art!" class="flex place-self-center items-center w-4/5">
         <div class="flex flex-col gap-2">
-          <h2 class="text-xl">TOS</h2>
-          <ScrollPanel>
-            <p>{{ idol }}</p>
+          <h2 class="text-xl">TERMS OF SERVICE & FAQ</h2>
+          <ScrollPanel style="h-2/3">
+            <p>{{ tos }}</p>
           </ScrollPanel>
           <div class="flex items-center gap-2">
             <label id="tos-label">I confirm that I have read and agree to these terms.</label>
@@ -106,7 +106,7 @@ async function submit() {
         detail: "You didn't attach a file.",
         life: 3000
       })
-      throw new Error('there is no file in ba sing se')
+      throw new Error('there is no file')
     }
     console.log(links.value.length)
 
@@ -140,8 +140,8 @@ async function submit() {
   uploading.value = false
 }
 //obviously the most important part of the code...
-const idol =
-  'Muteki no egao de arasu media Shiritai sono himitsu misuteriasu Nuketeru toko sae kanojo no eria Kanpeki de usotsuki na kimi wa Tensaitekina aidoru sama Kyou nani tabeta? Suki na hon wa? Asobi ni iku nara doko ni iku no? Nanimo tabetenai, sore wa naisho Nani wo kikaretemo norari kurari Sou tantan to, dakedo sansan to Miesou de mienai himitsu wa mitsu no aji Are mo nai, nai, nai Kore mo nai, nai, nai Suki na taipu wa? Aite wa? Saa kotaete'
+const tos =
+  'Art: Against the Machine is an amateur project created by a group of teenage high-school students. Our primary goal is to educate and spread awareness about the issues regarding artificially generated images. Though the main focus of this project is art, the limitations of the problems regarding AI goes far and beyond just this one field. cont.'
 
 const addUpload = () => {
   pictures.value++
