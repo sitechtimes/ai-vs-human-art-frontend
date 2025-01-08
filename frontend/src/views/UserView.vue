@@ -25,6 +25,7 @@ import { useUserStore } from '../stores/user'
 const userStore = useUserStore()
 const userData = ref([]) // vue iteraates through dict
 onMounted(() => {
+  //put in App.vue to access globally, obv with no parameter access, maybe user cookie store access blah blah
   try {
     const res = userStore
       .getUser(Number(route.params.id))
