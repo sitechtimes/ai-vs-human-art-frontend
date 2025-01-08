@@ -1,28 +1,31 @@
 <template>
-  <div class="flex flex-col gap-2">
-    <div v-if="artPieces.length" class="flex flex-col items-center max-w-screen">
-      <div class="flex flex-row gap-2 w-full justify-between items-center max-h-20%]">
-        <div class="flex flex-col max-w-[40vw] items-center">
-          <Image :src="artPieces[0]" alt="" class="flex m-7" preview aria-label="Image 1" />
-          <Button label="Image 1" class="flex self-center" @click="checkAnswer(0)"></Button>
-        </div>
+  <div class="w-full">
+    <!-- <TabsComponent class="w-full mx-auto" /> -->
+    <div class="flex flex-col gap-2">
+      <div v-if="artPieces.length" class="flex flex-col items-center max-w-screen">
+        <div class="flex flex-row gap-2 w-full justify-between items-center max-h-20%]">
+          <div class="flex flex-col max-w-[40vw] items-center">
+            <Image :src="artPieces[0]" alt="" class="flex m-7" preview aria-label="Image 1" />
+            <Button label="Image 1" class="flex self-center" @click="checkAnswer(0)"></Button>
+          </div>
 
-        <span>vs</span>
+          <span>vs</span>
 
-        <div class="flex flex-col max-w-[40vw] items-center">
-          <Image :src="artPieces[1]" alt="" class="flex m-7" preview aria-label="Image 2" />
-          <Button label="Image 2" class="flex self-center" @click="checkAnswer(1)"></Button>
+          <div class="flex flex-col max-w-[40vw] items-center">
+            <Image :src="artPieces[1]" alt="" class="flex m-7" preview aria-label="Image 2" />
+            <Button label="Image 2" class="flex self-center" @click="checkAnswer(1)"></Button>
+          </div>
         </div>
-      </div>
-      <div>
-        <div id="result">
-          <!-- eslint-disable vue/no-v-model-argument -->
-          <Dialog v-model:visible="isVisible" modal>
-            <!-- i think v-model:visible is the only way to toggle visibility with this primevue component, so unfortunately were going to have to break an eslint rule -->
-            <p v-if="correct">Your answer is correct!</p>
-            <p v-else>Your answer is incorrect!</p>
-            <Button label="Try Again?" class="flex self-center" @click="getArt"></Button>
-          </Dialog>
+        <div>
+          <div id="result">
+            <!-- eslint-disable vue/no-v-model-argument -->
+            <Dialog v-model:visible="isVisible" modal>
+              <!-- i think v-model:visible is the only way to toggle visibility with this primevue component, so unfortunately were going to have to break an eslint rule -->
+              <p v-if="correct">Your answer is correct!</p>
+              <p v-else>Your answer is incorrect!</p>
+              <Button label="Try Again?" class="flex self-center" @click="getArt"></Button>
+            </Dialog>
+          </div>
         </div>
       </div>
     </div>
@@ -30,6 +33,7 @@
 </template>
 
 <script setup>
+// import TabsComponent from '../GamePage/TabsComponent.vue'
 import Button from 'primevue/button'
 import Dialog from 'primevue/dialog'
 import Image from 'primevue/image'

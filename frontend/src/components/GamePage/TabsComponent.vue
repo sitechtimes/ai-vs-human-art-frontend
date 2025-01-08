@@ -2,9 +2,14 @@
   <div id="themes">
     <Tabs value="0">
       <TabList class="tabs grid items-stretch w-full">
-        <Tab v-for="tab in tabs" :value="tab.value" :key="tab.value" class="justify-self-auto">{{
-          tab.name
-        }}</Tab>
+        <Tab
+          v-for="tab in tabs"
+          :value="tab.value"
+          :key="tab.value"
+          @click="getType()"
+          class="justify-self-auto"
+          >{{ tab.name }}</Tab
+        >
       </TabList>
     </Tabs>
   </div>
@@ -15,13 +20,17 @@ import Tabs from 'primevue/tabs'
 import TabList from 'primevue/tablist'
 import Tab from 'primevue/tab'
 
-const tabs = [
+import { ref } from 'vue'
+
+const tabs = ref([
   { name: 'Randomized', value: '0' },
   { name: 'Realistic', value: '1' },
   { name: 'Anime', value: '2' },
   { name: 'Photography', value: '3' },
   { name: 'Still Life', value: '4' }
-]
+])
+
+const getType = () => {}
 </script>
 
 <style scoped></style>
