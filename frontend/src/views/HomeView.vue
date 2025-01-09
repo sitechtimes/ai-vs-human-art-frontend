@@ -10,12 +10,13 @@ import HeaderComponent from '@/components/HeaderComponent.vue';
 <template>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <div class="bg-[url('/concept1animation.gif')] h-svh bg-cover bg-no-repeat md:bg-center static"> <!-- h = height -->
-        <div class="absolute bottom-0 left-0">
-            popup
+        <div class="absolute top-24 right-0 xl:right-32">
+            <img src="/logo_black_white.gif" class="mt-16 sm:mt-0 md:h-1/2">
         </div>
 
         <!-- <HeaderComponent class="opacity-0 hover:opacity-100"/> -->
         <div class="grid lg:grid-cols-12 grid-cols-6 space-y-9 "> 
+
             <Button as="router-link" placeholder="Overriden" 
             class="!transition duration-300 ease-in-out delay-300 -rotate-6 
             hover:!bg-black hover:scale-125 press-start-2p-regular lg:col-start-8 lg:col-span-4
