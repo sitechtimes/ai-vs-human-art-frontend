@@ -1,17 +1,21 @@
 <template>
   <div id="themes">
-    <Tabs value="0">
-      <TabList class="tabs grid items-stretch w-full">
-        <Tab
-          v-for="tab in tabs"
-          :value="tab.value"
-          :key="tab.value"
-          @click="getType()"
-          class="justify-self-auto"
-          >{{ tab.name }}</Tab
-        >
-      </TabList>
-    </Tabs>
+    <div class="min-w-max">
+      <div class="justify-items-center">
+        <Tabs value="0">
+          <TabList class="tabs grid items-stretch w-full">
+            <Tab
+              v-for="tab in tabs"
+              :value="tab.value"
+              :key="tab.value"
+              @click="getType(tab.value)"
+              class="justify-self-auto"
+              >{{ tab.name }}</Tab
+            >
+          </TabList>
+        </Tabs>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -20,7 +24,9 @@ import Tabs from 'primevue/tabs'
 import TabList from 'primevue/tablist'
 import Tab from 'primevue/tab'
 
-import { ref } from 'vue'
+import { ref, defineExpose } from 'vue'
+
+const type = ref<Number>()
 
 const tabs = ref([
   { name: 'Randomized', value: '0' },
@@ -30,7 +36,13 @@ const tabs = ref([
   { name: 'Still Life', value: '4' }
 ])
 
-const getType = () => {}
+const getType = (value: Number) => {
+  type.value = value
+}
+
+defineExpose({
+  type
+})
 </script>
 
 <style scoped></style>

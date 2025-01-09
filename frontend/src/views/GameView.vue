@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="w-full bg-[var(--p-content-background)]">
-      <TabsComponent class="w-min mx-auto" />
+      <!-- <TabsComponent class="w-min mx-auto" /> -->
     </div>
     <GameArt />
     <GameFooter />
@@ -10,7 +10,7 @@
 
 <script setup lang="ts">
 import GameFooter from '../components/GamePage/GameFooter.vue'
-import TabsComponent from '../components/GamePage/TabsComponent.vue'
+// import TabsComponent from '../components/GamePage/TabsComponent.vue'
 import GameArt from '../components/GamePage/GameArt.vue'
 </script>
 

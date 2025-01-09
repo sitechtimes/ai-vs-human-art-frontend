@@ -1,6 +1,8 @@
 <template>
   <div class="w-full">
-    <!-- <TabsComponent class="w-full mx-auto" /> -->
+    <div class="">
+      <TabsComponent ref="tabs" class="" />
+    </div>
     <div class="flex flex-col gap-2">
       <div v-if="artPieces.length" class="flex flex-col items-center max-w-screen">
         <div class="flex flex-row gap-2 w-full justify-between items-center max-h-20%]">
@@ -33,13 +35,15 @@
 </template>
 
 <script setup>
-// import TabsComponent from '../GamePage/TabsComponent.vue'
+import TabsComponent from '../GamePage/TabsComponent.vue'
 import Button from 'primevue/button'
 import Dialog from 'primevue/dialog'
 import Image from 'primevue/image'
 
 import { ref, onMounted } from 'vue'
 import { useArtStore } from '../../stores/art.ts'
+
+const type = ref()
 
 const artStore = useArtStore()
 const artPieces = ref([])
@@ -74,6 +78,10 @@ const checkAnswer = (e) => {
 onMounted(() => {
   getArt()
 })
+
+// onUpdated(() => {
+//   console.log(type.value)
+// })
 </script>
 
 <style scoped></style>
