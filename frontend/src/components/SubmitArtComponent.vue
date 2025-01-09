@@ -1,17 +1,17 @@
 <template>
   <div class="flex flex-col gap-4 items-center m-8">
     <form @submit.prevent="submit">
-        <div class="flex flex-col gap-2">
+        <div class="flex flex-col gap-4">
           <h2 class="text-xl underline self-center font-bold">TERMS OF SERVICE & FAQ</h2>
-          <ScrollPanel style="height: 200px;">
+          <ScrollPanel style="height: 30vw;">
             <p>{{ tos }}</p>
           </ScrollPanel>
           <div class="flex items-center gap-2 mt-4">
             <label id="tos-label">I confirm that I have read and agree to these terms.</label>
             <Checkbox ariaLabelledby="tos-label" v-model="checked" :binary="true" />
           </div>
-          <div class="flex flex-col gap-4 items-start me-60">
-            <div v-for="(picture, index) in pictures" :key="index">
+          <div class="flex flex-col lg:grid-cols-2 md:grid-cols-1 grid-cols-1 gap-4 items-start me-60">
+            <div v-for="(picture, index) in pictures" :key="index" class=" flex flex-col">
               <div class="flex items-center gap-2">
                 <label id="link-label">Link to art source:</label>
                 <InputText
@@ -29,16 +29,17 @@
                 @select="uploadedFile"
                 :multiple="isAdmin"
                 label="Upload an image"
+                class="mt-4"
                 />
+                <Button
+              :disabled="!ok"
+              type="submit"
+              :class=" `${checked ? 'cursor-pointer' : '!cursor-not-allowed'} mt-8 fixed`"
+              >Submit</Button
+            >
             </div>
             <Button v-if="isAdmin" :disabled="!checked" label="Upload More" @click="addUpload()" />
             <Toast />
-            <Button
-              :disabled="!ok"
-              type="submit"
-              :class="`${checked ? 'cursor-pointer' : '!cursor-not-allowed'}`"
-              >Submit</Button
-            >
           </div>
         </div>
     </form>
