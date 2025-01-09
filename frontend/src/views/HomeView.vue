@@ -11,7 +11,7 @@ import HeaderComponent from '@/components/HeaderComponent.vue';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <div class="bg-[url('/concept1animation.gif')] h-svh bg-cover bg-no-repeat md:bg-center static"> <!-- h = height -->
         <div class="absolute top-24 right-0 xl:right-32">
-            <img src="/logo_black_white.gif" class="mt-16 sm:mt-0 md:h-1/2">
+            <img src="/logo_black_white.gif" class="mt-16 sm:mt-0">
         </div>
 
         <!-- <HeaderComponent class="opacity-0 hover:opacity-100"/> -->
