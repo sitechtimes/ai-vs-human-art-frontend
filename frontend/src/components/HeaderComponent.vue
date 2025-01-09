@@ -2,7 +2,7 @@
   <div>
     <Menubar id="header" :model="items" class="!rounded-none">
       <template #start>
-        <img src="/fatfatpankocat-panko.gif" alt="placeholder logo" class="mr-0" />
+        <img src="/nagi.jpg" alt="placeholder logo" class="mr-0" />
       </template>
       <template #item="{ item, props }">
         <button v-if="item.route" @click="item.route">{{ item.label }}</button>
@@ -20,10 +20,10 @@
         <div class="flex items-center gap-0.5">
           <img
             v-if="signedIn"
-            src="/nagi.jpg"
+            :src="userData.profile_picture"
             alt="placeholder avatar"
             class="rounded-full cursor-pointer"
-            @click="router.push(`/user/${userStore.userID}`)"
+            @click="router.push(`/user/${userData.userID}`)"
           />
         </div>
       </template>
@@ -32,15 +32,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, inject } from 'vue'
 import Menubar from 'primevue/menubar'
 import Button from 'primevue/button'
-import { useUserStore } from '../stores/user'
 import { useRouter } from 'vue-router'
+const userData = inject('userData')
+console.log(userData)
+import { useUserStore } from '../stores/user'
 const userStore = useUserStore()
-const signedIn = computed(() => !!userStore.user)
-console.log(signedIn.value)
 const router = useRouter()
+const signedIn = computed(() => !!userData)
 
 /* const globalRouter = function (route: String) {
   router.push(`/${route}`)
@@ -89,7 +90,7 @@ const items = ref([
       : function () {
           router.push('/sign')
         },
-    label: signedIn.value ? `Welcome, ${userStore.user}` : 'Sign in',
+    label: signedIn.value ? `Welcome, ${userData?.username}` : 'Sign in',
     items: !signedIn.value
       ? null
       : [

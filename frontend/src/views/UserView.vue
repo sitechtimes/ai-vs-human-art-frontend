@@ -17,24 +17,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, inject } from 'vue'
 import Avatar from 'primevue/avatar'
 import { useRoute } from 'vue-router'
-const route = useRoute()
-import { useUserStore } from '../stores/user'
-const userStore = useUserStore()
-const userData = ref([]) // vue iteraates through dict
-onMounted(() => {
-  //put in App.vue to access globally, obv with no parameter access, maybe user cookie store access blah blah
-  try {
-    const res = userStore
-      .getUser(Number(route.params.id))
-      .then((response) => response.json())
-      .then((data) => (userData.value = data))
-  } catch (error) {
-    console.error(error)
-  }
-})
+const userData = inject('userData')
 </script>
 
 <style scoped></style>
