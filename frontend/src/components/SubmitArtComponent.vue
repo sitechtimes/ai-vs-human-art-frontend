@@ -3,7 +3,7 @@
     <form @submit.prevent="submit">
         <div class="flex flex-col gap-4">
           <h2 class="text-xl underline self-center font-bold">TERMS OF SERVICE & FAQ</h2>
-          <ScrollPanel style="height: 30vw;">
+          <ScrollPanel class="h-36 w-full">
             <p>{{ tos }}</p>
           </ScrollPanel>
           <div class="flex items-center gap-2 mt-4">
@@ -46,10 +46,10 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { computed, ref } from 'vue'
 import InputText from 'primevue/inputtext'
-import FileUpload, { type FileUploadSelectEvent } from 'primevue/fileupload'
+import FileUpload from 'primevue/fileupload'
 import Checkbox from 'primevue/checkbox'
 import ScrollPanel from 'primevue/scrollpanel'
 import Button from 'primevue/button'
@@ -62,7 +62,7 @@ const imageStore = useImageStore()
 const checked = ref(false)
 const type = ref('unscreened')
 const links = ref([''])
-const files = ref<File[]>([])
+const files = ref([])
 const uploading = ref(false)
 const ok = computed(() => checked.value && files.value && !uploading.value)
 const pictures = ref(1)
@@ -72,7 +72,7 @@ const userStore = useUserStore()
 const user = userStore.currentUser
 const isAdmin = userStore.isAdmin
 
-async function uploadedFile(e: FileUploadSelectEvent) {
+async function uploadedFile(e) {
   files.value.push(e.files[0])
   console.log(files.value)
   toast.add({
