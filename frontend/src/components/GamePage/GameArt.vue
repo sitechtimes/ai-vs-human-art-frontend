@@ -4,6 +4,7 @@
       <TabsComponent ref="tabs" class="" />
     </div>
     <div class="flex flex-col gap-2">
+      <!-- put dimensions in div and the images havea spoecific height + width and object fit cover or mandate image dimensions -->
       <div v-if="artPieces.length" class="flex flex-col items-center max-w-screen">
         <div class="flex flex-row gap-2 w-full justify-between items-center max-h-20%]">
           <div class="flex flex-col max-w-[40vw] items-center">
@@ -63,6 +64,7 @@ const getArt = async () => {
     answer.value = 0
   }
 }
+
 const checkAnswer = (e) => {
   if (e != answer.value) {
     correct.value = false
@@ -78,10 +80,10 @@ const checkAnswer = (e) => {
 onMounted(() => {
   getArt()
 })
-
-// onUpdated(() => {
-//   console.log(type.value)
-// })
 </script>
 
 <style scoped></style>
+
+
+<!-- overall tally of all users + one of individual users -->
+<!-- dmeographic data? -->

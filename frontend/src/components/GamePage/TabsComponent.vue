@@ -19,14 +19,14 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import Tabs from 'primevue/tabs'
 import TabList from 'primevue/tablist'
 import Tab from 'primevue/tab'
 
 import { ref, defineExpose } from 'vue'
 
-const type = ref<Number>()
+const type = ref(0)
 
 const tabs = ref([
   { name: 'Randomized', value: '0' },
@@ -36,7 +36,7 @@ const tabs = ref([
   { name: 'Still Life', value: '4' }
 ])
 
-const getType = (value: Number) => {
+const getType = (value) => {
   type.value = value
 }
 

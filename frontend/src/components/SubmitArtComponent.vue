@@ -47,7 +47,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup >
 import { computed, ref } from 'vue'
 import Fieldset from 'primevue/fieldset'
 import InputText from 'primevue/inputtext'
@@ -128,6 +128,7 @@ async function submit() {
     }
     links.value = []
     files.value = []
+    // backend route for bulk uploads to push ina rray
   } catch (error) {
     console.error(error)
     toast.add({
