@@ -23,7 +23,7 @@
             :src="userData.profile_picture"
             alt="placeholder avatar"
             class="rounded-full cursor-pointer"
-            @click="router.push(`/user/${userData.userID}`)"
+            @click="router.push(`/user/${userData.userid}`), router.go(0)"
           />
         </div>
       </template>
@@ -32,16 +32,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, inject } from 'vue'
+import { ref, computed, inject, onMounted } from 'vue'
 import Menubar from 'primevue/menubar'
 import Button from 'primevue/button'
 import { useRouter } from 'vue-router'
-const userData = inject('userData')
-console.log(userData)
 import { useUserStore } from '../stores/user'
 const userStore = useUserStore()
 const router = useRouter()
 const signedIn = computed(() => !!userData)
+const userData = inject('userData')
+console.log(userData)
 
 /* const globalRouter = function (route: String) {
   router.push(`/${route}`)
@@ -90,7 +90,7 @@ const items = ref([
       : function () {
           router.push('/sign')
         },
-    label: signedIn.value ? `Welcome, ${userData?.username}` : 'Sign in',
+    label: signedIn.value ? `Welcome, ${userData.username}` : 'Sign in',
     items: !signedIn.value
       ? null
       : [

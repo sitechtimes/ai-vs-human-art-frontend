@@ -5,22 +5,32 @@
       class="flex flex-row bg-primary-50 dark:bg-primary-950 p-7 m-7 rounded-md border border-primary-700 dark:border-primary-500"
     >
       <img
-        :src="userData['profile_picture']"
+        :src="FoundUserData['profile_picture']"
         alt="placeholder avatar"
         class="clip-circle w-1/2 h-1/2"
       />
       <div class="flex flex-col justify-center p-5">
-        <h3 class="text-3xl">{{ userData['username'] }}</h3>
+        <h3 class="text-3xl">{{ FoundUserData['username'] }}</h3>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, inject } from 'vue'
+import { ref, onMounted, inject, onBeforeMount } from 'vue'
 import Avatar from 'primevue/avatar'
 import { useRoute } from 'vue-router'
-const userData = inject('userData')
+const route = useRoute()
+import { useUserStore } from '../stores/user'
+const userStore = useUserStore()
+const FoundUserData = ref([])
+try {
+  const res = userStore
+    .getUser(Number(route.params.id))
+    .then((data) => (FoundUserData.value = data))
+} catch (error) {
+  console.error(error)
+}
 </script>
 
 <style scoped></style>

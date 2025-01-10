@@ -10,21 +10,18 @@ const userStore = useUserStore()
 const userData = ref([])
 /* onMounted(() => { */
 if (userStore.userID) {
+  console.log(userStore.userID)
   try {
-    const res = userStore
-      .getUser(Number(userStore.userID))
-      .then((response) => response.json())
-      .then((data) => (userData.value = data))
+    const res = userStore.getUser(Number(userStore.userID)).then((data) => (userData.value = data))
     provide('userData', userData)
   } catch (error) {
     console.error(error)
   }
 }
-console.log(userData)
 </script>
 <template>
   <div>
-    <HeaderComponent :userData="userData" />
+    <HeaderComponent />
     <!--should probaby put this on the home page; in app for now can we move this later when katherine is done or smth-->
     <ThemeComponent />
     <RouterView />

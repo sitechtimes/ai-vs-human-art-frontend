@@ -35,7 +35,8 @@ export const useUserStore = defineStore('user', {
       }
       const res = await fetch(`http://localhost:3000/api/auth/users/${ID}`, requestOptions)
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
-      return res
+      const data = await res.json()
+      return data
     },
     async login(email: string, password: string) {
       const requestOptions = {
