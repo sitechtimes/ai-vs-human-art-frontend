@@ -41,7 +41,6 @@ const userStore = useUserStore()
 const router = useRouter()
 const signedIn = computed(() => !!userData)
 const userData = inject('userData')
-console.log(userData)
 
 /* const globalRouter = function (route: String) {
   router.push(`/${route}`)
@@ -90,7 +89,7 @@ const items = ref([
       : function () {
           router.push('/sign')
         },
-    label: signedIn.value ? `Welcome, ${userData.username}` : 'Sign in',
+    label: signedIn.value ? `User Settings` : 'Sign in', // I can't seem to access UserData in script setup, so the much easier option is to just call this user options
     items: !signedIn.value
       ? null
       : [

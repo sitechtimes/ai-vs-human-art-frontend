@@ -67,6 +67,7 @@ const themeList = [
   'pink'
 ]
 // not including 'slate', 'gray', 'zinc', 'neutral', 'stone' because they are all just gray and boring
+// YOU'RE GRAY AND BORING!!!
 const hover = ref('')
 const selected = ref('')
 
@@ -83,7 +84,7 @@ const dark = ref(false)
 onMounted(async () => {
   if (localStorage.getItem('dark') === 'true') dark.value = true
   toggleDarkMode()
-  await null
+  await null // <-- lol
   /*
   theme WILL NOT APPLY on page load without the await above!!
   however, this is the least serious await ever.
