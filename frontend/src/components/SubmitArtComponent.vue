@@ -3,9 +3,7 @@
     <form @submit.prevent="submit">
         <div class="flex flex-col gap-4">
           <h2 class="text-xl underline self-center font-bold">TERMS OF SERVICE & FAQ</h2>
-          <ScrollPanel class="h-36 w-full">
-            <p>{{ tos }}</p>
-          </ScrollPanel>
+          <TermsService />
           <div class="flex items-center gap-2 mt-4">
             <label id="tos-label">I confirm that I have read and agree to these terms.</label>
             <Checkbox ariaLabelledby="tos-label" v-model="checked" :binary="true" />
@@ -51,12 +49,12 @@ import { computed, ref } from 'vue'
 import InputText from 'primevue/inputtext'
 import FileUpload from 'primevue/fileupload'
 import Checkbox from 'primevue/checkbox'
-import ScrollPanel from 'primevue/scrollpanel'
 import Button from 'primevue/button'
 import { useImageStore } from '../stores/images'
 import { useUserStore } from '../stores/user'
 import Toast from 'primevue/toast'
 import { useToast } from 'primevue/usetoast'
+import TermsService from './TermsService.vue'
 
 const imageStore = useImageStore()
 const checked = ref(false)
@@ -137,9 +135,6 @@ async function submit() {
   }
   uploading.value = false
 }
-//obviously the most important part of the code...
-const tos =
-  'Art: Against the Machine is an amateur project created by a group of teenage high-school students. Our primary goal is to educate and spread awareness about the issues regarding artificially generated images. Though the main focus of this project is art, the limitations of the problems regarding AI goes far and beyond just this one field. cont.Art: Against the Machine is an amateur project created by a group of teenage high-school students. Our primary goal is to educate and spread awareness about the issues regarding artificially generated images. Though the main focus of this project is art, the limitations of the problems regarding AI goes far and beyond just this one field. cont.Art: Against the Machine is an amateur project created by a group of teenage high-school students. Our primary goal is to educate and spread awareness about the issues regarding artificially generated images. Though the main focus of this project is art, the limitations of the problems regarding AI goes far and beyond just this one field. cont.Art: Against the Machine is an amateur project created by a group of teenage high-school students. Our primary goal is to educate and spread awareness about the issues regarding artificially generated images. Though the main focus of this project is art, the limitations of the problems regarding AI goes far and beyond just this one field. cont.Art: Against the Machine is an amateur project created by a group of teenage high-school students. Our primary goal is to educate and spread awareness about the issues regarding artificially generated images. Though the main focus of this project is art, the limitations of the problems regarding AI goes far and beyond just this one field. cont.Art: Against the Machine is an amateur project created by a group of teenage high-school students. Our primary goal is to educate and spread awareness about the issues regarding artificially generated images. Though the main focus of this project is art, the limitations of the problems regarding AI goes far and beyond just this one field. cont.Art: Against the Machine is an amateur project created by a group of teenage high-school students. Our primary goal is to educate and spread awareness about the issues regarding artificially generated images. Though the main focus of this project is art, the limitations of the problems regarding AI goes far and beyond just this one field. cont.Art: Against the Machine is an amateur project created by a group of teenage high-school students. Our primary goal is to educate and spread awareness about the issues regarding artificially generated images. Though the main focus of this project is art, the limitations of the problems regarding AI goes far and beyond just this one field. cont.'
 
 const addUpload = () => {
   pictures.value++
