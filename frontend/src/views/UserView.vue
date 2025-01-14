@@ -1,6 +1,6 @@
 <template>
   <!-- must add v-if for missing user -->
-  <div v-if="FoundUserData.value">
+  <div v-if="FoundUserData">
     <div
       class="flex flex-row bg-primary-50 dark:bg-primary-950 p-7 m-7 rounded-md border border-primary-700 dark:border-primary-500"
     >
@@ -28,11 +28,12 @@ import { useRoute } from 'vue-router'
 const route = useRoute()
 import { useUserStore } from '../stores/user'
 const userStore = useUserStore()
-const FoundUserData = ref<any>([])
+const FoundUserData = ref<any>()
 try {
   const res = userStore
     .getUser(Number(route.params.id))
     .then((data) => (FoundUserData.value = data))
+  console.log(FoundUserData)
 } catch (error) {
   console.error(error)
 }

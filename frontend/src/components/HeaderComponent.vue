@@ -23,7 +23,7 @@
             :src="userData.profile_picture"
             alt="placeholder avatar"
             class="rounded-full cursor-pointer"
-            @click="router.push(`/user/${userData.userid}`), router.go(0)"
+            @click="router.push(`/user/${userData.userid}`), router.go(1)"
           />
         </div>
       </template>
@@ -41,6 +41,7 @@ const userStore = useUserStore()
 const router = useRouter()
 const signedIn = computed(() => !!userData)
 const userData = inject('userData')
+console.log(userData)
 
 /* const globalRouter = function (route: String) {
   router.push(`/${route}`)
