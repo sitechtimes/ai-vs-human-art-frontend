@@ -10,7 +10,7 @@ import HeaderComponent from '@/components/HeaderComponent.vue'
 <template>
   <div>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <div class="bg-[url('/concept1animation.gif')] h-svh bg-cover bg-no-repeat md:bg-center static">
+    <div class="bg-[url('/concept1animation.gif')] h-svh bg-cover bg-no-repeat static">
       <div class="absolute top-24 right-0 xl:right-32">
         <img src="/logo_black_white.gif" class="mt-16 sm:mt-0" />
       </div>
@@ -20,7 +20,7 @@ import HeaderComponent from '@/components/HeaderComponent.vue'
         <Button
           as="router-link"
           placeholder="Overriden"
-          class="!outline !outline-3 !outline-primary-400 !transition duration-300 ease-in-out delay-300 -rotate-6 hover:!bg-primary-400 hover:scale-125 press-start-2p-regular hover:!outline-none lg:col-start-8 lg:col-span-4 col-start-2 col-span-4 h-12 text-center !rounded-none mt-96"
+          class="!bg-primary-400 !border-[3px] !border-primary-900 !textdark:!bg-primary-900 dark: !transition duration-300 ease-in-out delay-300 -rotate-6 hover:!bg-primary-400 hover:scale-125 press-start-2p-regular hover:!outline-none lg:col-start-8 lg:col-span-4 col-start-2 col-span-4 h-12 text-center !rounded-none mt-96"
           label="gaym"
           to="/game"
         />
