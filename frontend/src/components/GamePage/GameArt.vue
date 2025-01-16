@@ -7,6 +7,12 @@
             :src="artPieces[0]"
             alt=""
             class="flex h-auto object-cover"
+            :class="[
+              {
+                'portrait:visible': portraitBools[0].value,
+                'landscape:visible': !portraitBools[0].value
+              }
+            ]"
             preview
             aria-label="Image 1"
           />
@@ -19,6 +25,12 @@
           <Image
             :src="artPieces[1]"
             class="flex h-auto object-cover"
+            :class="[
+              {
+                'portrait:visible': portraitBools[1].value,
+                'landscape:visible': !portraitBools[1].value
+              }
+            ]"
             preview
             aria-label="Image 2"
           />
@@ -58,6 +70,10 @@ const getFromBackend = async () => {
   artPieces.value = [await artStore.getRandomArt('human'), await artStore.getRandomArt('ai')]
   // the only reason this is pulled out is so
 }
+const portraitBools = {
+  0: ref(true),
+  1: ref(true)
+}
 
 const getArt = async () => {
   isVisible.value = false
@@ -70,6 +86,16 @@ const getArt = async () => {
   } else if (Math.random() < 0.5) {
     artPieces.value.reverse()
     answer.value = 0
+  }
+  for (let i = 0; i < artPieces.value.length; i++) {
+    let getImg = new window.Image()
+    getImg.src = artPieces[i]
+    getImg.onload = () => {
+      if (getImg.width <= getImg.height) {
+        portraitBools[i].value = true
+        console.log(portraitBools[i].value)
+      }
+    }
   }
 }
 const checkAnswer = (e) => {
