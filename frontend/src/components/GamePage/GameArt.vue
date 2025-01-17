@@ -1,16 +1,16 @@
 <template>
   <div class="flex flex-col gap-2">
-    <div v-if="artPieces.length" class="flex flex-col items-center max-w-screen">
+    <div v-if="artPieces.length" class="flex flex-col items-center max-w-1/2">
       <div class="flex flex-row gap-x-10 m-[8vh] max-w-full justify-between items-center">
-        <div class="flex flex-col items-center h-[50vh] w-full">
+        <div class="flex flex-col items-center h-auto w-auto">
           <Image
             :src="artPieces[0]"
             alt=""
-            class="flex h-auto object-cover"
+            class="h-auto flex min-w-96 max-w-4/5"
             :class="[
               {
-                'portrait:visible': portraitBools[0].value,
-                'landscape:visible': !portraitBools[0].value
+                'max-w-max h-full overflow-hidden': portraitBools[0].value,
+                'max-w-max h-full overflow-hidden': !portraitBools[0].value
               }
             ]"
             preview
@@ -21,14 +21,14 @@
 
         <span>vs</span>
 
-        <div class="flex flex-col items-center h-[50vh] w-full">
+        <div class="flex flex-col items-center h-auto w-auto">
           <Image
             :src="artPieces[1]"
-            class="flex h-auto object-cover"
+            class="h-auto flex min-w-96 max-w-auto"
             :class="[
               {
-                'portrait:visible': portraitBools[1].value,
-                'landscape:visible': !portraitBools[1].value
+                'max-w-max h-full overflow-hidden': portraitBools[1].value,
+                'max-w-max h-full overflow-hidden': !portraitBools[1].value
               }
             ]"
             preview
