@@ -1,10 +1,6 @@
-<script setup lang="ts">
-import Button from 'primevue/button'
-
-//skibidi gyat ohio rizz rizz mr beast lunchly ksi "thick of it"
+<!-- //skibidi gyat ohio rizz rizz mr beast lunchly ksi "thick of it"
 //:3
-// - tina
-</script>
+// - tina -->
 
 <template>
   <div>
@@ -18,7 +14,7 @@ import Button from 'primevue/button'
           <Button
             as="router-link"
             placeholder="Overriden"
-            class="!border-[2px] !border-primary-200 dark:!border-primary-700 !transition duration-300 ease-in-out delay-300 -rotate-6 hover:!bg-primary-950 hover:scale-125 hover:(dark:&hover\:bg-primary-200) press-start-2p-regular lg:col-start-8 col-start-2 col-span-4 h-12 text-center !rounded-none mt-96"
+            class="!border-[2px] !border-primary-200 dark:!border-primary-700 !transition duration-300 ease-in-out delay-300 -rotate-6 dark:(hover:bg-primary-200) hover:!bg-primary-950 hover:scale-125 press-start-2p-regular lg:col-start-8 col-start-2 col-span-4 h-12 text-center !rounded-none mt-96"
             label="gaym"
             to="/game"
           />
@@ -26,7 +22,7 @@ import Button from 'primevue/button'
           <Button
             as="router-link"
             placeholder="Overriden"
-            class="!border-[3px] !border-primary-200 dark:!border-primary-700 !transition duration-300 ease-in-out delay-300 -rotate-6 hover:!bg-primary-950 hover:scale-125 dark:(hover:!bg-primary-600) press-start-2p-regular lg:col-start-8 col-start-2 col-span-4 h-12 text-center !rounded-none mt-96"
+            class="!border-[3px] !border-primary-200 dark:!border-primary-700 !transition duration-300 ease-in-out delay-300 -rotate-6 hover:(dark:bg-primary-200) hover:!bg-primary-950 hover:scale-125 press-start-2p-regular lg:col-start-8 col-start-2 col-span-4 h-12 text-center !rounded-none mt-96"
             label="submit your art"
             to="/submit"
           />
@@ -43,6 +39,10 @@ import Button from 'primevue/button'
     </div>
   </div>
 </template>
+
+<script setup>
+import Button from 'primevue/button'
+</script>
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
