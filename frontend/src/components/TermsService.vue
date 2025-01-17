@@ -1,9 +1,10 @@
 <template>
-    <div class="flex flex-col">
+    <div class="flex flex-col bg-primary-100 rounded p-4 self-center">
         <ScrollPanel class="h-36 w-full">
             <div v-for="text in tos" :key="text">
-                <p>{{ text.heading }}</p>
+                <p class="font-bold">{{ text.heading }}</p>
                 <p v-for="words in text.text" :key="words">{{ words }}</p>
+                <br />
             </div>
         </ScrollPanel>
         <p class="self-center">Scroll ↓</p>
