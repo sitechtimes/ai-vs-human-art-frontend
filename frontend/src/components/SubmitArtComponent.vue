@@ -3,43 +3,43 @@
     <h2 class="text-xl underline self-center font-bold">TERMS OF SERVICE & FAQ</h2>
     <TermsService />
     <form @submit.prevent="submit">
+      <div class="flex flex-col gap-4 items-center w-full">
+        <div class="flex items-center gap-2 mt-4">
+          <label id="tos-label">I confirm that I have read and agree to these terms.</label>
+          <Checkbox ariaLabelledby="tos-label" v-model="checked" :binary="true" />
+        </div>
         <div class="flex flex-col gap-4">
-          <div class="flex items-center gap-2 mt-4">
-            <label id="tos-label">I confirm that I have read and agree to these terms.</label>
-            <Checkbox ariaLabelledby="tos-label" v-model="checked" :binary="true" />
-          </div>
-          <div class="flex flex-col gap-4">
-            <div v-for="(picture, index) in pictures" :key="index" class="flex flex-col border-2 p-8 rounded-lg">
-              <div class="flex items-center gap-2">
-                <label id="link-label">Link to art source:</label>
-                <InputText
-                  aria-labelledby="link-label"
-                  v-model="links[index]"
-                  :disabled="!checked"
-                />
-              </div>
-              <FileUpload
-                mode="basic"
-                :disabled="!checked"
-                accept="image/*"
-                :maxFileSize="1024 * 1024 * 15"
-                customUpload
-                @select="uploadedFile"
-                :multiple="isAdmin"
-                label="Upload an image"
-                class="mt-4"
-                />
-                <Button
+          <div
+            v-for="(picture, index) in pictures"
+            :key="index"
+            class="flex flex-col border-2 p-8 rounded-lg"
+          >
+            <div class="flex items-center gap-2">
+              <label id="link-label">Link to art source:</label>
+              <InputText aria-labelledby="link-label" v-model="links[index]" :disabled="!checked" />
+            </div>
+            <FileUpload
+              mode="basic"
+              :disabled="!checked"
+              accept="image/*"
+              :maxFileSize="1024 * 1024 * 15"
+              customUpload
+              @select="uploadedFile"
+              :multiple="isAdmin"
+              label="Upload an image"
+              class="mt-4"
+            />
+            <Button
               :disabled="!ok"
               type="submit"
-              :class=" `${checked ? 'cursor-pointer' : '!cursor-not-allowed'} mt-8 fixed`"
+              :class="`${checked ? 'cursor-pointer' : '!cursor-not-allowed'} mt-8 fixed`"
               >Submit</Button
             >
-            </div>
-            <Button v-if="isAdmin" :disabled="!checked" label="Upload More" @click="addUpload()" />
-            <Toast />
           </div>
+          <Button v-if="isAdmin" :disabled="!checked" label="Upload More" @click="addUpload()" />
+          <Toast />
         </div>
+      </div>
     </form>
   </div>
 </template>
