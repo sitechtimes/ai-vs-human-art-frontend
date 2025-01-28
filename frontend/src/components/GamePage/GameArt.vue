@@ -1,52 +1,50 @@
 <template>
-  <div class="flex flex-col gap-2">
-    <div v-if="artPieces.length" class="flex flex-col items-center max-w-1/2">
-      <div class="flex flex-row gap-x-10 m-[8vh] max-w-full justify-between items-center">
-        <div class="flex flex-col items-center h-auto w-auto">
-          <Image
-            :src="artPieces[0]"
-            alt=""
-            class="h-auto flex min-w-96 max-w-4/5"
-            :class="[
-              {
-                'max-w-max h-full overflow-hidden': portraitBools[0].value,
-                'max-w-max h-full overflow-hidden': !portraitBools[0].value
-              }
-            ]"
-            preview
-            aria-label="Image 1"
-          />
-          <Button label="Image 1" class="flex self-center m-3" @click="checkAnswer(0)"></Button>
-        </div>
-
-        <span>vs</span>
-
-        <div class="flex flex-col items-center h-auto w-auto">
-          <Image
-            :src="artPieces[1]"
-            class="h-auto flex min-w-96 max-w-auto"
-            :class="[
-              {
-                'max-w-max h-full overflow-hidden': portraitBools[1].value,
-                'max-w-max h-full overflow-hidden': !portraitBools[1].value
-              }
-            ]"
-            preview
-            aria-label="Image 2"
-          />
-          <Button label="Image 2" class="flex self-center m-3" @click="checkAnswer(1)"></Button>
-        </div>
+  <div v-if="artPieces.length" class="flex flex-col items-center h-9/10">
+    <div class="flex flex-row gap-x-10 m-[8vh] max-w-full justify-between items-center">
+      <div class="flex flex-col items-center h-auto w-auto">
+        <Image
+          :src="artPieces[0]"
+          alt=""
+          class="h-auto flex min-w-96 max-w-4/5"
+          :class="[
+            {
+              'max-w-max h-full overflow-hidden': portraitBools[0].value,
+              'max-w-max h-full overflow-hidden': !portraitBools[0].value
+            }
+          ]"
+          preview
+          aria-label="Image 1"
+        />
+        <Button label="Image 1" class="flex self-center m-3" @click="checkAnswer(0)"></Button>
       </div>
-      <div>
-        <div id="result">
-          <!-- eslint-disable vue/no-v-model-argument -->
-          <Dialog v-model:visible="isVisible" modal>
-            <!-- i think v-model:visible is the only way to toggle visibility with this primevue component, so unfortunately were going to have to break an eslint rule -->
-            <p v-if="correct">Your answer is correct!</p>
-            <p v-else>Your answer is incorrect!</p>
-            <Button label="Try Again?" class="flex self-center" @click="getArt"></Button>
-          </Dialog>
-        </div>
+
+      <span>vs</span>
+
+      <div class="flex flex-col items-center h-auto w-auto">
+        <Image
+          :src="artPieces[1]"
+          class="h-auto flex min-w-96 max-w-auto"
+          :class="[
+            {
+              'max-w-max h-full overflow-hidden': portraitBools[1].value,
+              'max-w-max h-full overflow-hidden': !portraitBools[1].value
+            }
+          ]"
+          preview
+          aria-label="Image 2"
+        />
+        <Button label="Image 2" class="flex self-center m-3" @click="checkAnswer(1)"></Button>
+      </div>
+    </div>
+    <div>
+      <div id="result">
+        <!-- eslint-disable vue/no-v-model-argument -->
+        <Dialog v-model:visible="isVisible" modal>
+          <!-- i think v-model:visible is the only way to toggle visibility with this primevue component, so unfortunately were going to have to break an eslint rule -->
+          <p v-if="correct">Your answer is correct!</p>
+          <p v-else>Your answer is incorrect!</p>
+          <Button label="Try Again?" class="flex self-center" @click="getArt"></Button>
+        </Dialog>
       </div>
     </div>
   </div>
