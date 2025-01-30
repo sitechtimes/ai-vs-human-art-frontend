@@ -3,8 +3,10 @@
     <div class="w-full bg-[var(--p-content-background)]">
       <TabsComponent class="w-min mx-auto" />
     </div>
-    <GameArt />
-    <GameFooter />
+    <div>
+      <GameArt />
+      <GameFooter />
+    </div>
   </div>
 </template>
 

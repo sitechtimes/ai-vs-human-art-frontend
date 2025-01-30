@@ -1,11 +1,14 @@
 <template>
-  <div v-if="artPieces.length" class="flex flex-col items-center h-9/10">
-    <div class="flex flex-row gap-x-10 m-[8vh] max-w-full justify-between items-center">
-      <div class="flex flex-col items-center h-auto w-auto">
+  <div
+    v-if="artPieces.length"
+    class="flex flex-col items-center h-[calc(100%-a68px)] w-100% overflow-hidden"
+  >
+    <div class="flex flex-row gap-x-10 m-[8vh] justify-between items-center">
+      <div class="flex flex-col items-center max-h-8/10">
         <Image
           :src="artPieces[0]"
           alt=""
-          class="h-auto flex min-w-96 max-w-4/5"
+          class="h-3/5 w-full overflow-hidden"
           :class="[
             {
               'max-w-max h-full overflow-hidden': portraitBools[0].value,
@@ -20,10 +23,10 @@
 
       <span>vs</span>
 
-      <div class="flex flex-col items-center h-auto w-auto">
+      <div class="flex flex-col items-center max-h-8/10">
         <Image
           :src="artPieces[1]"
-          class="h-auto flex min-w-96 max-w-auto"
+          class="h-3/5 w-full overflow-hidden"
           :class="[
             {
               'max-w-max h-full overflow-hidden': portraitBools[1].value,
