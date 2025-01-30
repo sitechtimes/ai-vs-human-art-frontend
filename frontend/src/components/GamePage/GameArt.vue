@@ -1,6 +1,6 @@
 <template>
   <div class="w-full">
-    <div class="">
+    <div class="mt-[58px] w-q">
       <TabsComponent ref="tabs" class="" />
     </div>
     <div class="flex flex-col gap-2">
@@ -54,7 +54,12 @@ const correct = ref(false)
 
 const getArt = async () => {
   isVisible.value = false
-  artPieces.value = [await artStore.getRandomArt('human'), await artStore.getRandomArt('ai')]
+  if (type.value != '') {
+    artPieces.value = [await artStore.getRandomArt('human'), await artStore.getRandomArt('ai')]
+  } else {
+    artPieces.value = [await artStore.getRandomArt('human'), await artStore.getRandomArt('ai')]
+  }
+
   answer.value = 1
   if (artPieces.value.some((el) => el === null)) {
     alert('Failed to fetch art (boowomp)')
@@ -83,7 +88,6 @@ onMounted(() => {
 </script>
 
 <style scoped></style>
-
 
 <!-- overall tally of all users + one of individual users -->
 <!-- dmeographic data? -->

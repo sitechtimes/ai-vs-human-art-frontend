@@ -21,12 +21,10 @@
 </template>
 
 <script setup>
-defineProps<{
+defineProps({
   name: string,
   image: string,
   yap: string,
   color: string
-}>
+})
 </script>
-
-<style scoped></style>
