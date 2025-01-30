@@ -5,5 +5,8 @@ export default {
     extend: {}
   },
   plugins: [require('tailwindcss-primeui')],
-  darkMode: ['selector']
+  darkMode: ['selector'],
+  future: {
+    hoverOnlyWhenSupported: true
+  }
 }
