@@ -7,11 +7,11 @@
       <Checkbox ariaLabelledby="tos-label" v-model="checked" :binary="true" />
     </div>
     <form @submit.prevent="submit">
-      <div class="flex grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 items-center w-full">
+      <div class="flex flex-auto flex-col gap-4 items-center w-full">
         <div
           v-for="(picture, index) in pictures"
           :key="index"
-          class="flex flex-col border-2 p-8 rounded-lg"
+          class="flex flex-col border-2 p-8 rounded-lg w-auto"
         >
           <div class="items-center gap-2">
             <label id="link-label">Link to art source:</label>
