@@ -1,5 +1,7 @@
 <template>
-  <div class="grid grid-cols-1 lg:grid-cols-2 md:grid-cols-1 grid-cols-1 justify-items-center h-full">
+  <div
+    class="grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 grid-cols-1 justify-items-center h-full"
+  >
     <PersonComponent v-for="person in persons" :key="person.name" :person="person" />
   </div>
 </template>

@@ -13,8 +13,8 @@
           :key="index"
           class="flex flex-col border-2 p-8 rounded-lg w-auto"
         >
-          <div class="items-center gap-2">
-            <label id="link-label">Link to art source:</label>
+          <div class="items-center gap-2 mb-4">
+            <label id="link-label" class="mr-2">Link to art source:</label>
             <InputText aria-labelledby="link-label" v-model="links[index]" :disabled="!checked" />
           </div>
           <FileUpload
@@ -26,7 +26,7 @@
             @select="uploadedFile"
             :multiple="isAdmin"
             label="Upload an image"
-            class="mt-4"
+            class=""
           />
           <Button
             :disabled="!ok"
