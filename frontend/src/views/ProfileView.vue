@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="mt-[58px]">
     <Message severity="error" v-if="visible"
       >You are not
       <RouterLink to="/sign" class="underline">logged in</RouterLink>
