@@ -5,25 +5,25 @@
     >
   </div>
   <div v-if="user">
-    <div class="flex-col space-y-2.5 mt-6 w-96 place-items-center place-self-center space-y-8">
+    <div class="flex flex-col space-y-2.5 mt-6 w-full space-y-8 place-content-center">
       <div>
-        <Fieldset legend="Username" class="w-96">
+        <Fieldset legend="Username" class="w-2/3">
           <p>{{ username }}</p>
         </Fieldset>
       </div>
       <div>
-        <Fieldset legend="Email" class="w-96">
+        <Fieldset legend="Email" class="w-2/3">
           <p>{{ email }}</p>
         </Fieldset>
       </div>
     </div>
-    <div class="flex-col space-y-2.5 mt-8 w-96 place-self-center">
+    <div class="flex-col space-y-2.5 mt-8 w-2/3 place-self-center">
       <Button @click="logout" class="w-96">Log Out</Button>
     </div>
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { ref } from 'vue'
 import { useUserStore } from '../stores/user'
 import Fieldset from 'primevue/fieldset'
@@ -41,7 +41,7 @@ const logout = () => {
   router.push({ path: '/' })
 }
 
-function getData(user: { username: string; email: string }) {
+function getData(user) {
   console.log(user)
   username.value = user.username
   email.value = user.email
