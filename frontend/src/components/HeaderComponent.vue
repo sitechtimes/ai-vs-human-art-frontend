@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Menubar id="header" :model="items" class="!rounded-none">
+    <Menubar id="header" :model="items" class="!rounded-none !absolute w-full top-0">
       <template #start>
         <img src="/fatfatpankocat-panko.gif" alt="placeholder logo" class="mr-0" />
       </template>
@@ -48,17 +48,21 @@ const menuItems = ref([
   //   label: 'About Us'
   // },
   {
+    route: '/submit',
+    label: 'Submit Your Art'
+  },
+  {
     route: false,
-    label: 'About Us',
+    label: 'About',
     items: [
       {
         route: '/team',
         label: 'The Team'
       },
-      {
-        route: '/submit',
-        label: 'Submit Your Art'
-      },
+      // {
+      //   route: '/submit',
+      //   label: 'Submit Your Art'
+      // }, //make this into its own button
       {
         route: '/credits',
         label: 'Acknowledgements'
