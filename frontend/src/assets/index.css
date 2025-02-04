@@ -9,5 +9,7 @@
   @tailwind utilities;
 }
 * {
-  font-family: 'Montserrat';
+  font-family: 'Nunito', serif;
+  /* font-family: 'Fraunces', serif;
+  font-family: 'Space Grotesk', serif; */
 }
