@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=SUSE:wght@100..800&display=swap');
 @layer tailwind-base, primevue, tailwind-utilities;
 
 @layer tailwind-base {
@@ -9,6 +10,6 @@
   @tailwind utilities;
 }
 
-* {
-  font-family: 'Montserrat';
+:root {
+  font-family: 'Montserrat', sans-serif, 'Comic Sans MS';
 }
