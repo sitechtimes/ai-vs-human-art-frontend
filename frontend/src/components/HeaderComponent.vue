@@ -18,11 +18,7 @@
       <template #end>
         <div class="flex items-center gap-0.5" v-if="userStore.currentUser">
           <router-link to="/profile">
-            <img
-              src="https://www.apexmedicalresearch.com/wp-content/uploads/2020/06/anonymous-user-300x296.png"
-              alt="placeholder avatar"
-              class="rounded-full"
-            />
+            <img src="" alt="placeholder avatar" class="rounded-full" />
           </router-link>
         </div>
       </template>

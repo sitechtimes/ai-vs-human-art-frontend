@@ -1,24 +1,17 @@
 <template>
-  <div v-if="!user" class="justify-self-center">
-    <router-link to="/sign" class="underline underline-offset-2 text-2xl"
-      >You must be logged in to view this page</router-link
-    >
-  </div>
   <div v-if="user">
-    <div class="flex flex-col space-y-2.5 mt-6 w-full space-y-8 place-content-center">
+    <div class="flex flex-col space-y-2.5 mt-10 w-full space-y-8 items-center place-content-center">
       <div>
-        <Fieldset legend="Username" class="w-2/3">
+        <Fieldset legend="Username" class="w-80">
           <p>{{ username }}</p>
         </Fieldset>
       </div>
       <div>
-        <Fieldset legend="Email" class="w-2/3">
+        <Fieldset legend="Email" class="w-80">
           <p>{{ email }}</p>
         </Fieldset>
       </div>
-    </div>
-    <div class="flex-col space-y-2.5 mt-8 w-2/3 place-self-center">
-      <Button @click="logout" class="w-96">Log Out</Button>
+      <Button @click="logout" class="w-80">Log Out</Button>
     </div>
   </div>
 </template>
