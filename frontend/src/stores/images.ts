@@ -8,7 +8,7 @@ export const useImageStore = defineStore('image', () => {
       body: formData
     }
 
-    const res = await fetch('http://localhost:3000/items/upload', requestOptions)
+    const res = await fetch('http://localhost:8000/items/upload', requestOptions)
     if (!res.ok) console.error(`HTTP error! status: ${res.status}`)
     return res
   }

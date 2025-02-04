@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="mt-[65px]">
     <SubmitArtComponent />
   </div>
 </template>

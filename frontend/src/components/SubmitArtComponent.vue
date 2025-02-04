@@ -1,70 +1,64 @@
 <template>
-  <div>
+  <div class="flex flex-col gap-4 items-center m-8">
+    <h2 class="text-xl underline self-center font-bold">TERMS OF SERVICE & FAQ</h2>
+    <TermsService />
+    <div class="flex items-center gap-2 mt-4">
+      <label id="tos-label">I confirm that I have read and agree to these terms.</label>
+      <Checkbox ariaLabelledby="tos-label" v-model="checked" :binary="true" />
+    </div>
     <form @submit.prevent="submit">
-      <Fieldset legend="Submit your own art!">
-        <div class="flex flex-col gap-2">
-          <h2 class="text-xl">TOS</h2>
-          <ScrollPanel>
-            <p>{{ idol }}</p>
-          </ScrollPanel>
-          <div class="flex items-center gap-2">
-            <label id="tos-label">I confirm that I have read and agree to these terms.</label>
-            <Checkbox ariaLabelledby="tos-label" v-model="checked" :binary="true" />
+      <div class="flex flex-auto flex-col gap-4 items-center w-full">
+        <div
+          v-for="(picture, index) in pictures"
+          :key="index"
+          class="flex flex-col border-2 p-8 rounded-lg w-auto"
+        >
+          <div class="items-center gap-2 mb-4">
+            <label id="link-label" class="mr-2">Link to art source:</label>
+            <InputText aria-labelledby="link-label" v-model="links[index]" :disabled="!checked" />
           </div>
-          <div class="flex flex-col gap-4 items-start">
-            <div v-for="(picture, index) in pictures" :key="index">
-              <div class="flex items-center gap-2">
-                <label id="link-label">Link to art source:</label>
-                <InputText
-                  aria-labelledby="link-label"
-                  v-model="links[index]"
-                  :disabled="!checked"
-                />
-              </div>
-              <FileUpload
-                mode="basic"
-                :disabled="!checked"
-                accept="image/*"
-                :maxFileSize="1024 * 1024 * 15"
-                customUpload
-                @select="uploadedFile"
-                :multiple="isAdmin"
-                label="Upload an image"
-              />
-            </div>
-            <Button v-if="isAdmin" :disabled="!checked" label="Upload More" @click="addUpload()" />
-            <Toast />
-            <Button
-              :disabled="!ok"
-              type="submit"
-              :class="`${checked ? 'cursor-pointer' : '!cursor-not-allowed'}`"
-              >Submit</Button
-            >
-          </div>
+          <FileUpload
+            mode="basic"
+            :disabled="!checked"
+            accept="image/*"
+            :maxFileSize="1024 * 1024 * 15"
+            customUpload
+            @select="uploadedFile"
+            :multiple="isAdmin"
+            label="Upload an image"
+            class=""
+          />
+          <Button
+            :disabled="!ok"
+            type="submit"
+            :class="`${checked ? 'cursor-pointer' : '!cursor-not-allowed'} mt-8 fixed`"
+            >Submit</Button
+          >
         </div>
-      </Fieldset>
+        <Button v-if="isAdmin" :disabled="!checked" label="Upload More" @click="addUpload()" />
+        <Toast />
+      </div>
     </form>
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { computed, ref } from 'vue'
-import Fieldset from 'primevue/fieldset'
 import InputText from 'primevue/inputtext'
-import FileUpload, { type FileUploadSelectEvent } from 'primevue/fileupload'
+import FileUpload from 'primevue/fileupload'
 import Checkbox from 'primevue/checkbox'
-import ScrollPanel from 'primevue/scrollpanel'
 import Button from 'primevue/button'
 import { useImageStore } from '../stores/images'
 import { useUserStore } from '../stores/user'
 import Toast from 'primevue/toast'
 import { useToast } from 'primevue/usetoast'
+import TermsService from './TermsService.vue'
 
 const imageStore = useImageStore()
 const checked = ref(false)
 const type = ref('unscreened')
 const links = ref([''])
-const files = ref<File[]>([])
+const files = ref([])
 const uploading = ref(false)
 const ok = computed(() => checked.value && files.value && !uploading.value)
 const pictures = ref(1)
@@ -74,7 +68,7 @@ const userStore = useUserStore()
 const user = userStore.currentUser
 const isAdmin = userStore.isAdmin
 
-async function uploadedFile(e: FileUploadSelectEvent) {
+async function uploadedFile(e) {
   files.value.push(e.files[0])
   console.log(files.value)
   toast.add({
@@ -106,7 +100,7 @@ async function submit() {
         detail: "You didn't attach a file.",
         life: 3000
       })
-      throw new Error('there is no file in ba sing se')
+      throw new Error('there is no file')
     }
     console.log(links.value.length)
 
@@ -139,9 +133,6 @@ async function submit() {
   }
   uploading.value = false
 }
-//obviously the most important part of the code...
-const idol =
-  'Muteki no egao de arasu media Shiritai sono himitsu misuteriasu Nuketeru toko sae kanojo no eria Kanpeki de usotsuki na kimi wa Tensaitekina aidoru sama Kyou nani tabeta? Suki na hon wa? Asobi ni iku nara doko ni iku no? Nanimo tabetenai, sore wa naisho Nani wo kikaretemo norari kurari Sou tantan to, dakedo sansan to Miesou de mienai himitsu wa mitsu no aji Are mo nai, nai, nai Kore mo nai, nai, nai Suki na taipu wa? Aite wa? Saa kotaete'
 
 const addUpload = () => {
   pictures.value++
