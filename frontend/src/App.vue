@@ -5,7 +5,7 @@ import ThemeComponent from './components/ThemeComponent.vue'
 </script>
 
 <template>
-  <div class="font-display">
+  <div>
     <HeaderComponent />
     <!--should probaby put this on the home page; in app for now can we move this later when katherine is done or smth-->
     <ThemeComponent />
