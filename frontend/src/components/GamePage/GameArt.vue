@@ -41,16 +41,21 @@ import Button from 'primevue/button'
 import Dialog from 'primevue/dialog'
 import Image from 'primevue/image'
 
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUpdated } from 'vue'
 import { useArtStore } from '../../stores/art.ts'
 
-const type = ref()
+const tabs = ref(null)
+const type = ref(tabs.value.type)
 
 const artStore = useArtStore()
 const artPieces = ref([])
 const isVisible = ref(false)
 const answer = ref(1) // which one is ai
 const correct = ref(false)
+
+onUpdated(() => {
+  console.log(type.value)
+})
 
 const getArt = async () => {
   isVisible.value = false
