@@ -18,7 +18,7 @@
       <template #end>
         <div class="flex items-center gap-0.5" v-if="userStore.currentUser">
           <router-link to="/profile">
-            <img src="/userImg.svg" alt="placeholder avatar" class="rounded-full" />
+            <img src="/userImg.svg" alt="placeholder avatar" class="rounded-full dark:invert" />
           </router-link>
         </div>
       </template>
@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import Menubar from 'primevue/menubar'
 import { useUserStore } from '../stores/user'
 
@@ -70,7 +70,7 @@ const items = ref([
   }
 ])
 
-const signedIn = computed(() => !!userStore.currentUser)
+//const signedIn = computed(() => !!userStore.currentUser)
 </script>
 
 <style scoped>
