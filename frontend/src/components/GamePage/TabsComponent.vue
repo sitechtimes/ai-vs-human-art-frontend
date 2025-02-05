@@ -23,10 +23,9 @@
 import Tabs from 'primevue/tabs'
 import TabList from 'primevue/tablist'
 import Tab from 'primevue/tab'
-
+import { useArtStore } from '../../stores/art.ts'
 import { ref, defineExpose } from 'vue'
-
-const type = ref(0)
+const artStore = useArtStore()
 
 const tabs = ref([
   { name: 'Randomized', value: '0' },
@@ -37,12 +36,10 @@ const tabs = ref([
 ])
 
 const getType = (value) => {
-  type.value = value
+  for (let i = 0; i < tabs.value.length; i++) {
+    if (value == tabs.value[i].value) artStore.imageType = tabs.value[i].name
+  }
 }
-
-defineExpose({
-  type
-})
 </script>
 
 <style scoped></style>
