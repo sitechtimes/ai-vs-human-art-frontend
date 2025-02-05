@@ -18,7 +18,7 @@
       <template #end>
         <div class="flex items-center gap-0.5" v-if="userStore.currentUser">
           <router-link to="/profile">
-            <img src="" alt="placeholder avatar" class="rounded-full" />
+            <img src="/userImg.svg" alt="placeholder avatar" class="rounded-full" />
           </router-link>
         </div>
       </template>
