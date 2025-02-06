@@ -42,6 +42,7 @@ const getType = (value) => {
     }
   }
 }
+
 </script>
 
 <style scoped></style>

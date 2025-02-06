@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="mt-[58px]">
     <div class="mt-[5vh]">
       <h1 class="my-2 text-center text-4xl font-bold">Sign {{ signUp ? 'Up' : 'In' }}</h1>
       <div class="flex flex-col items-center text-base">
