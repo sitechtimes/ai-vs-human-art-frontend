@@ -1,7 +1,7 @@
 <template>
   <div class="w-full">
     <div class="mt-[58px] w-q">
-      <TabsComponent ref="tabs" class="" />
+      <TabsComponent class="" />
     </div>
     <div class="flex flex-col gap-2">
       <!-- put dimensions in div and the images havea spoecific height + width and object fit cover or mandate image dimensions -->
@@ -41,11 +41,8 @@ import Button from 'primevue/button'
 import Dialog from 'primevue/dialog'
 import Image from 'primevue/image'
 
-import { ref, onMounted, onUpdated } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useArtStore } from '../../stores/art.ts'
-
-const tabs = ref(null)
-const type = ref(tabs.value.type)
 
 const artStore = useArtStore()
 const artPieces = ref([])
@@ -53,17 +50,10 @@ const isVisible = ref(false)
 const answer = ref(1) // which one is ai
 const correct = ref(false)
 
-onUpdated(() => {
-  console.log(type.value)
-})
-
 const getArt = async () => {
   isVisible.value = false
-  if (type.value != '') {
-    artPieces.value = [await artStore.getRandomArt('human'), await artStore.getRandomArt('ai')]
-  } else {
-    artPieces.value = [await artStore.getRandomArt('human'), await artStore.getRandomArt('ai')]
-  }
+
+  artPieces.value = [await artStore.getRandomArt('human'), await artStore.getRandomArt('ai')]
 
   answer.value = 1
   if (artPieces.value.some((el) => el === null)) {

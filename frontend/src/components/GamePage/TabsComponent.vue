@@ -40,6 +40,7 @@ const getType = (value) => {
     if (value == tabs.value[i].value) artStore.imageType = tabs.value[i].name
   }
 }
+
 </script>
 
 <style scoped></style>
