@@ -12,7 +12,7 @@
           <p>{{ email }}</p>
         </Fieldset>
       </div>
-      <Button @click="logout" class="w-80">Log Out</Button>
+      <Button @click="logout" class="w-80" aria-label="Log Out">Log Out</Button>
     </div>
   </div>
 </template>
