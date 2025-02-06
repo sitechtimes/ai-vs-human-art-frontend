@@ -3,6 +3,7 @@ import { ref } from 'vue'
 
 export const useArtStore = defineStore('art', () => {
   const combo = ref(0)
+  const imageType = ref('')
   //actions
 
   /**
