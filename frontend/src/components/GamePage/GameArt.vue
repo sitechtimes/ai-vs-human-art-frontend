@@ -4,11 +4,11 @@
     class="flex flex-col items-center h-[calc(100%-a68px)] w-100% overflow-hidden"
   >
     <div class="flex flex-row gap-x-10 m-[8vh] justify-between items-center">
-      <div class="flex flex-col items-center max-h-8/10">
+      <div class="flex flex-col items-center">
         <Image
           :src="artPieces[0]"
           alt=""
-          class="h-3/5 w-full overflow-hidden"
+          class="max-h-[65vh] w-full overflow-hidden"
           :class="[
             {
               'max-w-max h-full overflow-hidden': portraitBools[0].value,
@@ -23,10 +23,10 @@
 
       <span>vs</span>
 
-      <div class="flex flex-col items-center max-h-8/10">
+      <div class="flex flex-col items-center">
         <Image
           :src="artPieces[1]"
-          class="h-3/5 w-full overflow-hidden"
+          class="max-h-[65vh] w-auto overflow-hidden"
           :class="[
             {
               'max-w-max h-full overflow-hidden': portraitBools[1].value,
