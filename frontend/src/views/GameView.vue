@@ -12,7 +12,6 @@
 import GameFooter from '../components/GamePage/GameFooter.vue'
 // import TabsComponent from '../components/GamePage/TabsComponent.vue'
 import GameArt from '../components/GamePage/GameArt.vue'
-
 </script>
 
 <style scoped></style>
