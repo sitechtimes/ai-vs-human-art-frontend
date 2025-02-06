@@ -37,7 +37,9 @@ const tabs = ref([
 
 const getType = (value) => {
   for (let i = 0; i < tabs.value.length; i++) {
-    if (value == tabs.value[i].value) artStore.imageType = tabs.value[i].name
+    if (value == tabs.value[i].value) {
+      artStore.imageType = tabs.value[i].name
+    }
   }
 }
 </script>

@@ -70,6 +70,30 @@ const getArt = async () => {
   }
 }
 
+const getArtByType = async (category) => {
+  isVisible.value = false
+  if (type.value != '') {
+    artPieces.value = [
+      await artStore.getArtByType('human', `${category}`),
+      await getArtByType('ai', `${category}`)
+    ]
+  } else {
+    artPieces.value = [
+      await artStore.getArtByType('human', `${category}`),
+      await getArtByType('ai', `${category}`)
+    ]
+  }
+
+  answer.value = 1
+  if (artPieces.value.some((el) => el === null)) {
+    alert('Failed to fetch art (boowomp)')
+    artPieces.value = []
+  } else if (Math.random() < 0.5) {
+    artPieces.value.reverse()
+    answer.value = 0
+  }
+}
+
 const checkAnswer = (e) => {
   if (e != answer.value) {
     correct.value = false
@@ -83,7 +107,15 @@ const checkAnswer = (e) => {
 }
 
 onMounted(() => {
-  getArt()
+  if (
+    !artStore.imageType ||
+    artStore.imageType.length == 0 ||
+    artStore.imageType.value == 'Randomized'
+  ) {
+    getArt()
+  } else {
+    getArtByType(artStore.imageType.value), console.log(artStore.imageType.value)
+  }
 })
 </script>
 

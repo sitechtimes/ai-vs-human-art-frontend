@@ -27,10 +27,32 @@ export const useArtStore = defineStore('art', () => {
       return null
     }
   }
+  const getArtByType = async (type: 'human' | 'ai', category: string) => {
+    const requestOptions = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+    try {
+      const res = await fetch(
+        `http://localhost:3000/items/tags/${category}?type=${type}`,
+        requestOptions
+      )
+      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
+      const data = await res.json()
+      return data
+    } catch (error) {
+      console.error('failed to fetch art 💥', error)
+      return null
+    }
+  }
   // tyr having backend send two images at once to prevent ispecg element network cheating
 
   return {
     combo,
-    getRandomArt
+    getRandomArt,
+    getArtByType,
+    imageType
   }
 })
