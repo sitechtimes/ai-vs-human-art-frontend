@@ -3,7 +3,7 @@ import { ref } from 'vue'
 
 export const useArtStore = defineStore('art', () => {
   const combo = ref(0)
-  const imageType = ref('')
+  const imageType = ref('Randomized')
   //actions
 
   /**
@@ -18,7 +18,7 @@ export const useArtStore = defineStore('art', () => {
       }
     }
     try {
-      const res = await fetch(`http://localhost:8000/items/random?type=${type}`, requestOptions)
+      const res = await fetch(`http://localhost:3000/items/random?type=${type}`, requestOptions)
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
       const data = await res.json()
       return data

@@ -3,7 +3,7 @@
     <div class="w-full bg-[var(--p-content-background)]">
       <!-- <TabsComponent class="w-min mx-auto" /> -->
     </div>
-    <GameArt :key="watched" />
+    <GameArt :watcher="watcher" />
     <GameFooter />
   </div>
 </template>
@@ -15,12 +15,16 @@ import GameArt from '../components/GamePage/GameArt.vue'
 import { watch, ref } from 'vue'
 import { useArtStore } from '../stores/art'
 const artStore = useArtStore()
-const watched = ref()
+const watcher = ref(1)
 console.log(artStore.imageType)
-/* watch(artStore.imageType, async () => {
-  watched.value = 1 // wil reload page
-  console.log(artStore.imageType)
-})  -- need to figure out how to force reload component*/
+watch(
+  // vue docs calls this "destructutred prop watching"
+  () => artStore.imageType,
+  async () => {
+    watcher.value++
+    console.log(artStore.imageType)
+  }
+)
 </script>
 
 <style scoped></style>

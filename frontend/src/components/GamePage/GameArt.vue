@@ -41,7 +41,7 @@ import Button from 'primevue/button'
 import Dialog from 'primevue/dialog'
 import Image from 'primevue/image'
 
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch, defineProps } from 'vue'
 import { useArtStore } from '../../stores/art.ts'
 
 const artStore = useArtStore()
@@ -50,10 +50,17 @@ const isVisible = ref(false)
 const answer = ref(1) // which one is ai
 const correct = ref(false)
 
-const getArt = async () => {
+const getArt = async (category) => {
   isVisible.value = false
-
-  artPieces.value = [await artStore.getRandomArt('human'), await artStore.getRandomArt('ai')]
+  console.log('h')
+  if (!category || category == 'Randomized') {
+    artPieces.value = [await artStore.getRandomArt('human'), await artStore.getRandomArt('ai')]
+  } else {
+    artPieces.value = [
+      await artStore.getArtByType('human', `${category}`),
+      await getArtByType('ai', `${category}`)
+    ]
+  }
 
   answer.value = 1
   if (artPieces.value.some((el) => el === null)) {
@@ -65,9 +72,9 @@ const getArt = async () => {
   }
 }
 
-const getArtByType = async (category) => {
+/* const getArtByType = async (category) => {
   isVisible.value = false
-  if (type.value != '') {
+  if (category.value != '') {
     artPieces.value = [
       await artStore.getArtByType('human', `${category}`),
       await getArtByType('ai', `${category}`)
@@ -87,7 +94,7 @@ const getArtByType = async (category) => {
     artPieces.value.reverse()
     answer.value = 0
   }
-}
+} */
 
 const checkAnswer = (e) => {
   if (e != answer.value) {
@@ -100,17 +107,8 @@ const checkAnswer = (e) => {
   }
   isVisible.value = !isVisible.value
 }
-
 onMounted(() => {
-  if (
-    !artStore.imageType ||
-    artStore.imageType.length == 0 ||
-    artStore.imageType.value == 'Randomized'
-  ) {
-    getArt()
-  } else {
-    getArtByType(artStore.imageType.value), console.log(artStore.imageType.value)
-  }
+  getArt(artStore.imageType)
 })
 </script>
 
