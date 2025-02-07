@@ -21,7 +21,7 @@ export const useUserStore = defineStore('user', () => {
       })
     }
     try {
-      const res = await fetch('http://localhost:3000/api/auth/register', requestOptions)
+      const res = await fetch('http://localhost:8000/api/auth/register', requestOptions)
       if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`)
       }
@@ -42,13 +42,17 @@ export const useUserStore = defineStore('user', () => {
       })
     }
     try {
-      const res = await fetch('http://localhost:3000/api/auth/login', requestOptions)
+      const res = await fetch('http://localhost:8000/api/auth/login', requestOptions)
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
       const data = await res.json()
       currentUser.value = data.user
+      if (data.user.role == 'admin') {
+        isAdmin.value = true
+      }
       // token.value = data.user.refresh_token
       token.value = data.access_token
       userId.value = data.user._id
+      // console.log('well noting for now')
       localStorage.setItem('token', token.value)
       localStorage.setItem('userId', userId.value)
       // console.log('success!! logged in')
@@ -63,7 +67,7 @@ export const useUserStore = defineStore('user', () => {
       headers: { Authorization: `Bearer ${localStorage.token}` }
     }
     try {
-      const res = await fetch('http://localhost:3000/api/auth', requestOptions)
+      const res = await fetch('http://localhost:8000/api/auth', requestOptions)
       if (!res.ok) throw new Error(`HTTP error status: ${res.status}`)
       isAuthenticated.value = true
     } catch (error) {
@@ -78,11 +82,12 @@ export const useUserStore = defineStore('user', () => {
       headers: { 'Content-Type': 'application/json' }
     }
     try {
-      const res = await fetch('http://localhost:3000/api/auth/logout', requestOptions)
+      const res = await fetch('http://localhost:8000/api/auth/logout', requestOptions)
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
       currentUser.value = null
       token.value = ''
       isAuthenticated.value = false
+      isAdmin.value = false
       localStorage.removeItem('token')
       localStorage.removeItem('userId')
     } catch (error) {

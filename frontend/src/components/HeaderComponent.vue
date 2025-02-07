@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Menubar id="header" :model="items" class="!rounded-none">
+    <Menubar id="header" :model="items" class="!rounded-none !absolute w-full top-0 z-40">
       <template #start>
         <img src="/fatfatpankocat-panko.gif" alt="placeholder logo" class="mr-0" />
       </template>
@@ -27,13 +27,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import Menubar from 'primevue/menubar'
 import { useUserStore } from '../stores/user'
 
 const userStore = useUserStore()
+const signedIn = computed(() => !!userStore.currentUser)
 
-const items = ref([
+const menuItems = ref([
   {
     route: '/',
     label: 'Home'
@@ -47,30 +48,38 @@ const items = ref([
   //   label: 'About Us'
   // },
   {
+    route: '/submit',
+    label: 'Submit Your Art'
+  },
+  {
     route: false,
-    label: 'About Us',
+    label: 'About',
     items: [
       {
         route: '/team',
         label: 'The Team'
       },
-      {
-        route: '/submit',
-        label: 'Submit Your Art'
-      },
+      // {
+      //   route: '/submit',
+      //   label: 'Submit Your Art'
+      // }, //make this into its own button
       {
         route: '/credits',
         label: 'Acknowledgements'
       }
     ]
-  },
-  {
-    route: '/sign',
-    label: 'Sign In'
   }
 ])
 
-//const signedIn = computed(() => !!userStore.currentUser)
+const items = computed(() => {
+  const itemsValue = [...menuItems.value]
+  if (!signedIn.value)
+    itemsValue.push({
+      route: '/sign',
+      label: 'Sign In'
+    })
+  return itemsValue
+})
 </script>
 
 <style scoped>

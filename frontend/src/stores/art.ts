@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
 export const useArtStore = defineStore('art', () => {
+  const combo = ref(0)
   //actions
 
   /**
@@ -16,18 +17,19 @@ export const useArtStore = defineStore('art', () => {
       }
     }
     try {
-      const res = await fetch(`http://localhost:3000/items/random?type=${type}`, requestOptions)
+      const res = await fetch(`http://localhost:8000/items/random?type=${type}`, requestOptions)
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
       const data = await res.json()
-      console.log(data)
       return data
     } catch (error) {
       console.error('failed to fetch art 💥', error)
       return null
     }
   }
+  // tyr having backend send two images at once to prevent ispecg element network cheating
 
   return {
+    combo,
     getRandomArt
   }
 })
