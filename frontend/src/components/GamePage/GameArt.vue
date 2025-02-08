@@ -1,25 +1,38 @@
 <template>
   <div
     v-if="artPieces.length"
-    class="flex flex-col items-center h-[calc(100%-a68px)] w-100% overflow-hidden"
+    class="flex flex-col items-center h-[calc(100%-68px)] w-100% overflow-hidden"
   >
-    <div class="flex flex-row gap-x-10 m-[5vh] justify-between items-center max-h-full max-w-full">
-      <div class="flex flex-col items-center max-w-[60vw] max-h-[70vh]">
-        <Image
-          :src="artPieces[0]"
-          alt=""
-          class="object-contain h-auto w-auto"
-          preview
-          aria-label="Image 1"
-        />
+    <div
+      class="flex flex-row gap-x-10 m-[5vh] justify-between items-center max-w-[50dvw] max-h-[70dvh]"
+    >
+      <div class="flex flex-col items-center">
+        <div class="flex overflow-hidden max-w-full max-h-full">
+          <Image
+            :src="artPieces[0]"
+            alt=""
+            class="object-contain justify-center"
+            preview
+            aria-label="Image 1"
+          />
+        </div>
+
         <Button label="Image 1" class="flex self-center m-3" @click="checkAnswer(0)"></Button>
       </div>
 
       <span>vs</span>
 
-      <div class="flex flex-col items-center max-w-[50vw] max-h-[70vh]">
-        <Image :src="artPieces[1]" class="overflow-hidden" preview aria-label="Image 2" />
-        <Button label="Image 2" class="flex self-center m-3" @click="checkAnswer(1)"></Button>
+      <div class="flex flex-col items-center">
+        <div class="flex overflow-hidden max-w-full max-h-full">
+          <Image
+            :src="artPieces[1]"
+            class="object-contain justify-center"
+            preview
+            aria-label="Image 2"
+          />
+        </div>
+
+        <Button label="Image 2" class="flex self-center m-3" @click="checkAnswer(0)"></Button>
       </div>
     </div>
     <div>

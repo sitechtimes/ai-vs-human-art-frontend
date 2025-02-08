@@ -21,7 +21,7 @@ export const useUserStore = defineStore('user', () => {
       })
     }
     try {
-      const res = await fetch('http://localhost:8000/api/auth/register', requestOptions)
+      const res = await fetch('http://localhost:3000/api/auth/register', requestOptions)
       if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`)
       }
@@ -42,7 +42,7 @@ export const useUserStore = defineStore('user', () => {
       })
     }
     try {
-      const res = await fetch('http://localhost:8000/api/auth/login', requestOptions)
+      const res = await fetch('http://localhost:3000/api/auth/login', requestOptions)
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
       const data = await res.json()
       currentUser.value = data.user
@@ -67,7 +67,7 @@ export const useUserStore = defineStore('user', () => {
       headers: { Authorization: `Bearer ${localStorage.token}` }
     }
     try {
-      const res = await fetch('http://localhost:8000/api/auth', requestOptions)
+      const res = await fetch('http://localhost:3000/api/auth', requestOptions)
       if (!res.ok) throw new Error(`HTTP error status: ${res.status}`)
       isAuthenticated.value = true
     } catch (error) {
@@ -82,7 +82,7 @@ export const useUserStore = defineStore('user', () => {
       headers: { 'Content-Type': 'application/json' }
     }
     try {
-      const res = await fetch('http://localhost:8000/api/auth/logout', requestOptions)
+      const res = await fetch('http://localhost:3000/api/auth/logout', requestOptions)
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
       currentUser.value = null
       token.value = ''
