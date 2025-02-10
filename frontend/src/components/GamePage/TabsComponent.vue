@@ -10,6 +10,7 @@
               :key="tab.value"
               @click="getType(tab.value)"
               class="justify-self-auto"
+              :disabled="tab.disabled"
               >{{ tab.name }}</Tab
             >
           </TabList>
@@ -24,15 +25,15 @@ import Tabs from 'primevue/tabs'
 import TabList from 'primevue/tablist'
 import Tab from 'primevue/tab'
 import { useArtStore } from '../../stores/art.ts'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 const artStore = useArtStore()
 
 const tabs = ref([
-  { name: 'Randomized', value: '0' },
-  { name: 'Realistic', value: '1' },
-  { name: 'Anime', value: '2' },
-  { name: 'Photography', value: '3' },
-  { name: 'Still Life', value: '4' }
+  { name: 'Randomized', value: '0', disabled: false },
+  { name: 'Realistic', value: '1', disabled: false },
+  { name: 'Anime', value: '2', disabled: false },
+  { name: 'Photography', value: '3', disabled: false },
+  { name: 'Still Life', value: '4', disabled: false }
 ])
 
 const getType = (value) => {
@@ -42,6 +43,17 @@ const getType = (value) => {
     }
   }
 }
+watch(
+  () => artStore.imageType,
+  async () => {
+    for (const tab of tabs.value) {
+      tab.disabled = true
+      setTimeout(() => {
+        tab.disabled = false
+      }, 5000)
+    }
+  }
+)
 </script>
 
 <style scoped></style>

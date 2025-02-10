@@ -3,7 +3,7 @@
     <div class="w-full bg-[var(--p-content-background)]">
       <!-- <TabsComponent class="w-min mx-auto" /> -->
     </div>
-    <GameArt :watcher="watcher" />
+    <GameArt />
     <GameFooter />
   </div>
 </template>
@@ -17,14 +17,6 @@ import { useArtStore } from '../stores/art'
 const artStore = useArtStore()
 const watcher = ref(1)
 console.log(artStore.imageType)
-watch(
-  // vue docs calls this "destructutred prop watching"
-  () => artStore.imageType,
-  async () => {
-    watcher.value++
-    console.log(artStore.imageType)
-  }
-)
 </script>
 
 <style scoped></style>

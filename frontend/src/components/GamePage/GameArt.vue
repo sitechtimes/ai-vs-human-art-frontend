@@ -52,13 +52,15 @@ const correct = ref(false)
 
 const getArt = async (category) => {
   isVisible.value = false
-  console.log('h')
   if (!category || category == 'Randomized') {
     artPieces.value = [await artStore.getRandomArt('human'), await artStore.getRandomArt('ai')]
   } else {
+    const humanArt = await artStore.getArtByType('human', `${category}`)
+    const aiArt = await artStore.getArtByType('ai', `${category}`)
+
     artPieces.value = [
-      await artStore.getArtByType('human', `${category}`),
-      await getArtByType('ai', `${category}`)
+      humanArt[Math.floor(Math.random() * humanArt.length)],
+      aiArt[Math.floor(Math.random() * aiArt.length)]
     ]
   }
 
@@ -110,6 +112,14 @@ const checkAnswer = (e) => {
 onMounted(() => {
   getArt(artStore.imageType)
 })
+watch(
+  // vue docs calls this "destructutred prop watching"
+  () => artStore.imageType,
+  async () => {
+    artPieces.value = []
+    getArt(artStore.imageType)
+  }
+)
 </script>
 
 <style scoped></style>
