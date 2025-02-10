@@ -6,6 +6,10 @@
       <label id="tos-label">I confirm that I have read and agree to these terms.</label>
       <Checkbox ariaLabelledby="tos-label" v-model="checked" :binary="true" />
     </div>
+    <div class="flex items-center gap-2 mb-4">
+      <label id="tos-label">I confirm that I have not uploaded any NSFW/suggestive, heavy gore, nor hateful content.</label>
+      <Checkbox ariaLabelledby="tos-label" v-model="checked" :binary="true" />
+    </div>
     <form @submit.prevent="submit">
       <div class="flex flex-auto flex-col gap-4 items-center w-full">
         <div
