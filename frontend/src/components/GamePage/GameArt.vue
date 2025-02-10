@@ -4,7 +4,7 @@
     class="flex flex-col items-center h-[calc(100%-68px)] w-100% overflow-hidden"
   >
     <div
-      class="flex flex-row gap-x-10 m-[5vh] justify-between items-center max-w-[50dvw] max-h-[70dvh]"
+      class="flex flex-row gap-x-10 m-[5vh] justify-between items-center max-w-[50dvw] max-h-[70dvh] md:max-w-[40dvh] sm:max-h-[90dvh]"
     >
       <div class="flex flex-col items-center">
         <div class="flex overflow-hidden max-w-full max-h-full">
