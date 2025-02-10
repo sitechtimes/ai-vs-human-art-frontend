@@ -12,7 +12,7 @@
       </template>
     </Toolbar>
     <!-- eslint-disable vue/no-v-model-argument -->
-    <Dialog v-model:visible="helpButton" header="Instructions / How to play" modal>
+    <Dialog v-model:visible="helpButton" header="Instructions / How to play" class="w-4/5" modal>
       <HelpInstructions />
     </Dialog>
   </div>

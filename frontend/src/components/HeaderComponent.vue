@@ -10,15 +10,15 @@
             <span>{{ item.label }}</span>
           </a>
         </router-link>
-        <a v-else :href="item.url" :target="item.target" v-bind="props.action">
-          <span>{{ item.label }}</span>
-          <!-- put something here to indicate that this is a dropdown i don't know -->
-        </a>
+        <!--         <a v-else :href="item.url" :target="item.target" v-bind="props.action">
+          <span class="ml-2">{{ item.label }}</span>
+           put something here to indicate that this is a dropdown i don't know
+        </a> -->
       </template>
       <template #end>
-        <div class="flex items-center gap-0.5">
+        <div class="flex items-center gap-0.5" v-if="userStore.currentUser">
           <router-link to="/profile">
-            <img v-if="signedIn" src="/nagi.jpg" alt="placeholder avatar" class="rounded-full" />
+            <img src="/userImg.svg" alt="placeholder avatar" class="rounded-full dark:invert" />
           </router-link>
         </div>
       </template>
