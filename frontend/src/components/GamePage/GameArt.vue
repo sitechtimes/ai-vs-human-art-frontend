@@ -4,7 +4,7 @@
     class="flex flex-col items-center h-[calc(100%-68px)] w-100% overflow-hidden"
   >
     <div
-      class="flex flex-row gap-x-10 m-[5vh] justify-between items-center max-w-[50dvw] max-h-[70dvh] md:max-w-[40dvh] sm:max-h-[90dvh]"
+      class="flex flex-row gap-x-10 m-[5vh] justify-between items-center max-w-[60dvw] max-h-[100dvh] md:max-w-[40dvh] lg:max-h-[70dvh]"
     >
       <div class="flex flex-col items-center">
         <div class="flex overflow-hidden max-w-full max-h-full">
@@ -90,7 +90,7 @@ const getArt = async () => {
     getImg.onload = () => {
       if (getImg.width <= getImg.height) {
         portraitBools[i].value = true
-        console.log(portraitBools[i].value)
+        // console.log(portraitBools[i].value)
       }
     }
   }
@@ -99,7 +99,7 @@ const checkAnswer = (e) => {
   if (e != answer.value) {
     correct.value = false
     artStore.combo = 0
-    console.log(artStore.combo)
+    // console.log(artStore.combo)
   } else {
     correct.value = true
     artStore.combo++

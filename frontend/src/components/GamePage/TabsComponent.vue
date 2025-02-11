@@ -2,9 +2,13 @@
   <div id="themes">
     <Tabs value="0" class="w-full">
       <TabList class="flex flex-wrap">
-        <Tab v-for="tab in tabs" :value="tab.value" :key="tab.value" class="sm:text-[2.5vw]">{{
-          tab.name
-        }}</Tab>
+        <Tab
+          v-for="tab in tabs"
+          :value="tab.value"
+          :key="tab.value"
+          class="text-[2vw] md:text-[1vw] lg:text-[1vw]"
+          >{{ tab.name }}</Tab
+        >
       </TabList>
     </Tabs>
   </div>

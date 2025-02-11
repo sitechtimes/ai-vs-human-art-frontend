@@ -17,7 +17,10 @@ export const useArtStore = defineStore('art', () => {
       }
     }
     try {
-      const res = await fetch(`http://localhost:8000/items/random?type=${type}`, requestOptions)
+      const res = await fetch(
+        `${import.meta.env.VITE_ADDRESS}/items/random?type=${type}`,
+        requestOptions
+      )
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
       const data = await res.json()
       return data
