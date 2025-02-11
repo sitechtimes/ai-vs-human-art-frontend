@@ -8,7 +8,7 @@
         <p>COMBO: {{ artStore.combo }}</p>
       </template>
       <template #end>
-        <Button @click="toggleHelpButton">Help</Button>
+        <Button @click="toggleHelpButton">Instructions</Button>
       </template>
     </Toolbar>
     <!-- eslint-disable vue/no-v-model-argument -->
