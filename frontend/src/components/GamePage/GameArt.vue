@@ -26,7 +26,11 @@
               <!-- i think v-model:visible is the only way to toggle visibility with this primevue component, so unfortunately were going to have to break an eslint rule -->
               <p v-if="correct">Your answer is correct!</p>
               <p v-else>Your answer is incorrect!</p>
-              <Button label="Try Again?" class="flex self-center" @click="getArt"></Button>
+              <Button
+                label="Try Again?"
+                class="flex self-center"
+                @click="getArt(humanArt, aiArt)"
+              ></Button>
             </Dialog>
           </div>
         </div>
@@ -49,54 +53,35 @@ const artPieces = ref([])
 const isVisible = ref(false)
 const answer = ref(1) // which one is ai
 const correct = ref(false)
-
-const getArt = async (category) => {
-  isVisible.value = false
+const humanArt = ref([])
+const aiArt = ref([])
+const populateDictionaries = async (category) => {
   if (!category || category == 'Randomized') {
-    artPieces.value = [await artStore.getRandomArt('human'), await artStore.getRandomArt('ai')]
+    humanArt.value = await artStore.getAllArt('human')
+    aiArt.value = await artStore.getAllArt('ai')
   } else {
-    const humanArt = await artStore.getArtByType('human', `${category}`)
-    const aiArt = await artStore.getArtByType('ai', `${category}`)
-
-    artPieces.value = [
-      humanArt[Math.floor(Math.random() * humanArt.length)],
-      aiArt[Math.floor(Math.random() * aiArt.length)]
-    ]
+    humanArt.value = await artStore.getArtByType('human', `${category}`)
+    aiArt.value = await artStore.getArtByType('ai', `${category}`)
   }
-
-  answer.value = 1
-  if (artPieces.value.some((el) => el === null)) {
-    alert('Failed to fetch art (boowomp)')
-    artPieces.value = []
-  } else if (Math.random() < 0.5) {
-    artPieces.value.reverse()
-    answer.value = 0
+}
+const getArt = (humanDict, aiDict) => {
+  isVisible.value = false
+  if (humanDict.value && aiDict.value) {
+    artPieces.value = [
+      humanDict.value[Math.floor(Math.random() * humanDict.value.length)],
+      aiDict.value[Math.floor(Math.random() * aiDict.value.length)]
+    ]
   }
 }
 
-/* const getArtByType = async (category) => {
-  isVisible.value = false
-  if (category.value != '') {
-    artPieces.value = [
-      await artStore.getArtByType('human', `${category}`),
-      await getArtByType('ai', `${category}`)
-    ]
-  } else {
-    artPieces.value = [
-      await artStore.getArtByType('human', `${category}`),
-      await getArtByType('ai', `${category}`)
-    ]
-  }
-
-  answer.value = 1
-  if (artPieces.value.some((el) => el === null)) {
-    alert('Failed to fetch art (boowomp)')
-    artPieces.value = []
-  } else if (Math.random() < 0.5) {
-    artPieces.value.reverse()
-    answer.value = 0
-  }
-} */
+answer.value = 1
+if (artPieces.value.some((el) => el === null)) {
+  alert('Failed to fetch art (boowomp)')
+  artPieces.value = []
+} else if (Math.random() < 0.5) {
+  artPieces.value.reverse()
+  answer.value = 0
+}
 
 const checkAnswer = (e) => {
   if (e != answer.value) {
@@ -109,15 +94,17 @@ const checkAnswer = (e) => {
   }
   isVisible.value = !isVisible.value
 }
-onMounted(() => {
-  getArt(artStore.imageType)
+onMounted(async () => {
+  await populateDictionaries()
+  getArt(humanArt, aiArt)
 })
 watch(
   // vue docs calls this "destructutred prop watching"
   () => artStore.imageType,
   async () => {
-    artPieces.value = []
-    getArt(artStore.imageType)
+    artPieces.value = [] // clears art
+    await populateDictionaries(artStore.imageType) // fills dictionaries with new art
+    getArt(humanArt, aiArt) // chooses random art from new dictionaries
   }
 )
 </script>
