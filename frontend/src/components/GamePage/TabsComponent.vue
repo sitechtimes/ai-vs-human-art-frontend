@@ -6,7 +6,7 @@
           v-for="tab in tabs"
           :value="tab.value"
           :key="tab.value"
-          class="text-[2vw] md:text-[1vw] lg:text-[1vw]"
+          class="tab text-xs md:text-sm lg:text-base"
           >{{ tab.name }}</Tab
         >
       </TabList>
@@ -28,4 +28,18 @@ const tabs = [
 ]
 </script>
 
-<style scoped></style>
+<style scoped>
+@media (min-width: 768px) {
+  .tab {
+    font-size: 0.875rem; /* 14px */
+    line-height: 1.25rem; /* 20px */
+  }
+}
+
+@media (min-width: 1024px) {
+  .tab {
+    font-size: 1rem; /* 16px */
+    line-height: 1.5rem; /* 24px */
+  }
+}
+</style>
