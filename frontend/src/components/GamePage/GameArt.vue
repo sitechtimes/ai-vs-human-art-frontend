@@ -26,11 +26,7 @@
               <!-- i think v-model:visible is the only way to toggle visibility with this primevue component, so unfortunately were going to have to break an eslint rule -->
               <p v-if="correct">Your answer is correct!</p>
               <p v-else>Your answer is incorrect!</p>
-              <Button
-                label="Try Again?"
-                class="flex self-center"
-                @click="getArt(humanArt, aiArt)"
-              ></Button>
+              <Button label="Try Again?" class="flex self-center" @click="getArt()"></Button>
             </Dialog>
           </div>
         </div>
@@ -56,6 +52,7 @@ const correct = ref(false)
 const humanArt = ref([])
 const aiArt = ref([])
 const populateDictionaries = async (category) => {
+  artPieces.value = []
   if (!category || category == 'Randomized') {
     humanArt.value = await artStore.getAllArt('human')
     aiArt.value = await artStore.getAllArt('ai')
@@ -64,14 +61,13 @@ const populateDictionaries = async (category) => {
     aiArt.value = await artStore.getArtByType('ai', `${category}`)
   }
 }
-const getArt = (humanDict, aiDict) => {
+const getArt = () => {
   isVisible.value = false
-  if (humanDict.value && aiDict.value) {
-    artPieces.value = [
-      humanDict.value[Math.floor(Math.random() * humanDict.value.length)],
-      aiDict.value[Math.floor(Math.random() * aiDict.value.length)]
-    ]
-  }
+  artPieces.value = []
+  artPieces.value = [
+    humanArt.value[Math.floor(Math.random() * humanArt.value.length)],
+    aiArt.value[Math.floor(Math.random() * aiArt.value.length)]
+  ]
 }
 
 answer.value = 1
@@ -96,12 +92,12 @@ const checkAnswer = (e) => {
 }
 onMounted(async () => {
   await populateDictionaries()
-  getArt(humanArt, aiArt)
+  getArt()
 })
 watch(
-  // vue docs calls this "destructutred prop watching"
   () => artStore.imageType,
   async () => {
+    //async (newType) => { .. if (artStore.imageType !== newType) {
     artPieces.value = [] // clears art
     await populateDictionaries(artStore.imageType) // fills dictionaries with new art
     getArt(humanArt, aiArt) // chooses random art from new dictionaries
