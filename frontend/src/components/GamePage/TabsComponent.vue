@@ -1,14 +1,10 @@
 <template>
-  <div id="themes">
-    <Tabs value="0" class="w-full">
+  <div id="themes m-0">
+    <Tabs value="0" class="w-screen">
       <TabList class="flex flex-wrap">
-        <Tab
-          v-for="tab in tabs"
-          :value="tab.value"
-          :key="tab.value"
-          class="tab text-xs md:text-sm lg:text-base"
-          >{{ tab.name }}</Tab
-        >
+        <Tab v-for="tab in tabs" :value="tab.value" :key="tab.value" class="tab text-[2.3vw]">{{
+          tab.name
+        }}</Tab>
       </TabList>
     </Tabs>
   </div>
