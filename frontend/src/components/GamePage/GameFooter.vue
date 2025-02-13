@@ -1,6 +1,6 @@
 <template>
   <div class="m-0">
-    <Toolbar class="!rounded-none !absolute w-screen m-0 !bottom-0 right-0 left-0 z-40">
+    <Toolbar class="!rounded-none !fixed w-screen m-0 !bottom-0 right-0 left-0 z-40">
       <template #start>
         <Button as="router-link" label="Router" to="/" id="game-home-button">Home</Button>
       </template>

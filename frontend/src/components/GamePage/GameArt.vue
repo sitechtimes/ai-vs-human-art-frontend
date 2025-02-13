@@ -1,7 +1,7 @@
 <template>
   <div v-if="artPieces.length" class="flex flex-col items-center h-[calc(100%-68px)] w-full">
     <div
-      class="flex flex-row gap-10 m-[5vh] justify-between items-center lg:max-h-[70dvh] max-w-full md:max-w-[60vw]"
+      class="flex flex-col gap-10 m-[5vh] lg:mt-[9vh] mb-6vh justify-between items-center lg:max-h-[60dvh] lg:max-w-[50dvw] max-w-full md:max-w-[70dvw] md:flex-row"
     >
       <div class="flex flex-col items-center">
         <div class="flex overflow-hidden">
