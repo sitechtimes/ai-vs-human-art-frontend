@@ -8,7 +8,7 @@
     </div>
     <div class="flex items-center gap-2 mb-4">
       <label id="tos-label">I confirm that I have not uploaded any NSFW/suggestive, heavy gore, nor hateful content.</label>
-      <Checkbox ariaLabelledby="tos-label" v-model="checked" :binary="true" />
+      <Checkbox ariaLabelledby="tos-label" v-model="checked2" :binary="true" />
     </div>
     <form @submit.prevent="submit">
       <div class="flex flex-auto flex-col gap-4 items-center w-full">
@@ -19,11 +19,11 @@
         >
           <div class="items-center gap-2 mb-4">
             <label id="link-label" class="mr-2">Link to art source:</label>
-            <InputText aria-labelledby="link-label" v-model="links[index]" :disabled="!checked" />
+            <InputText aria-labelledby="link-label" v-model="links[index]" :disabled="!ok" />
           </div>
           <FileUpload
             mode="basic"
-            :disabled="!checked"
+            :disabled="!ok"
             accept="image/*"
             :maxFileSize="1024 * 1024 * 15"
             customUpload
@@ -39,7 +39,7 @@
             >Submit</Button
           >
         </div>
-        <Button v-if="isAdmin" :disabled="!checked" label="Upload More" @click="addUpload()" />
+        <Button v-if="isAdmin" :disabled="!ok" label="Upload More" @click="addUpload()" />
         <Toast />
       </div>
     </form>
@@ -59,12 +59,14 @@ import { useToast } from 'primevue/usetoast'
 import TermsService from './TermsService.vue'
 
 const imageStore = useImageStore()
+
 const checked = ref(false)
+const checked2 = ref(false)
 const type = ref('unscreened')
 const links = ref([''])
 const files = ref([])
 const uploading = ref(false)
-const ok = computed(() => checked.value && files.value && !uploading.value)
+const ok = computed(() => checked.value && checked2.value && files.value && !uploading.value)
 const pictures = ref(1)
 const toast = useToast()
 
