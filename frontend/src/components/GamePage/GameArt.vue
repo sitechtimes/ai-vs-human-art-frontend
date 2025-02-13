@@ -107,9 +107,9 @@ const checkAnswer = (e) => {
   isVisible.value = !isVisible.value
 }
 
-// onMounted(() => {
-//   getArt()
-// })
+onMounted(() => {
+  getArt()
+})
 </script>
 
 <style scoped></style>
