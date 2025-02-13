@@ -1,10 +1,12 @@
 <template>
   <div class="">
     <div class="w-full bg-[var(--p-content-background)] mt-[58px]">
-      <TabsComponent class="w-min mx-auto" />
+      <TabsComponent class="max-w-screen w-full" />
     </div>
-    <GameArt />
-    <GameFooter />
+    <div>
+      <GameArt />
+      <GameFooter />
+    </div>
   </div>
 </template>
 
