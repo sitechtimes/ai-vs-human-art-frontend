@@ -1,13 +1,10 @@
 <template>
-  <div
-    v-if="artPieces.length"
-    class="flex flex-col items-center h-[calc(100%-68px)] w-100% overflow-hidden"
-  >
+  <div v-if="artPieces.length" class="flex flex-col items-center h-[calc(100%-68px)] w-full">
     <div
-      class="flex flex-row gap-x-10 m-[5vh] justify-between items-center max-w-[60dvw] max-h-[100dvh] md:max-w-[40dvh] lg:max-h-[70dvh]"
+      class="flex flex-row gap-10 m-[5vh] justify-between items-center lg:max-h-[70dvh] max-w-full md:max-w-[60vw]"
     >
       <div class="flex flex-col items-center">
-        <div class="flex overflow-hidden max-w-full max-h-full">
+        <div class="flex overflow-hidden">
           <Image
             :src="artPieces[0]"
             alt=""
@@ -23,7 +20,7 @@
       <span>vs</span>
 
       <div class="flex flex-col items-center">
-        <div class="flex overflow-hidden max-w-full max-h-full">
+        <div class="flex overflow-hidden">
           <Image
             :src="artPieces[1]"
             class="object-contain justify-center"
@@ -32,7 +29,7 @@
           />
         </div>
 
-        <Button label="Image 2" class="flex self-center m-3" @click="checkAnswer(0)"></Button>
+        <Button label="Image 2" class="flex self-center m-3" @click="checkAnswer(1)"></Button>
       </div>
     </div>
     <div>
