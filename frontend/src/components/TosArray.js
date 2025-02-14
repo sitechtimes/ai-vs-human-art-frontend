@@ -18,9 +18,5 @@ export const tos = [
     {
         heading: 'USER DATA - WHY DO I HAVE TO REGISTER/SIGN IN?',
         text: ['As mentioned in the “Introduction”, our primary goal of this project is to bring exposure to the issues surrounding AI and art. Our ultimate goal of this project is to write a paper - the statistics that we collect allow us to build the “logos”. We understand that not everyone is not excited to be used as a statistic, which is why we allow everyone to play the “game” portion without making an account. However, understand that your “rights” and “wrongs” will still be data noted during gameplay.', 'We will NOT use your data or any uploaded content for any malicious purposes: selling for profit, training AI, leaking to other persons, etc. This is just for us to accomplish our project!!']
-    },
-    {
-        heading: '',
-        text: ''
-    },
+    }
 ]
