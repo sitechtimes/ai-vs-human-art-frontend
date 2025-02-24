@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="max-w-full">
     <Menubar id="header" :model="items" class="!rounded-none !absolute w-screen top-0 z-40">
       <template #start>
         <img src="/fatfatpankocat-panko.gif" alt="placeholder logo" class="mr-0" />
