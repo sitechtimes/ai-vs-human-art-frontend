@@ -59,7 +59,7 @@ import Button from 'primevue/button'
 import Dialog from 'primevue/dialog'
 import Image from 'primevue/image'
 
-import { ref, reactive, onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useArtStore } from '../../stores/art.ts'
 
 const artStore = useArtStore()
