@@ -59,7 +59,7 @@ import Button from 'primevue/button'
 import Dialog from 'primevue/dialog'
 import Image from 'primevue/image'
 
-import { ref, onMounted } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import { useArtStore } from '../../stores/art.ts'
 
 const artStore = useArtStore()
@@ -72,10 +72,6 @@ const getFromBackend = async () => {
   artPieces.value = [await artStore.getRandomArt('human'), await artStore.getRandomArt('ai')]
   // the only reason this is pulled out is so
 }
-const portraitBools = {
-  0: ref(true),
-  1: ref(true)
-}
 
 const getArt = async () => {
   isVisible.value = false
@@ -85,19 +81,12 @@ const getArt = async () => {
   if (artPieces.value.some((el) => el === null)) {
     alert('Failed to fetch art (boowomp)')
     artPieces.value = []
-  } else if (Math.random() < 0.5) {
+    return
+  }
+
+  if (Math.random() < 0.5) {
     artPieces.value.reverse()
     answer.value = 0
-  }
-  for (let i = 0; i < artPieces.value.length; i++) {
-    let getImg = new window.Image()
-    getImg.src = artPieces[i]
-    getImg.onload = () => {
-      if (getImg.width <= getImg.height) {
-        portraitBools[i].value = true
-        // console.log(portraitBools[i].value)
-      }
-    }
   }
 }
 const checkAnswer = (e) => {

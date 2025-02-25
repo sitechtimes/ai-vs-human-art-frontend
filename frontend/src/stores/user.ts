@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
+const BACKEND_URL = import.meta.env.VITE_ADDRESS
+
 export const useUserStore = defineStore('user', () => {
   // state
   const currentUser = ref(null)
@@ -21,7 +23,7 @@ export const useUserStore = defineStore('user', () => {
       })
     }
     try {
-      const res = await fetch(`${import.meta.env.VITE_ADDRESS}/api/auth/register`, requestOptions)
+      const res = await fetch(`${BACKEND_URL}/api/auth/register`, requestOptions)
       if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`)
       }
@@ -42,7 +44,7 @@ export const useUserStore = defineStore('user', () => {
       })
     }
     try {
-      const res = await fetch(`${import.meta.env.VITE_ADDRESS}/api/auth/login`, requestOptions)
+      const res = await fetch(`${BACKEND_URL}/api/auth/login`, requestOptions)
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
       const data = await res.json()
       currentUser.value = data.user
@@ -67,7 +69,7 @@ export const useUserStore = defineStore('user', () => {
       headers: { Authorization: `Bearer ${localStorage.token}` }
     }
     try {
-      const res = await fetch(`${import.meta.env.VITE_ADDRESS}/api/auth`, requestOptions)
+      const res = await fetch(`${BACKEND_URL}/api/auth`, requestOptions)
       if (!res.ok) throw new Error(`HTTP error status: ${res.status}`)
       isAuthenticated.value = true
     } catch (error) {
@@ -82,7 +84,7 @@ export const useUserStore = defineStore('user', () => {
       headers: { 'Content-Type': 'application/json' }
     }
     try {
-      const res = await fetch(`${import.meta.env.VITE_ADDRESS}/api/auth/logout`, requestOptions)
+      const res = await fetch(`${BACKEND_URL}/api/auth/logout`, requestOptions)
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
       currentUser.value = null
       token.value = ''
