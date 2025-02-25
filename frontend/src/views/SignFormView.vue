@@ -92,7 +92,6 @@ const userStore = useUserStore()
 const registerInfo = async () => {
   if (evilMatch()) return
   try {
-    // console.log('resigerting')
     const res = await userStore.register(username.value, email.value, password.value)
     if (res !== null) {
       signUp.value = !signUp.value
@@ -103,7 +102,6 @@ const registerInfo = async () => {
 }
 
 const signIn = async () => {
-  // console.log('logging in')
   await userStore.login(email.value, password.value)
   if (userStore.currentUser) {
     router.push({ path: '/' })
