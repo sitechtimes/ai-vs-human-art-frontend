@@ -70,7 +70,6 @@ const isAdmin = userStore.isAdmin
 
 async function uploadedFile(e) {
   files.value.push(e.files[0])
-  // console.log(files.value)
   toast.add({
     severity: 'success',
     summary: 'Success',
@@ -93,7 +92,6 @@ async function submit() {
     }
 
     if (files.value.length != links.value.length) {
-      // console.log(files.value.length, links.value.length)
       toast.add({
         severity: 'warn',
         summary: 'Warning',
@@ -102,14 +100,12 @@ async function submit() {
       })
       throw new Error('there is no file')
     }
-    // console.log(links.value.length)
 
     for (let i = 0; i < links.value.length; i++) {
       const formData = new FormData()
       formData.append('type', type.value)
       formData.append('link', links.value[i])
       formData.append('image', files.value[i])
-      // console.log(formData)
       const res = await imageStore.uploadImage(formData)
       if (res?.ok) {
         toast.add({

@@ -45,7 +45,6 @@ const logout = () => userStore.logout()
 
 function getData(user: { username: string; email: string }) {
   visible.value = false
-  // console.log(user)
   username.value = user.username
   email.value = user.email
 }

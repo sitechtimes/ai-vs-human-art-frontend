@@ -27,7 +27,6 @@ export const useUserStore = defineStore('user', () => {
       if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`)
       }
-      // console.log('success!! registered')
     } catch (error) {
       console.error('Registration Error', error)
       // gonna have to do more than console log this later
@@ -54,10 +53,8 @@ export const useUserStore = defineStore('user', () => {
       // token.value = data.user.refresh_token
       token.value = data.access_token
       userId.value = data.user._id
-      // console.log('well noting for now')
       localStorage.setItem('token', token.value)
       localStorage.setItem('userId', userId.value)
-      // console.log('success!! logged in')
     } catch (error) {
       console.error('Login Error', error)
     }
