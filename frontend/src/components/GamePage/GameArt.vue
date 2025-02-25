@@ -68,15 +68,9 @@ const isVisible = ref(false)
 const answer = ref(1) // which one is ai
 const correct = ref(false)
 
-const getFromBackend = async () => {
-  artPieces.value = [await artStore.getRandomArt('human'), await artStore.getRandomArt('ai')]
-  // the only reason this is pulled out is so
-}
-
 const getArt = async () => {
   isVisible.value = false
   artPieces.value = [await artStore.getRandomArt('human'), await artStore.getRandomArt('ai')]
-  // await getFromBackend()
   answer.value = 1
   if (artPieces.value.some((el) => el === null)) {
     alert('Failed to fetch art (boowomp)')
@@ -93,7 +87,6 @@ const checkAnswer = (e) => {
   if (e != answer.value) {
     correct.value = false
     artStore.combo = 0
-    // console.log(artStore.combo)
   } else {
     correct.value = true
     artStore.combo++
