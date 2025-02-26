@@ -1,4 +1,7 @@
 <template>
+  <div>
+    <Button v-if="!gameStarted" @click="startGame">Start Game</Button>
+  </div>
   <div
     v-if="artPieces.length"
     class="flex flex-col items-center h-[calc(100%-68px)] w-100% overflow-hidden"
@@ -36,22 +39,13 @@
       </div>
     </div>
     <div>
-      <div id="result">
-        <!-- eslint-disable vue/no-v-model-argument -->
-        <Dialog v-model:visible="isVisible" modal>
-          <!-- i think v-model:visible is the only way to toggle visibility with this primevue component, so unfortunately were going to have to break an eslint rule -->
-          <p v-if="correct">Your answer is correct!</p>
-          <p v-else>Your answer is incorrect!</p>
-          <Button label="Try Again?" class="flex self-center" @click="getArt"></Button>
-        </Dialog>
-      </div>
     </div>
   </div>
 </template>
 
 <script setup>
 import Button from 'primevue/button'
-import Dialog from 'primevue/dialog'
+//import Dialog from 'primevue/dialog'
 import Image from 'primevue/image'
 
 import { ref, onMounted } from 'vue'
@@ -62,6 +56,9 @@ const artPieces = ref([])
 const isVisible = ref(false)
 const answer = ref(1) // which one is ai
 const correct = ref(false)
+
+const gameStarted = ref(false)
+const counter = ref(0)
 
 const getFromBackend = async () => {
   artPieces.value = [await artStore.getRandomArt('human'), await artStore.getRandomArt('ai')]
@@ -96,6 +93,7 @@ const getArt = async () => {
   }
 }
 const checkAnswer = (e) => {
+  counter.value ++
   if (e != answer.value) {
     correct.value = false
     artStore.combo = 0
@@ -107,6 +105,11 @@ const checkAnswer = (e) => {
   isVisible.value = !isVisible.value
 }
 
+function startGame() {
+  gameStarted.value = true
+}
+
+//right, total, user 
 onMounted(() => {
   getArt()
 })
