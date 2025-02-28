@@ -1,9 +1,6 @@
 <template>
-  <div>
-    <Button v-if="!gameStarted" @click="startGame">Start Game</Button>
-  </div>
   <div
-    v-if="artPieces.length && gameStarted"
+    v-if="artPieces.length"
     class="flex flex-col items-center h-[calc(100%-68px)] w-100% overflow-hidden"
   >
     <div
@@ -66,7 +63,6 @@ const isVisible = ref(false)
 const answer = ref(1) // which one is ai
 const correct = ref(false)
 
-const gameStarted = ref(false)
 
 const getFromBackend = async () => {
   artPieces.value = [await artStore.getRandomArt('human'), await artStore.getRandomArt('ai')]
@@ -82,6 +78,7 @@ const getArt = async () => {
   artPieces.value = [await artStore.getRandomArt('human'), await artStore.getRandomArt('ai')]
   // await getFromBackend()
   answer.value = 1
+  artPieces.value.reverse()
   if (artPieces.value.some((el) => el === null)) {
     alert('Failed to fetch art (boowomp)')
     artPieces.value = []
@@ -112,11 +109,6 @@ const checkAnswer = (e) => {
   }
   isVisible.value = !isVisible.value
   artStore.total++
-  console.log(artStore.correctCounter, artStore.total)
-}
-
-function startGame() {
-  gameStarted.value = true
 }
 
 //right, total, user 
