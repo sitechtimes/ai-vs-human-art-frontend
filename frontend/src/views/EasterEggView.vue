@@ -2,7 +2,7 @@
   <div>
     <h1 class="text-5xl text-center pt-5">The Team</h1>
     <p class="text-center italic">lines next to each other are simultaneous</p>
-    <div v-if="!FettyWapMode" class="flex flex-col mx-auto px-0 xl:w-11/12">
+    <div class="flex flex-col mx-auto px-0 xl:w-11/12">
       <div class="flex flex-col pt-4" v-for="time in Object.keys(lyrics)" :key="time">
         <div class="flex flex-row gap-2 w-11/12 flex-wrap justify-between pb-4 mx-auto">
           <LyricComponent
@@ -18,39 +18,17 @@
         <hr class="border-2 rounded-full w-full" />
       </div>
     </div>
-    <div v-else class="flex flex-col mx-auto px-0 xl:w-11/12">
-      <div class="flex flex-col pt-4" v-for="time in Object.keys(FettyWapLyrics)" :key="time">
-        <div class="flex flex-row gap-2 w-11/12 flex-wrap justify-between pb-4 mx-auto">
-          <LyricComponent
-            v-for="line in FettyWapLyrics[Number(time)]"
-            class="w-fit grow"
-            :key="time + line.singer + line.line"
-            :name="line.singer"
-            :color="singerColor[line.singer]"
-            :yap="line.line"
-            :image="`/${line.singer}.png`"
-          ></LyricComponent>
-        </div>
-        <hr class="border-2 rounded-full w-full" />
-      </div>
-    </div>
-    <button @click="switchFetty">Thank you for reaching the bottom! Click me.</button>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
 import LyricComponent from '../components/LyricComponent.vue'
 type Line = {
   line: string
   singer: string
   time: number
 }
-function switchFetty() {
-  FettyWapMode.value = !FettyWapMode.value
-  console.log(FettyWapMode)
-}
-const FettyWapMode = ref(false)
+
 const lyrics: { [key: number]: Line[] } = {
   '2': [
     {
@@ -278,37 +256,14 @@ const lyrics: { [key: number]: Line[] } = {
     }
   ]
 }
-const FettyWapLyrics: { [key: number]: Line[] } = {
-  '2': [
-    {
-      line: 'im like yeah shes fine',
-      singer: 'Fetty Wap',
-      time: 2
-    }
-  ],
-  '4': [
-    {
-      line: 'wonder if shell be mine',
-      singer: 'Fetty Wap',
-      time: 4
-    }
-  ],
-  '6': [
-    {
-      line: 'and i got the soda',
-      singer: 'Fetty Wap',
-      time: 6
-    }
-  ]
-}
+
 const colorSinger = {
   'rgb(51, 204, 186)': 'miku',
   'rgb(51, 103, 205)': 'KAITO',
   'rgb(187, 101, 136)': 'kanade',
   'rgb(228, 168, 202)': 'mizuki',
   'rgb(204, 170, 135)': 'ena',
-  'rgb(136, 137, 204)': 'mafuyu',
-  'rgb(150,75,0)': 'Fetty Wap'
+  'rgb(136, 137, 204)': 'mafuyu'
 }
 
 const singerColor = Object.assign({}, ...Object.entries(colorSinger).map(([a, b]) => ({ [b]: a })))
