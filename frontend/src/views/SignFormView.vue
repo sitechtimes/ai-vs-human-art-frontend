@@ -92,7 +92,6 @@ const userStore = useUserStore()
 const registerInfo = async () => {
   if (evilMatch()) return
   try {
-    // console.log('resigerting')
     const res = await userStore.register(username.value, email.value, password.value)
     if (res !== null) {
       signUp.value = !signUp.value
@@ -103,23 +102,19 @@ const registerInfo = async () => {
 }
 
 const signIn = async () => {
-  // console.log('logging in')
   await userStore.login(email.value, password.value)
   if (userStore.currentUser) {
     router.push({ path: '/' })
   }
 }
 
+// clear an existing warning if user matches password
+// will not add warning as user types out password, because that's annoying
 const evilMatch = () => {
   return (notMatch.value = password.value !== passwordConfirm.value)
 }
 
-// clear an existing warning if user matches password
-// will not add warning as user types out password, because that's annoying
-watch(password, () => {
-  if (notMatch.value) evilMatch()
-})
-watch(passwordConfirm, () => {
+watch([password, passwordConfirm], () => {
   if (notMatch.value) evilMatch()
 })
 </script>
