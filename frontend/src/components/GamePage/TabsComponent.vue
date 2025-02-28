@@ -1,8 +1,10 @@
 <template>
   <div id="themes">
-    <Tabs value="0">
-      <TabList class="tabs grid items-stretch w-full">
-        <Tab v-for="tab in tabs" :value="tab.value" :key="tab" class="justify-self-auto">{{ tab.name }}</Tab>
+    <Tabs value="0" class="w-full">
+      <TabList class="flex flex-wrap">
+        <Tab v-for="tab in tabs" :value="tab.value" :key="tab.value" class="sm:text-[2.5vw]">{{
+          tab.name
+        }}</Tab>
       </TabList>
     </Tabs>
   </div>

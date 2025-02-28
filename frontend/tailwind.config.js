@@ -2,8 +2,19 @@
 export default {
   content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   theme: {
-    extend: {}
+    extend: {},
+    screens: {
+      portrait: {
+        raw: '(orientation: portrait)'
+      },
+      landscape: {
+        raw: '(orientation: landscape)'
+      }
+    }
   },
   plugins: [require('tailwindcss-primeui')],
-  darkMode: ['selector']
+  darkMode: ['selector'],
+  future: {
+    hoverOnlyWhenSupported: true
+  }
 }

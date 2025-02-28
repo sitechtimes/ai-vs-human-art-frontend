@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-row bg-primary-50 dark:bg-primary-950 p-7 m-7 rounded-md border border-primary-700 dark:border-primary-500"
+    class="flex flex-row bg-primary-50 dark:bg-primary-950 p-7 m-7 rounded-md border border-primary-700 dark:border-primary-500 w-5/6"
   >
     <img
       v-if="person.image"
