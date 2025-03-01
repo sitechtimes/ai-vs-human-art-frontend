@@ -7,10 +7,9 @@ import { useUserStore } from './stores/user'
 import { useRoute } from 'vue-router'
 const route = useRoute()
 const userStore = useUserStore()
-const userData = ref([])
-/* onMounted(() => { */
+const userData = ref({})
+// this janky piece of code's entire purpose is to supply the profile picture and sign in status to HeaderComponent
 if (userStore.userID) {
-  console.log(userStore.userID)
   try {
     const res = userStore.getUser(Number(userStore.userID)).then((data) => (userData.value = data))
     provide('userData', userData)

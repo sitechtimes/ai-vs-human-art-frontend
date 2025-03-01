@@ -21,7 +21,9 @@
         </span>
       </button>
     </div>
-    <p v-if="errMsg" class="my-2 text-center text-2xl font-bold text-red-500">{{ errMsg }}</p>
+    <p v-if="errorMessage" class="my-2 text-center text-2xl font-bold text-red-500">
+      {{ errorMessage }}
+    </p>
     <div class="flex flex-col items-center gap-2">
       <form action="submit" class="flex flex-col gap-2">
         <TransitionGroup>
@@ -88,37 +90,36 @@ const email = ref('')
 const password = ref('')
 const passwordConfirm = ref('')
 const notMatch = ref(false)
-const errMsg = ref<string>('')
+const errorMessage = ref('')
 
 const userStore = useUserStore()
 
 const registerInfo = async () => {
   if (evilMatch()) return
   try {
-    // console.log('resigerting')
-    errMsg.value = ''
+    errorMessage.value = ''
     const res = await userStore.register(username.value, email.value, password.value)
-    if (res !== null) {
+    if (res.ok) {
       signUp.value = !signUp.value
       await userStore.auth()
     }
   } catch (error: any) {
-    errMsg.value = error
+    errorMessage.value = error
     console.error(error)
   }
 }
 
 const signIn = async () => {
   try {
-    errMsg.value = ''
+    errorMessage.value = ''
     const res = await userStore.login(email.value, password.value)
     if (userStore.user) {
       console.log('success' + res)
-      router.push({ path: '/' })
+      router.push('/')
       window.location.reload()
     }
-  } catch (error: any) {
-    errMsg.value = error
+  } catch (error) {
+    errorMessage.value = error
     console.error(error)
   }
 }

@@ -5,26 +5,28 @@
         <img src="/nagi.jpg" alt="placeholder logo" class="mr-0" />
       </template>
       <template #item="{ item, props }">
-        <button v-if="item.route" @click="item.route">{{ item.label }}</button>
-        <!-- <router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
-          <a :href="href" v-bind="props.action" @click="navigate">
-            <span>{{ item.label }}</span>
-          </a>
-        </router-link> -->
-        <a v-else :href="item.url" :target="item.target" v-bind="props.action">
-          <span>{{ item.label }}</span>
-          <!-- put something here to indicate that this is a dropdown i don't know -->
-        </a>
+        <router-link v-if="item.route" :to="item.route">
+          {{ item.label }}
+        </router-link>
+        <ul v-if="item.items">
+          {{
+            item.label
+          }}
+          <li v-for="entry in item.items" :key="entry.label">
+            <router-link :to="{ path: entry.route, replace: true }" class="dropdown-item">
+            </router-link>
+          </li>
+        </ul>
       </template>
       <template #end>
         <div class="flex items-center gap-0.5">
-          <img
-            v-if="signedIn"
-            :src="userData.profile_picture"
-            alt="placeholder avatar"
-            class="rounded-full cursor-pointer"
-            @click="router.push(`/user/${userData.userid}`), router.go(1)"
-          />
+          <router-link :to="'/user/${userData.userid}'">
+            <img
+              v-if="signedIn"
+              :src="userData.profile_picture"
+              class="rounded-full cursor-pointer"
+            />
+          </router-link>
         </div>
       </template>
     </Menubar>
@@ -34,30 +36,20 @@
 <script setup lang="ts">
 import { ref, computed, inject, onMounted } from 'vue'
 import Menubar from 'primevue/menubar'
-import Button from 'primevue/button'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '../stores/user'
 const userStore = useUserStore()
+const userData = inject('userData')
 const router = useRouter()
 const signedIn = computed(() => !!userData)
-const userData = inject('userData')
-console.log(userData)
 
-/* const globalRouter = function (route: String) {
-  router.push(`/${route}`)
-  router.go(0)
-} */
 const items = ref([
   {
-    route: function () {
-      router.push('/')
-    },
+    route: '/',
     label: 'Home'
   },
   {
-    route: function () {
-      router.push('/game')
-    },
+    route: '/game',
     label: 'Game'
   },
   {
@@ -65,45 +57,30 @@ const items = ref([
     label: 'About Us',
     items: [
       {
-        route: function () {
-          router.push('/team')
-        },
+        route: '/team',
         label: 'The Team'
       },
       {
-        route: function () {
-          router.push('/submit')
-        },
+        route: '/submit',
         label: 'Submit Your Art'
       },
       {
-        route: function () {
-          router.push('/credits')
-        },
+        route: '/credits',
         label: 'Acknowledgements'
       }
     ]
   },
   {
-    route: signedIn.value
-      ? false
-      : function () {
-          router.push('/sign')
-        },
+    route: signedIn.value ? false : '/sign',
     label: signedIn.value ? `User Settings` : 'Sign in', // I can't seem to access UserData in script setup, so the much easier option is to just call this user options
-    items: !signedIn.value
-      ? null
-      : [
+    items: signedIn.value
+      ? [
           {
-            route: async function () {
-              await userStore.logout().then(() => {
-                router.push('/')
-                router.go(0)
-              })
-            },
+            route: '/logout',
             label: 'Log Out'
           }
         ]
+      : null
   }
 ])
 </script>

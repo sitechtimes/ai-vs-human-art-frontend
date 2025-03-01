@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
 import { useUserStore } from '../stores/user'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -7,7 +6,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: () => import('../views/HomeView.vue')
     },
     {
       path: '/game',
@@ -16,7 +15,7 @@ const router = createRouter({
     },
     {
       path: '/user/:id',
-      name: '',
+      name: 'user',
       component: () => import('../views/UserView.vue')
     },
     {
@@ -52,11 +51,16 @@ const router = createRouter({
     {
       path: '/logout',
       name: 'logout',
-      component: HomeView
-      /* async beforeEnter(to, from, next) {
-        await userStore.logout
-        return next('/')
-      } */
+      beforeEnter: async (to, from, next) => {
+        console.log('beforeEnter is running...')
+        const userStore = useUserStore()
+        try {
+          await userStore.logout()
+          next('/')
+        } catch (error) {
+          console.error('Logout failed:', error)
+        }
+      }
     }
   ]
 })
