@@ -2,30 +2,28 @@
   <div>
     <Menubar id="header" :model="items" class="!rounded-none">
       <template #start>
-        <img src="/nagi.jpg" alt="placeholder logo" class="mr-0" />
+        <img src="/nagi.jpg" alt="placeholder logo" class="mr-0 w-[3rem] h-[3rem]" />
       </template>
-      <template #item="{ item, props }">
-        <router-link v-if="item.route" :to="item.route">
-          {{ item.label }}
+      <template #item="{ item, hasSubmenu }">
+        <router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
+          <a :href="href" @click="navigate" class="block w-full">
+            <span>{{ item.label }}</span>
+          </a>
         </router-link>
-        <ul v-if="item.items">
-          {{
-            item.label
-          }}
-          <li v-for="entry in item.items" :key="entry.label">
-            <router-link :to="{ path: entry.route, replace: true }" class="dropdown-item">
-            </router-link>
-          </li>
-        </ul>
+        <a v-else :href="item.url" :target="item.target">
+          <span>{{ item.label }}</span>
+          <span v-if="hasSubmenu" class="pi pi-fw pi-angle-down" />
+        </a>
       </template>
       <template #end>
         <div class="flex items-center gap-0.5">
-          <router-link :to="'/user/${userData.userid}'">
+          <router-link :to="userLink">
             <img
               v-if="signedIn"
-              :src="userData.profile_picture"
-              class="rounded-full cursor-pointer"
+              :src="userData?.profile_picture || '/defaultprofileimage.jpg'"
+              class="rounded-full cursor-pointer w-[3rem] h-[3rem]"
             />
+            <!-- fallback image = cloudinary default-->
           </router-link>
         </div>
       </template>
@@ -34,16 +32,23 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, inject, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import Menubar from 'primevue/menubar'
-import { useRouter } from 'vue-router'
 import { useUserStore } from '../stores/user'
+const userData = ref()
 const userStore = useUserStore()
-const userData = inject('userData')
-const router = useRouter()
-const signedIn = computed(() => !!userData)
-
-const items = ref([
+const fetchUserData = async () => {
+  if (userStore.userID) {
+    const storeData = await userStore.getUser(Number(userStore.userID))
+    userData.value = storeData
+  }
+}
+onMounted(fetchUserData)
+const signedIn = computed(() => !!userData.value)
+const userLink = computed(() => {
+  return userData.value ? `/user/${userData.value.userid}` : '#'
+})
+const items = computed(() => [
   {
     route: '/',
     label: 'Home'
@@ -72,7 +77,7 @@ const items = ref([
   },
   {
     route: signedIn.value ? false : '/sign',
-    label: signedIn.value ? `User Settings` : 'Sign in', // I can't seem to access UserData in script setup, so the much easier option is to just call this user options
+    label: signedIn.value ? `Welcome, ${userData?.value.username}` : 'Sign in', // I can't seem to access UserData in script setup, so the much easier option is to just call this user options
     items: signedIn.value
       ? [
           {
@@ -85,9 +90,4 @@ const items = ref([
 ])
 </script>
 
-<style scoped>
-img {
-  width: 40px;
-  height: 40px;
-}
-</style>
+<style scoped></style>

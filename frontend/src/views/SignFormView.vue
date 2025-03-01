@@ -98,13 +98,13 @@ const registerInfo = async () => {
   if (evilMatch()) return
   try {
     errorMessage.value = ''
-    const res = await userStore.register(username.value, email.value, password.value)
-    if (res.ok) {
+    const res: Response = await userStore.register(username.value, email.value, password.value)
+    if (res && res.ok) {
       signUp.value = !signUp.value
-      await userStore.auth()
+      router.push('/sign')
     }
-  } catch (error: any) {
-    errorMessage.value = error
+  } catch (error) {
+    errorMessage.value = String(error)
     console.error(error)
   }
 }
@@ -112,14 +112,13 @@ const registerInfo = async () => {
 const signIn = async () => {
   try {
     errorMessage.value = ''
-    const res = await userStore.login(email.value, password.value)
+    await userStore.login(email.value, password.value)
     if (userStore.user) {
-      console.log('success' + res)
       router.push('/')
       window.location.reload()
     }
   } catch (error) {
-    errorMessage.value = error
+    errorMessage.value = String(error)
     console.error(error)
   }
 }

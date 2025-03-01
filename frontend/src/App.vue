@@ -1,22 +1,8 @@
 <script setup lang="ts">
-import { onMounted, ref, provide } from 'vue'
 import { RouterView } from 'vue-router'
 import HeaderComponent from './components/HeaderComponent.vue'
 import ThemeComponent from './components/ThemeComponent.vue'
-import { useUserStore } from './stores/user'
-import { useRoute } from 'vue-router'
-const route = useRoute()
-const userStore = useUserStore()
-const userData = ref({})
 // this janky piece of code's entire purpose is to supply the profile picture and sign in status to HeaderComponent
-if (userStore.userID) {
-  try {
-    const res = userStore.getUser(Number(userStore.userID)).then((data) => (userData.value = data))
-    provide('userData', userData)
-  } catch (error) {
-    console.error(error)
-  }
-}
 </script>
 <template>
   <div>
@@ -26,66 +12,3 @@ if (userStore.userID) {
     <RouterView />
   </div>
 </template>
-
-<style>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
-}
-</style>

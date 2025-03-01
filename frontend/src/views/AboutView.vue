@@ -4,10 +4,10 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import PersonComponent from '../components/PersonComponent.vue'
 
-const persons = [
+const persons: { name: string; blurb: string | null; image: string | null } = [
   { name: 'Katherine Zeng', blurb: null, image: null },
   { name: 'Tina Guo', blurb: null, image: null },
   {

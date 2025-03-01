@@ -11,7 +11,7 @@
     <img
       v-else
       class="object-contain w-52 h-80 flex self-center"
-      src="https://res.cloudinary.com/dbrjbu4kt/image/upload/v1729521317/human-art/gllhjacrwvj9zfftk08d.jpg"
+      src="/defaultprofileimage.jpg"
       :alt="person.name"
     />
     <div class="flex flex-col justify-center p-5">

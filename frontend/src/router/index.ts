@@ -57,6 +57,7 @@ const router = createRouter({
         try {
           await userStore.logout()
           next('/')
+          window.location.reload()
         } catch (error) {
           console.error('Logout failed:', error)
         }

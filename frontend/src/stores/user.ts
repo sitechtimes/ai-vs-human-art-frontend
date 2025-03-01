@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
 const backendUrl = import.meta.env.VITE_PUBLIC_BACKEND
 export const useUserStore = defineStore('user', {
   state: () => {
@@ -13,7 +12,7 @@ export const useUserStore = defineStore('user', {
     }
   },
   actions: {
-    async register(username, email, password) {
+    async register(username: string, email: string, password: string) {
       const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -28,12 +27,13 @@ export const useUserStore = defineStore('user', {
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`)
         }
+        const data = await res.json()
+        return data
       } catch (error) {
         console.error('You cannot register at this time.', error.message)
       }
-      // console.log('success!! registered')
     },
-    async getUser(id) {
+    async getUser(id: string | number) {
       const requestOptions = {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
@@ -47,7 +47,7 @@ export const useUserStore = defineStore('user', {
         console.error('Problem getting this user', error.message)
       }
     },
-    async login(email, password) {
+    async login(email: string, password: string) {
       const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -61,6 +61,7 @@ export const useUserStore = defineStore('user', {
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
         const data = await res.json()
         if (data) {
+          this.isAuthenticated = true
           this.user = data
           this.token = data.user.refresh_token
           this.ID = data.user._ID
@@ -85,9 +86,9 @@ export const useUserStore = defineStore('user', {
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
         localStorage.removeItem('user')
         this.isAuthenticated = false
-        this.token = null
-        this.ID = null
-        this.userID = null
+        this.token = ''
+        this.ID = ''
+        this.userID = ''
         localStorage.removeItem('token')
         localStorage.removeItem('ID')
         localStorage.removeItem('userID')
