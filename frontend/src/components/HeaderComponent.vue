@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Menubar id="header" :model="items" class="!rounded-none !absolute w-full top-0 z-40">
+    <Menubar id="header" :model="items" class="!rounded-none">
       <template #start>
         <img src="/nagi.jpg" alt="placeholder logo" class="mr-0" />
       </template>
@@ -25,7 +25,6 @@
             class="rounded-full cursor-pointer"
             @click="router.push(`/user/${userData.userid}`), router.go(1)"
           />
-
         </div>
       </template>
     </Menubar>
@@ -49,8 +48,6 @@ console.log(userData)
   router.go(0)
 } */
 const items = ref([
-
-const menuItems = ref([
   {
     route: function () {
       router.push('/')
@@ -63,17 +60,9 @@ const menuItems = ref([
     },
     label: 'Game'
   },
-  // {
-  //   route: '/about',
-  //   label: 'About Us'
-  // },
-  {
-    route: '/submit',
-    label: 'Submit Your Art'
-  },
   {
     route: false,
-    label: 'About',
+    label: 'About Us',
     items: [
       {
         route: function () {
@@ -87,7 +76,6 @@ const menuItems = ref([
         },
         label: 'Submit Your Art'
       },
-
       {
         route: function () {
           router.push('/credits')

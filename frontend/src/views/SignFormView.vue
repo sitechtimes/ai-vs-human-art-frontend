@@ -1,21 +1,22 @@
 <template>
-  <div class="mt-[58px]">
-    <div class="mt-[5vh]">
-      <h1 class="my-2 text-center text-4xl font-bold">Sign {{ signUp ? 'Up' : 'In' }}</h1>
-      <div class="flex flex-col items-center text-base">
+  <div>
+    <h1 class="my-2 text-center text-2xl font-bold">Sign {{ signUp ? 'Up' : 'In' }}</h1>
+    <div class="flex flex-col items-center">
+      <label for="switcher">
         <span class="italic">
           {{ signUp ? `Already have an account?` : `Don't have an account?` }}
         </span>
-        <button
-          id="switcher"
-          class="underline"
-          @click="
-            () => {
-              signUp = !signUp
-              notMatch = false
-            }
-          "
-        >
+      </label>
+      <button
+        id="switcher"
+        @click="
+          () => {
+            signUp = !signUp
+            notMatch = false
+          }
+        "
+      >
+        <span class="underline">
           {{ signUp ? 'Sign in' : 'Sign up' }}
         </span>
       </button>
@@ -47,37 +48,26 @@
           <div v-if="signUp" class="flex flex-col gap-2">
             <label for="password-confirm" key="password-confirm.label">Confirm Password</label>
             <Password
-              v-model="password"
-              inputId="password"
+              inputId="password-confirm"
+              v-model="passwordConfirm"
+              placeholder="Confirm Password"
               :feedback="false"
               toggleMask
-              placeholder="Password"
-              key="password.input"
+              key="password-confirm.input"
             />
-            <div v-if="signUp" class="flex flex-col gap-2">
-              <label for="password-confirm" key="password-confirm.label">Confirm Password</label>
-              <Password
-                inputId="password-confirm"
-                v-model="passwordConfirm"
-                placeholder="Confirm Password"
-                :feedback="false"
-                toggleMask
-                key="password-confirm.input"
-              />
-            </div>
-            <p v-if="notMatch" class="text-rose-600 font-bold" key="not-match-notif">
-              Your passwords do not match!
-            </p>
-            <Button
-              :label="signUp ? 'Sign Up' : 'Sign In'"
-              :disabled="notMatch"
-              :class="notMatch ? '!cursor-not-allowed' : 'cursor-pointer'"
-              key="button"
-              type="submit"
-            />
-          </TransitionGroup>
-        </form>
-      </div>
+          </div>
+          <p v-if="notMatch" class="text-rose-600 font-bold" key="not-match-notif">
+            Your passwords do not match!
+          </p>
+          <Button
+            :label="signUp ? 'Sign Up' : 'Sign In'"
+            :disabled="notMatch"
+            :class="notMatch ? '!cursor-not-allowed' : 'cursor-pointer'"
+            @click="signUp ? registerInfo() : signIn()"
+            key="'button'"
+          />
+        </TransitionGroup>
+      </form>
     </div>
   </div>
 </template>

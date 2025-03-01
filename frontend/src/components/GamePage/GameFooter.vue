@@ -5,15 +5,15 @@
         <Button as="router-link" label="Router" to="/" id="game-home-button">Home</Button>
       </template>
       <template #center>
-        <p>COMBO: {{ artStore.combo }}</p>
+        <p>COMBO: {{ combo }}</p>
       </template>
       <template #end>
-        <Button @click="toggleHelpButton">Instructions</Button>
+        <Button @click="toggleHelpButton">Help</Button>
       </template>
     </Toolbar>
     <!-- eslint-disable vue/no-v-model-argument -->
-    <Dialog v-model:visible="helpButton" header="Instructions / How to play" class="w-4/5" modal>
-      <HelpInstructions />
+    <Dialog v-model:visible="helpButton" modal>
+      <p>Help / Instructions</p>
     </Dialog>
   </div>
 </template>
@@ -23,10 +23,8 @@ import Toolbar from 'primevue/toolbar'
 import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
 import { ref } from 'vue'
-import { useArtStore } from '../../stores/art'
-import HelpInstructions from './HelpInstructions.vue'
 
-const artStore = useArtStore()
+const combo = ref(0)
 const helpButton = ref(false)
 
 function toggleHelpButton() {

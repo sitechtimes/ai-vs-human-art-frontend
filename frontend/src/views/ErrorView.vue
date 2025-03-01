@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full flex flex-col gap-2 items-center pt-5 mt-[58px]">
+  <div class="w-full flex flex-col gap-2 items-center pt-5">
     <h1 class="font-black text-6xl">404 Page</h1>
     <div class="flex text-2xl pt-2 gap-2">
       <p>Sorry! You've attempted to reach a page that doesn't exist</p>

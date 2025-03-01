@@ -30,16 +30,6 @@ const router = createRouter({
       component: () => import('../views/EasterEggView.vue')
     },
     {
-      path: '/team',
-      name: 'The Team',
-      component: () => import('../views/AboutView.vue')
-    },
-    {
-      path: '/test',
-      name: 'test',
-      component: () => import('../views/TestView.vue')
-    },
-    {
       path: '/sign',
       name: 'signupsignin',
       component: () => import('../views/SignFormView.vue'),
@@ -50,21 +40,6 @@ const router = createRouter({
           next()
         }
       }
-    },
-    {
-      path: '/about',
-      name: 'aboutus',
-      component: () => import('../views/AboutView.vue')
-    },
-    {
-      path: '/submit',
-      name: 'submit',
-      component: () => import('../views/SubmitArtView.vue')
-    },
-    {
-      path: '/profile',
-      name: 'profilepage',
-      component: () => import('../views/ProfileView.vue')
     },
     {
       path: '/:pathMatch(.*)*',

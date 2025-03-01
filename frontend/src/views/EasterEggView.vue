@@ -1,6 +1,6 @@
 <template>
-  <div class="mt-[58px]">
-    <h1 class="text-5xl text-center pt-5">The lyrics</h1>
+  <div>
+    <h1 class="text-5xl text-center pt-5">The Team</h1>
     <p class="text-center italic">lines next to each other are simultaneous</p>
     <div class="flex flex-col mx-auto px-0 xl:w-11/12">
       <div class="flex flex-col pt-4" v-for="time in Object.keys(lyrics)" :key="time">
