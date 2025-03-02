@@ -91,7 +91,7 @@ const uploadedFile = (e) => {
   addToast('success', 'Success', 'File sucessfully uploaded.')
 }
 
-const submit = async () => {
+const submit = async() => {
   uploading.value = true
   if (!user) {
     addToast('warn', 'Warning', 'You must be logged in to submit art.')

@@ -5,20 +5,20 @@
         <img src="/fatfatpankocat-panko.gif" alt="placeholder logo" class="mr-0" />
       </template>
       <template #item="{ item, props }">
-        <router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
+        <RouterLink v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
           <span :href="href" v-bind="props.action" @click="navigate">{{ item.label }}</span>
-        </router-link>
-        <router-link v-if="item.route == null" v-slot="{ href, navigate }" :to="'/sign'">
+        </RouterLink>
+        <RouterLink v-if="item.route == null" v-slot="{ href, navigate }" :to="'/sign'">
           <span :href="href" v-bind="props.action" @click="navigate">
             {{ signedIn ? null : 'Sign In' }}
           </span>
-        </router-link>
+        </RouterLink>
       </template>
       <template #end>
         <div class="flex items-center gap-0.5" v-if="userStore.currentUser">
-          <router-link to="/profile">
+          <RouterLink to="/profile">
             <img src="/userImg.svg" alt="placeholder avatar" class="rounded-full dark:invert" />
-          </router-link>
+          </RouterLink>
         </div>
       </template>
     </Menubar>
