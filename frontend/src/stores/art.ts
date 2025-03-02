@@ -23,7 +23,6 @@ export const useArtStore = defineStore('art', () => {
       return data
     } catch (error) {
       console.error('failed to fetch art 💥', error)
-      return null
     }
   }
   // tyr having backend send two images at once to prevent ispecg element network cheating
