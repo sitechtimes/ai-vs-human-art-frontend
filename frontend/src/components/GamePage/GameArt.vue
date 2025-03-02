@@ -80,7 +80,9 @@ const getArt = async () => {
   if (artPieces.value.some((el) => el === null)) {
     alert('Failed to fetch art (boowomp)')
     artPieces.value = []
-  } else if (Math.random() < 0.5) {
+    return
+  }
+  if (Math.random() < 0.5) {
     artPieces.value.reverse()
     answer.value = 0
   }
