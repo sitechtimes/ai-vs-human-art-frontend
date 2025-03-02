@@ -77,7 +77,7 @@ const selected = ref('')
 // showing popover
 const themes = ref()
 const open = ref(false)
-function toggle(event: Event) {
+const toggle = (event) => {
   themes.value.toggle(event)
   hover.value = selected.value ?? 'emerald'
 }
@@ -101,13 +101,13 @@ onMounted(async () => {
   changeColors(selected.value)
 })
 
-function toggleDarkMode() {
+const toggleDarkMode = () => {
   const element = document.querySelector('html')
   if (element) element.classList[dark.value ? 'add' : 'remove']('dark')
   localStorage.setItem('dark', String(dark.value))
 }
 
-function changeColors(color: string) {
+const changeColors = (color) => {
   const palettes = {
     0: `{${color}.200}`,
     50: `{${color}.50}`,

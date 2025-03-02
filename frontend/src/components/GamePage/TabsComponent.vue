@@ -2,7 +2,7 @@
   <div id="themes">
     <Tabs value="0" class="w-full">
       <TabList class="flex flex-wrap">
-        <Tab v-for="tab in tabs" :value="tab.value" :key="tab.value" class="sm:text-[2.5vw]">{{
+        <Tab v-for="tab in gameTabs" :value="tab.value" :key="tab.value" class="sm:text-[2.5vw]">{{
           tab.name
         }}</Tab>
       </TabList>
@@ -15,7 +15,7 @@ import Tabs from 'primevue/tabs'
 import TabList from 'primevue/tablist'
 import Tab from 'primevue/tab'
 
-const tabs = [
+const gameTabs = [
   { name: 'Randomized', value: '0' },
   { name: 'Realistic', value: '1' },
   { name: 'Anime', value: '2' },

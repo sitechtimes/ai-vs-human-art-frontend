@@ -33,7 +33,6 @@
             @select="uploadedFile"
             :multiple="isAdmin"
             label="Upload an image"
-            class=""
           />
           <Button
             :disabled="!ok"
@@ -42,7 +41,7 @@
             >Submit</Button
           >
         </div>
-        <Button v-if="isAdmin" :disabled="!ok" label="Upload More" @click="addUpload()" />
+        <Button v-if="isAdmin" :disabled="!ok" label="Upload More" @click="pictures.value++" />
         <Toast />
       </div>
     </form>
@@ -66,85 +65,62 @@ const imageStore = useImageStore()
 const checked = ref(false)
 const checked2 = ref(false)
 const type = ref('unscreened')
-const links = ref([''])
+const links = ref([])
 const files = ref([])
 const uploading = ref(false)
 const ok = computed(() => checked.value && checked2.value && files.value && !uploading.value)
 const pictures = ref(1)
 const toast = useToast()
+const allForms = ref([])
 
 const userStore = useUserStore()
 const user = userStore.currentUser
 const isAdmin = userStore.isAdmin
 
-async function uploadedFile(e) {
-  files.value.push(e.files[0])
-  console.log(files.value)
+const addToast = (severity, summary, detail) => {
   toast.add({
-    severity: 'success',
-    summary: 'Success',
-    detail: 'File successfully uploaded.',
+    severity: severity,
+    summary: summary,
+    detail: detail,
     life: 3000
   })
 }
 
-async function submit() {
-  try {
-    uploading.value = true
-    if (!user) {
-      toast.add({
-        severity: 'warn',
-        summary: 'Warning',
-        detail: 'You must be logged in to submit art.',
-        life: 3000
-      })
-      throw new Error('not logged in')
-    }
-
-    if (files.value.length != links.value.length) {
-      console.log(files.value.length, links.value.length)
-      toast.add({
-        severity: 'warn',
-        summary: 'Warning',
-        detail: "You didn't attach a file.",
-        life: 3000
-      })
-      throw new Error('there is no file')
-    }
-    console.log(links.value.length)
-
-    for (let i = 0; i < links.value.length; i++) {
-      const formData = new FormData()
-      formData.append('type', type.value)
-      formData.append('link', links.value[i])
-      formData.append('image', files.value[i])
-      console.log(formData)
-      const res = await imageStore.uploadImage(formData)
-      if (res?.ok) {
-        toast.add({
-          severity: 'success',
-          summary: 'Success',
-          detail: 'Art successfully submitted.',
-          life: 3000
-        })
-      } else throw new Error((await res.json()).error)
-    }
-    links.value = []
-    files.value = []
-  } catch (error) {
-    console.error(error)
-    toast.add({
-      severity: 'error',
-      summary: 'Error',
-      detail: 'Failed to submit art.',
-      life: 3000
-    })
-  }
-  uploading.value = false
+const uploadedFile = (e) => {
+  files.value.push(e.files[0])
+  addToast('success', 'Success', 'File sucessfully uploaded.')
 }
 
-const addUpload = () => {
-  pictures.value++
+const submit = async () => {
+  uploading.value = true
+  if (!user) {
+    addToast('warn', 'Warning', 'You must be logged in to submit art.')
+    throw new Error('not logged in')
+  }
+
+  if (files.value.length != links.value.length) {
+    addToast('warn', 'Warning', "You didn't attach a file.")
+    throw new Error('there is no file')
+  }
+
+  for (let i = 0; i < links.value.length; i++) {
+    const formData = new FormData()
+    formData.append('type', type.value)
+    formData.append('link', links.value[i])
+    formData.append('image', files.value[i])
+    allForms.value.push(formData)
+  }
+  const res = await imageStore.uploadImage(allForms.value)
+  if (!res.ok) {
+    addToast('error', 'Error', 'Failed to submit art.')
+    throw new Error((await res.json()).error)
+  }
+  addToast('success', 'Success', 'Art successfully submitted.')
+  links.value = []
+  files.value = []
+  allForms.value = []
+
+  uploading.value = false
 }
 </script>
 

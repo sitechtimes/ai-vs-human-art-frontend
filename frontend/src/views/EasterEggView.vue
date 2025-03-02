@@ -342,7 +342,6 @@ function getLyric(html: HTMLElement) {
 }
 
 Array.from(lyricsElement.children).forEach((el) => getLyric(el as HTMLElement))
-console.log(lyrics)
 // */
 </script>
 
