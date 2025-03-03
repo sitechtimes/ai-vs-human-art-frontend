@@ -37,13 +37,14 @@
     </div>
     <div>
       <div id="result">
+        <Toast />
         <!-- eslint-disable vue/no-v-model-argument -->
-        <Dialog v-model:visible="isVisible" modal>
-          <!-- i think v-model:visible is the only way to toggle visibility with this primevue component, so unfortunately were going to have to break an eslint rule -->
+         <!-- i think v-model:visible is the only way to toggle visibility with this primevue component, so unfortunately were going to have to break an eslint rule -->
+        <!-- <Dialog v-model:visible="isVisible" modal>
           <p v-if="correct">Your answer is correct!</p>
           <p v-else>Your answer is incorrect!</p>
           <Button label="Try Again?" class="flex self-center" @click="getArt"></Button>
-        </Dialog>
+        </Dialog> -->
       </div>
     </div>
   </div>
@@ -51,8 +52,11 @@
 
 <script setup>
 import Button from 'primevue/button'
-import Dialog from 'primevue/dialog'
+//import Dialog from 'primevue/dialog'
 import Image from 'primevue/image'
+import Toast from 'primevue/toast';
+import { useToast } from 'primevue/usetoast';
+
 
 import { ref, onMounted } from 'vue'
 import { useArtStore } from '../../stores/art.ts'
@@ -62,6 +66,8 @@ const artPieces = ref([])
 const isVisible = ref(false)
 const answer = ref(1) // which one is ai
 const correct = ref(false)
+
+const toast = useToast();
 
 
 const getFromBackend = async () => {
@@ -97,18 +103,29 @@ const getArt = async () => {
     }
   }
 }
+
+function showToast() {
+  if (!correct.value) {
+    toast.add({severity: 'success', summary: 'Correct', detail: 'This piece was AI Generated!', life: 1500})
+  } else {
+    toast.add({severity: 'error', summary: 'Incorrect', detail: 'This piece was made by {{artist name //placeholder?}}', life: 1500})
+  }
+}
+
 const checkAnswer = (e) => {
   if (e != answer.value) {
     correct.value = false
     artStore.combo = 0
-    console.log(artStore.combo)
+    showToast()
   } else {
     correct.value = true
+    showToast()
     artStore.correctCounter++
     artStore.combo++
   }
   isVisible.value = !isVisible.value
   artStore.total++
+  setTimeout(getArt, 1500)
 }
 
 //right, total, user 

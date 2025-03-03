@@ -9,7 +9,7 @@
     <div v-if="gameStarted">
       <GameArt />
       <GameFooter />
-      <Button @click="endGame()">End Game</Button>
+      <Button @click="endGame">End Game</Button>
     </div>
   </div>
 </template>
@@ -30,7 +30,8 @@ function startGame() {
 }
 
 function endGame() {
-  console.log(artStore.combo, artStore.total, artStore.correctCounter)
+  gameStarted.value = false
+  console.log('combo:', artStore.combo,'total:' ,artStore.total, 'Correct:',artStore.correctCounter)
 }
 
 </script>
