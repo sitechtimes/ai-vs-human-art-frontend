@@ -36,7 +36,6 @@ const logout = () => {
 }
 
 function getData(user) {
-  console.log(user)
   username.value = user.username
   email.value = user.email
 }

@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-
+const backend = import.meta.env.VITE_PUBLIC_BACKEND
 export const useUserStore = defineStore('user', () => {
   // state
   const currentUser = ref(null)
@@ -21,11 +21,10 @@ export const useUserStore = defineStore('user', () => {
       })
     }
     try {
-      const res = await fetch('http://localhost:8000/api/auth/register', requestOptions)
+      const res = await fetch(`${backend}/api/auth/register`, requestOptions)
       if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`)
       }
-      // console.log('success!! registered')
     } catch (error) {
       console.error('Registration Error', error)
       // gonna have to do more than console log this later
@@ -42,7 +41,7 @@ export const useUserStore = defineStore('user', () => {
       })
     }
     try {
-      const res = await fetch('http://localhost:8000/api/auth/login', requestOptions)
+      const res = await fetch(`${backend}/api/auth/login`, requestOptions)
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
       const data = await res.json()
       currentUser.value = data.user
@@ -52,10 +51,8 @@ export const useUserStore = defineStore('user', () => {
       // token.value = data.user.refresh_token
       token.value = data.access_token
       userId.value = data.user._id
-      // console.log('well noting for now')
       localStorage.setItem('token', token.value)
       localStorage.setItem('userId', userId.value)
-      // console.log('success!! logged in')
     } catch (error) {
       console.error('Login Error', error)
     }
@@ -67,7 +64,7 @@ export const useUserStore = defineStore('user', () => {
       headers: { Authorization: `Bearer ${localStorage.token}` }
     }
     try {
-      const res = await fetch('http://localhost:8000/api/auth', requestOptions)
+      const res = await fetch(`${backend}/api/auth`, requestOptions)
       if (!res.ok) throw new Error(`HTTP error status: ${res.status}`)
       isAuthenticated.value = true
     } catch (error) {
@@ -82,7 +79,7 @@ export const useUserStore = defineStore('user', () => {
       headers: { 'Content-Type': 'application/json' }
     }
     try {
-      const res = await fetch('http://localhost:8000/api/auth/logout', requestOptions)
+      const res = await fetch(`${backend}/api/auth/logout`, requestOptions)
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
       currentUser.value = null
       token.value = ''
