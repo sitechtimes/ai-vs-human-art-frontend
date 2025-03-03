@@ -16,13 +16,13 @@
     <form @submit.prevent="submit">
       <div class="flex flex-auto flex-col gap-4 items-center w-full">
         <div
-          v-for="(picture, index) in pictures"
+          v-for="index in pictures"
           :key="index"
           class="flex flex-col border-2 p-8 rounded-lg w-auto"
         >
           <div class="items-center gap-2 mb-4">
             <label id="link-label" class="mr-2">Link to art source:</label>
-            <InputText aria-labelledby="link-label" v-model="links[index]" :disabled="!ok" />
+            <InputText aria-labelledby="link-label" v-model="links[index - 1]" :disabled="!ok" />
           </div>
           <FileUpload
             mode="basic"
@@ -34,14 +34,20 @@
             :multiple="isAdmin"
             label="Upload an image"
           />
-          <Button
-            :disabled="!ok"
-            type="submit"
-            :class="`${checked ? 'cursor-pointer' : '!cursor-not-allowed'} mt-8 fixed`"
-            >Submit</Button
-          >
         </div>
-        <Button v-if="isAdmin" :disabled="!ok" label="Upload More" @click="pictures.value++" />
+        <Button
+          v-if="isAdmin"
+          :disabled="!ok"
+          label="Upload More"
+          @click="pictures++"
+          class="mt-8"
+        />
+        <Button
+          :disabled="!ok"
+          type="submit"
+          :class="`${checked ? 'cursor-pointer' : '!cursor-not-allowed'}  fixed`"
+          >Submit</Button
+        >
         <Toast />
       </div>
     </form>
@@ -91,13 +97,13 @@ const uploadedFile = (e) => {
   addToast('success', 'Success', 'File sucessfully uploaded.')
 }
 
-const submit = async() => {
+const submit = async () => {
   uploading.value = true
   if (!user) {
     addToast('warn', 'Warning', 'You must be logged in to submit art.')
     throw new Error('not logged in')
   }
-
+  console.log(files.value, links.value)
   if (files.value.length != links.value.length) {
     addToast('warn', 'Warning', "You didn't attach a file.")
     throw new Error('there is no file')
@@ -109,7 +115,9 @@ const submit = async() => {
     formData.append('link', links.value[i])
     formData.append('image', files.value[i])
     allForms.value.push(formData)
+    console.log(allForms.value)
   }
+  console.log(allForms.value.type)
   const res = await imageStore.uploadImage(allForms.value)
   if (!res.ok) {
     addToast('error', 'Error', 'Failed to submit art.')
