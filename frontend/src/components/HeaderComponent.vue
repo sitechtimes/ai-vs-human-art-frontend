@@ -8,7 +8,11 @@
         <RouterLink v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
           <span :href="href" v-bind="props.action" @click="navigate">{{ item.label }}</span>
         </RouterLink>
-        <RouterLink v-if="item.route == null" v-slot="{ href, navigate }" :to="'/sign'">
+        <RouterLink
+          v-if="item.route == null && !signedIn"
+          v-slot="{ href, navigate }"
+          :to="'/sign'"
+        >
           <span :href="href" v-bind="props.action" @click="navigate">
             {{ signedIn ? null : 'Sign In' }}
           </span>

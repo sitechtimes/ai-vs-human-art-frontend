@@ -70,7 +70,6 @@ const imageStore = useImageStore()
 
 const checked = ref(false)
 const checked2 = ref(false)
-const type = ref('unscreened')
 const links = ref([])
 const files = ref([])
 const uploading = ref(false)
@@ -111,14 +110,14 @@ const submit = async () => {
 
   for (let i = 0; i < links.value.length; i++) {
     const formData = new FormData()
-    formData.append('type', type.value)
+    formData.append('type', 'unscreened')
     formData.append('link', links.value[i])
     formData.append('image', files.value[i])
+    console.log(formData.link, formData.image)
     allForms.value.push(formData)
-    console.log(allForms.value)
+    console.log(allForms.value[i])
   }
-  console.log(allForms.value.type)
-  const res = await imageStore.uploadImage(allForms.value)
+  const res = await imageStore.uploadImage(allForms.value[0])
   if (!res.ok) {
     addToast('error', 'Error', 'Failed to submit art.')
     throw new Error((await res.json()).error)
