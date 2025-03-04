@@ -24,6 +24,7 @@ import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
 import { ref } from 'vue'
 import { useArtStore } from '../../stores/art'
+import HelpInstructions from './HelpInstructions.vue'
 
 const artStore = useArtStore()
 const helpButton = ref(false)

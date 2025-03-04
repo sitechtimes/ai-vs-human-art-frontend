@@ -1,22 +1,18 @@
 <template>
   <div id="themes">
-    <div class="min-w-max">
-      <div class="justify-items-center">
-        <Tabs value="0">
-          <TabList class="tabs grid items-stretch w-full">
-            <Tab
-              v-for="tab in tabs"
-              :value="tab.value"
-              :key="tab.value"
-              @click="getType(tab.value)"
-              class="justify-self-auto"
-              :disabled="tab.disabled"
-              >{{ tab.name }}</Tab
-            >
-          </TabList>
-        </Tabs>
-      </div>
-    </div>
+    <Tabs value="0">
+      <TabList class="tabs grid items-stretch w-full">
+        <Tab
+          v-for="tab in tabsObject"
+          :value="tab.value"
+          :key="tab.value"
+          @click="getType(tab.value)"
+          class="justify-self-auto"
+          :disabled="tab.disabled"
+          >{{ tab.name }}</Tab
+        >
+      </TabList>
+    </Tabs>
   </div>
 </template>
 
@@ -28,7 +24,7 @@ import { useArtStore } from '../../stores/art.ts'
 import { ref, watch } from 'vue'
 const artStore = useArtStore()
 
-const tabs = ref([
+const tabsObject = ref([
   { name: 'Randomized', value: '0', disabled: false },
   { name: 'Realistic', value: '1', disabled: false },
   { name: 'Anime', value: '2', disabled: false },
@@ -46,7 +42,7 @@ const getType = (value) => {
 watch(
   () => artStore.imageType,
   async () => {
-    for (const tab of tabs.value) {
+    for (const tab of tabsObject.value) {
       tab.disabled = true
       setTimeout(() => {
         tab.disabled = false

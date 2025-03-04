@@ -10,11 +10,8 @@
 
 <script setup>
 import GameFooter from '../components/GamePage/GameFooter.vue'
-// import TabsComponent from '../components/GamePage/TabsComponent.vue'
+import TabsComponent from '../components/GamePage/TabsComponent.vue'
 import GameArt from '../components/GamePage/GameArt.vue'
-import { useArtStore } from '../stores/art'
-const artStore = useArtStore()
-console.log(artStore.imageType)
 </script>
 
 <style scoped></style>
