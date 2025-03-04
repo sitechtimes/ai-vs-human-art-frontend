@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-
+const backend = import.meta.env.VITE_PUBLIC_BACKEND
 export const useArtStore = defineStore('art', () => {
   const combo = ref(0)
   const imageType = ref('Randomized')
@@ -18,7 +18,7 @@ export const useArtStore = defineStore('art', () => {
       }
     }
     try {
-      const res = await fetch(`http://localhost:3000/items/random?type=${type}`, requestOptions)
+      const res = await fetch(`${backend}/items/random?type=${type}`, requestOptions)
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
       const data = await res.json()
       return data
