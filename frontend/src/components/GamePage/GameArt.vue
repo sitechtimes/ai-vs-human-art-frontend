@@ -50,7 +50,6 @@
 </template>
 
 <script setup>
-import TabsComponent from '../GamePage/TabsComponent.vue'
 import Button from 'primevue/button'
 import Dialog from 'primevue/dialog'
 import Image from 'primevue/image'

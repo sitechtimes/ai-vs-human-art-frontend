@@ -4,13 +4,12 @@
       <TabList class="tabs grid items-stretch w-full">
         <Tab
           v-for="tab in tabsObject"
-          :value="tab.value"
           :key="tab.value"
-          @click="getType(tab.value)"
-          class="justify-self-auto"
+          @click="getType(tab.name)"
+          class="sm:text-[10vw]"
           :disabled="tab.disabled"
-          >{{ tab.name }}</Tab
-        >
+          >{{ tab.name }}
+        </Tab>
       </TabList>
     </Tabs>
   </div>
@@ -25,17 +24,19 @@ import { ref, watch } from 'vue'
 const artStore = useArtStore()
 
 const tabsObject = ref([
-  { name: 'Randomized', value: '0', disabled: false },
-  { name: 'Realistic', value: '1', disabled: false },
-  { name: 'Anime', value: '2', disabled: false },
-  { name: 'Photography', value: '3', disabled: false },
-  { name: 'Still Life', value: '4', disabled: false }
+  { name: 'Randomized', disabled: false },
+  { name: 'Realistic', disabled: false },
+  { name: 'Anime', disabled: false },
+  { name: 'Photography', disabled: false },
+  { name: 'Still Life', disabled: false }
 ])
-
-const getType = (value) => {
-  for (let i = 0; i < tabs.value.length; i++) {
-    if (value == tabs.value[i].value) {
-      artStore.imageType = tabs.value[i].name
+for (let i = 0; i < tabsObject.value.length; i++) {
+  console.log(tabsObject.value[i].name)
+}
+const getType = (name) => {
+  for (let i = 0; i < tabsObject.value.length; i++) {
+    if (name == tabsObject.value[i].name) {
+      artStore.imageType = tabsObject.value[i].name
     }
   }
 }
