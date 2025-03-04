@@ -116,10 +116,7 @@ const evilMatch = () => {
 
 // clear an existing warning if user matches password
 // will not add warning as user types out password, because that's annoying
-watch(password, () => {
-  if (notMatch.value) evilMatch()
-})
-watch(passwordConfirm, () => {
+watch([password, passwordConfirm], () => {
   if (notMatch.value) evilMatch()
 })
 </script>

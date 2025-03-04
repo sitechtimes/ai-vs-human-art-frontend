@@ -16,9 +16,9 @@
         </a>
       </template>
       <template #end>
-        <div class="flex items-center gap-0.5">
+        <div class="flex items-center gap-0.5" v-if="userStore.currentUser">
           <router-link to="/profile">
-            <img v-if="signedIn" src="/nagi.jpg" alt="placeholder avatar" class="rounded-full" />
+            <img src="/userImg.svg" alt="placeholder avatar" class="rounded-full dark:invert" />
           </router-link>
         </div>
       </template>

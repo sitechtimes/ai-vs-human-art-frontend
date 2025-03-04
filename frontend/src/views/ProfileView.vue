@@ -34,14 +34,17 @@ import { useUserStore } from '../stores/user'
 import Fieldset from 'primevue/fieldset'
 import Button from 'primevue/button'
 import Message from 'primevue/message'
-
 const userStore = useUserStore()
+import { useRouter } from 'vue-router'
 const user = userStore.currentUser
 const username = ref('')
 const email = ref('')
 const visible = ref(true)
-
-const logout = () => userStore.logout()
+const router = useRouter()
+const logout = () => {
+  userStore.logout()
+  router.push({ path: '/' })
+}
 
 function getData(user) {
   visible.value = false
@@ -49,6 +52,7 @@ function getData(user) {
   username.value = user.username
   email.value = user.email
 }
+
 if (user) {
   getData(user)
 }
