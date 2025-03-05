@@ -93,6 +93,8 @@ const addToast = (severity, summary, detail) => {
 
 const uploadedFile = (e) => {
   files.value.push(e.files[0])
+  // file is pushed upopn upload and stays when removed :/
+  // fix later after i fygure out upload
   addToast('success', 'Success', 'File sucessfully uploaded.')
 }
 
@@ -107,17 +109,22 @@ const submit = async () => {
     addToast('warn', 'Warning', "You didn't attach a file.")
     throw new Error('there is no file')
   }
+  //try usign file reader isntead
 
   for (let i = 0; i < links.value.length; i++) {
-    const formData = new FormData()
-    formData.append('type', 'unscreened')
-    formData.append('link', links.value[i])
-    formData.append('image', files.value[i])
-    console.log(formData.link, formData.image)
-    allForms.value.push(formData)
-    console.log(allForms.value[i])
+    const fileReader = new FileReader()
   }
-  const res = await imageStore.uploadImage(allForms.value[0])
+
+  // for (let i = 0; i < links.value.length; i++) {
+  //   const formData = new FormData()
+  //   formData.append('type', 'unscreened')
+  //   formData.append('link', links.value[i])
+  //   formData.append('image', files.value[i])
+  //   console.log(formData)
+  //   allForms.value.push(formData)
+  //   console.log(allForms.value[i])
+  // }
+  const res = await imageStore.uploadImage(allForms.value)
   if (!res.ok) {
     addToast('error', 'Error', 'Failed to submit art.')
     throw new Error((await res.json()).error)
