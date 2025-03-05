@@ -5,8 +5,9 @@
         <Tab
           v-for="tab in tabsObject"
           :key="tab.value"
+          :value="tab.value"
           @click="getType(tab.name)"
-          class="sm:text-[10vw]"
+          class="sm:text-[5vw]"
           :disabled="tab.disabled"
           >{{ tab.name }}
         </Tab>
@@ -24,10 +25,10 @@ import { ref, watch } from 'vue'
 const artStore = useArtStore()
 
 const tabsObject = ref([
-  { name: 'Randomized', disabled: false },
-  { name: 'Realistic', disabled: false },
-  { name: 'Anime', disabled: false },
-  { name: 'Photography', disabled: false },
+  { name: 'Randomized', disabled: false, value: 0 },
+  { name: 'Realistic', disabled: false, value: 1 },
+  { name: 'Anime', disabled: false, value: 2 },
+  { name: 'Photography', disabled: false, value: 3 },
   { name: 'Still Life', disabled: false }
 ])
 for (let i = 0; i < tabsObject.value.length; i++) {
