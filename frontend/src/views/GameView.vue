@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="w-full bg-[var(--p-content-background)]">
-      <TabsComponent class="w-min mx-auto" />
+      <TabsComponent class="w-min mx-auto mt-12" />
     </div>
     <GameArt />
     <GameFooter />

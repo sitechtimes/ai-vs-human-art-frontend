@@ -7,9 +7,10 @@
           :key="tab.value"
           :value="tab.value"
           @click="getType(tab.name)"
-          class="sm:text-[5vw]"
+          class="text-[5vw] sm:text-[4vw] md:text-[3vw] lg:text-[2vw]"
           :disabled="tab.disabled"
-          >{{ tab.name }}
+        >
+          {{ tab.name }}
         </Tab>
       </TabList>
     </Tabs>
