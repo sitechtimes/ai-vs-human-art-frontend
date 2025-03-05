@@ -17,7 +17,7 @@
           />
         </div>
 
-        <Button label="Image 1" class="flex self-center m-3" @click="checkAnswer(0)"></Button>
+        <Button label="Image 1" :disabled="buttonDisabled" class="flex self-center m-3" @click="checkAnswer(0)"></Button>
       </div>
 
       <span>vs</span>
@@ -32,7 +32,7 @@
           />
         </div>
 
-        <Button label="Image 2" class="flex self-center m-3" @click="checkAnswer(0)"></Button>
+        <Button label="Image 2" :disabled="buttonDisabled" class="flex self-center m-3" @click="checkAnswer(0)"></Button>
       </div>
     </div>
     <div>
@@ -58,7 +58,7 @@ import Toast from 'primevue/toast';
 import { useToast } from 'primevue/usetoast';
 
 
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import { useArtStore } from '../../stores/art.ts'
 
 const artStore = useArtStore()
@@ -66,6 +66,7 @@ const artPieces = ref([])
 const isVisible = ref(false)
 const answer = ref(1) // which one is ai
 const correct = ref(false)
+const buttonDisabled = ref(true)
 
 const toast = useToast();
 
@@ -125,8 +126,14 @@ const checkAnswer = (e) => {
   }
   isVisible.value = !isVisible.value
   artStore.total++
-  setTimeout(getArt, 1500)
+  buttonDisabled.value = !buttonDisabled.value
+
+setTimeout(getArt, 1500)
 }
+
+watch(artPieces, () => {
+  buttonDisabled.value = !buttonDisabled.value
+})
 
 //right, total, user 
 onMounted(() => {
