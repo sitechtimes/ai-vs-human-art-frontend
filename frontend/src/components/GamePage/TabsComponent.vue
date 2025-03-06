@@ -32,9 +32,6 @@ const tabsObject = ref([
   { name: 'Photography', disabled: false, value: 3 },
   { name: 'Still Life', disabled: false }
 ])
-for (let i = 0; i < tabsObject.value.length; i++) {
-  console.log(tabsObject.value[i].name)
-}
 const getType = (name) => {
   for (let i = 0; i < tabsObject.value.length; i++) {
     if (name == tabsObject.value[i].name) {

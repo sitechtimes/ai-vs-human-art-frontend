@@ -1,6 +1,6 @@
 <template>
   <div class="mt-[58px]">
-    <Message severity="error" v-if="visible"
+    <Message severity="error"
       >You are not
       <RouterLink to="/sign" class="underline">logged in</RouterLink>
     </Message>
@@ -39,7 +39,6 @@ import { useRouter } from 'vue-router'
 const user = userStore.currentUser
 const username = ref('')
 const email = ref('')
-const visible = ref(true)
 const router = useRouter()
 const logout = () => {
   userStore.logout()
