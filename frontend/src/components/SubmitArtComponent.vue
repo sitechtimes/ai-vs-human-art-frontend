@@ -76,7 +76,7 @@ const uploading = ref(false)
 const ok = computed(() => checked.value && checked2.value && files.value && !uploading.value)
 const pictures = ref(1)
 const toast = useToast()
-const allForms = ref([])
+const allFiles = ref([])
 
 const userStore = useUserStore()
 const user = userStore.currentUser
@@ -112,7 +112,18 @@ const submit = async () => {
   //try usign file reader isntead
 
   for (let i = 0; i < links.value.length; i++) {
-    const fileReader = new FileReader()
+    const fileData = JSON.stringify({
+      type: 'unscreened',
+      link: links.value[i],
+      image: files.value[i]
+    })
+    const blob = new Blob([fileData], { type: 'application/json' })
+    const file = new File([blob], 'filename')
+    console.log(file)
+    // file.push('type', 'unscreened')
+    // file.push('link', links.value[i])
+    // file.push('image', files.value[i])
+    allFiles.value.push(file)
   }
 
   // for (let i = 0; i < links.value.length; i++) {
@@ -124,7 +135,7 @@ const submit = async () => {
   //   allForms.value.push(formData)
   //   console.log(allForms.value[i])
   // }
-  const res = await imageStore.uploadImage(allForms.value)
+  const res = await imageStore.uploadImage(allFiles.value)
   if (!res.ok) {
     addToast('error', 'Error', 'Failed to submit art.')
     throw new Error((await res.json()).error)
