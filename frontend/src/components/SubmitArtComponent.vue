@@ -76,7 +76,6 @@ const uploading = ref(false)
 const ok = computed(() => checked.value && checked2.value && files.value && !uploading.value)
 const pictures = ref(1)
 const toast = useToast()
-const allFiles = ref([])
 
 const userStore = useUserStore()
 const user = userStore.currentUser
@@ -105,37 +104,19 @@ const submit = async () => {
     throw new Error('not logged in')
   }
   console.log(files.value, links.value)
-  if (files.value.length != links.value.length) {
+  if (files.value.length !== links.value.length) {
     addToast('warn', 'Warning', "You didn't attach a file.")
     throw new Error('there is no file')
   }
-  //try usign file reader isntead
 
-  for (let i = 0; i < links.value.length; i++) {
-    const fileData = JSON.stringify({
-      type: 'unscreened',
-      link: links.value[i],
-      image: files.value[i]
-    })
-    const blob = new Blob([fileData], { type: 'application/json' })
-    const file = new File([blob], 'filename')
-    console.log(file)
-    // file.push('type', 'unscreened')
-    // file.push('link', links.value[i])
-    // file.push('image', files.value[i])
-    allFiles.value.push(file)
-  }
+  const formData = new FormData()
+  files.value.forEach((file, index) => {
+    formData.append(`tags[${index}]`, links.value[index])
+    formData.append('image', file)
+  })
+  formData.append('type', 'unscreened')
 
-  // for (let i = 0; i < links.value.length; i++) {
-  //   const formData = new FormData()
-  //   formData.append('type', 'unscreened')
-  //   formData.append('link', links.value[i])
-  //   formData.append('image', files.value[i])
-  //   console.log(formData)
-  //   allForms.value.push(formData)
-  //   console.log(allForms.value[i])
-  // }
-  const res = await imageStore.uploadImage(allFiles.value)
+  const res = await imageStore.uploadImage(formData)
   if (!res.ok) {
     addToast('error', 'Error', 'Failed to submit art.')
     throw new Error((await res.json()).error)
@@ -143,7 +124,6 @@ const submit = async () => {
   addToast('success', 'Success', 'Art successfully submitted.')
   links.value = []
   files.value = []
-  allForms.value = []
 
   uploading.value = false
 }
