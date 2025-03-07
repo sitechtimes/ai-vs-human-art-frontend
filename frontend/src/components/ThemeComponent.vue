@@ -20,7 +20,10 @@
           <div id="colors" @mouseleave="hover = selected">
             <div
               id="color-text"
-              :style="`background-color: var(--p-${hover}-${dark ? 400 : 500}); color: ${dark ? 'white' : 'black'};`"
+              :style="{
+                backgroundColor: `var(--p-${hover}-${dark ? 400 : 500})`,
+                color: dark ? 'white' : 'black'
+              }"
             >
               <output>{{ hover }}</output>
             </div>
@@ -29,11 +32,15 @@
               v-for="(color, index) in themeList"
               :key="color"
               class="circle"
-              :style="`
-              background-image: linear-gradient(${(index / themeList.length) * -2 * Math.PI}rad, var(--p-${color}-200), var(--p-${color}-600)); 
-              transform: translate(calc(-50% - ${Math.sin((index / themeList.length) * 2 * Math.PI) * 290 * Number(open)}%), calc(-50% - ${Math.cos((index / themeList.length) * 2 * Math.PI) * 290 * Number(open)}%));
-              z-index: ${themeList.length - index + 5};
-              ${color === selected ? 'border-width: 3px; box-shadow: 0 0 8px var(--p-primary-' + (dark ? '600' : '200') + '); border-color: var(--p-primary-' + (dark ? '100' : '600') : ''}`"
+              :style="{
+                backgroundImage: `linear-gradient(${(index / themeList.length) * -2 * Math.PI}rad, var(--p-${color}-200), var(--p-${color}-600))`,
+                transform: `translate(calc(-50% - ${Math.sin((index / themeList.length) * 2 * Math.PI) * 290 * Number(open)}%), calc(-50% - ${Math.cos((index / themeList.length) * 2 * Math.PI) * 290 * Number(open)}%))`,
+                zIndex: `${themeList.length - index + 5}`,
+                borderWidth: color === selected ? `3px` : '',
+                boxShadow:
+                  color === selected ? `0 0 8px var(--p-primary-${dark ? '600' : '200'}` : '',
+                borderColor: `var(--p-primary-'${dark ? '100' : '600'}`
+              }"
               @click="changeColors(color)"
               @mouseenter="hover = color"
               :aria-label="color"
