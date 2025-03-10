@@ -24,6 +24,10 @@
             <label id="link-label" class="mr-2">Link to art source:</label>
             <InputText aria-labelledby="link-label" v-model="links[index - 1]" :disabled="!ok" />
           </div>
+          <div class="items-center gap-2 mb-4">
+            <label id="link-label" class="mr-2">Artist Name:</label>
+            <InputText aria-labelledby="link-label" v-model="names[index - 1]" :disabled="!ok" />
+          </div>
           <FileUpload
             mode="basic"
             :disabled="!ok"
@@ -71,6 +75,7 @@ const imageStore = useImageStore()
 const checked = ref(false)
 const checked2 = ref(false)
 const links = ref([])
+const names = ref([])
 const files = ref([])
 const uploading = ref(false)
 const ok = computed(() => checked.value && checked2.value && files.value && !uploading.value)
@@ -112,6 +117,7 @@ const submit = async () => {
   const formData = new FormData()
   files.value.forEach((file, index) => {
     formData.append(`tags[${index}]`, links.value[index])
+    formData.append('name', names.value[index])
     formData.append('image', file)
   })
   formData.append('type', 'unscreened')

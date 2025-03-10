@@ -89,6 +89,8 @@ const getArt = async () => {
       }
     }
   }
+  console.log(artPieces.value)
+  console.log(artPieces.value[0])
 }
 const checkAnswer = (e) => {
   if (e != gameAnswer.value) {
