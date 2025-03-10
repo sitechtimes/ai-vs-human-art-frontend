@@ -8,9 +8,14 @@
   </div>
     <div v-if="gameStarted">
       <GameArt />
-      <GameFooter />
       <Button @click="endGame">End Game</Button>
     </div>
+      <Dialog :visible="gameEnded" header="Thank you for playing!" modal>
+        <p>Here are your stats:</p>
+        <p> {{ artStore.correctCounter }} / {{artStore.total}}</p>
+        <p>out of {{ artStore.total }} games you picked {{ artStore.correctCounter }} as AI Generated pieces. Good Job!</p>
+      </Dialog>
+    <GameFooter />
   </div>
 </template>
 
@@ -20,17 +25,23 @@ import GameFooter from '../components/GamePage/GameFooter.vue'
 import TabsComponent from '../components/GamePage/TabsComponent.vue'
 import GameArt from '../components/GamePage/GameArt.vue'
 import Button from 'primevue/button'
+import Dialog from 'primevue/dialog'
 import { useArtStore } from '../stores/art'
 
 const artStore = useArtStore()
 const gameStarted = ref(false)
+const gameEnded = ref(false)
 
+//ill make this not ass later trust
 function startGame() {
   gameStarted.value = true
+  gameEnded.value = false
 }
 
 function endGame() {
+  //there probably IS an easier way to do this that i WILL implement later :D 
   gameStarted.value = false
+  gameEnded.value = true
   console.log('combo:', artStore.combo,'total:' ,artStore.total, 'Correct:',artStore.correctCounter)
 }
 

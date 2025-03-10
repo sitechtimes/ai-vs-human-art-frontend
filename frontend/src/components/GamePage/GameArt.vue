@@ -40,10 +40,8 @@
         <Toast />
         <!-- eslint-disable vue/no-v-model-argument -->
          <!-- i think v-model:visible is the only way to toggle visibility with this primevue component, so unfortunately were going to have to break an eslint rule -->
-        <!-- <Dialog v-model:visible="isVisible" modal>
-          <p v-if="correct">Your answer is correct!</p>
-          <p v-else>Your answer is incorrect!</p>
-          <Button label="Try Again?" class="flex self-center" @click="getArt"></Button>
+<!--         <Dialog v-model:visible="isVisible" modal>
+          <p>peepeepoopoo</p>
         </Dialog> -->
       </div>
     </div>
