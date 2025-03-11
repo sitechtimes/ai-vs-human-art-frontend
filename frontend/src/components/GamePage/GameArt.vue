@@ -58,8 +58,10 @@ import { useToast } from 'primevue/usetoast';
 
 import { ref, onMounted, watch } from 'vue'
 import { useArtStore } from '../../stores/art.ts'
+import { useSaveStore } from '@/stores/savegame.ts';
 
 const artStore = useArtStore()
+const saveStore = useSaveStore()
 const artPieces = ref([])
 const isVisible = ref(false)
 const answer = ref(1) // which one is ai
@@ -114,16 +116,16 @@ function showToast() {
 const checkAnswer = (e) => {
   if (e != answer.value) {
     correct.value = false
-    artStore.combo = 0
+    saveStore.combo = 0
     showToast()
   } else {
     correct.value = true
     showToast()
-    artStore.correctCounter++
-    artStore.combo++
+    saveStore.correctCounter++
+    saveStore.combo++
   }
   isVisible.value = !isVisible.value
-  artStore.total++
+  saveStore.total++
   buttonDisabled.value = !buttonDisabled.value
 
 setTimeout(getArt, 1500)

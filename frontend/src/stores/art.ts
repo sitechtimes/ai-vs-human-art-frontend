@@ -1,10 +1,7 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
 
 export const useArtStore = defineStore('art', () => {
-  const combo = ref(0)
-  const total = ref(0)
-  const correctCounter = ref(0)
+
   //actions
 
   /**
@@ -32,9 +29,6 @@ export const useArtStore = defineStore('art', () => {
 
 
   return {
-    combo,
-    total,
-    correctCounter,
     getRandomArt
   }
 })

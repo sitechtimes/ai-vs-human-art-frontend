@@ -12,8 +12,8 @@
     </div>
       <Dialog :visible="gameEnded" header="Thank you for playing!" modal>
         <p>Here are your stats:</p>
-        <p> {{ artStore.correctCounter }} / {{artStore.total}}</p>
-        <p>out of {{ artStore.total }} games you picked {{ artStore.correctCounter }} as AI Generated pieces. Good Job!</p>
+        <p> {{ saveStore.correctCounter }} / {{saveStore.total}}</p>
+        <p>out of {{ saveStore.total }} games you picked {{ saveStore.correctCounter }} as AI Generated pieces. Good Job!</p>
       </Dialog>
     <GameFooter />
   </div>
@@ -26,9 +26,9 @@ import TabsComponent from '../components/GamePage/TabsComponent.vue'
 import GameArt from '../components/GamePage/GameArt.vue'
 import Button from 'primevue/button'
 import Dialog from 'primevue/dialog'
-import { useArtStore } from '../stores/art'
+import { useSaveStore } from '../stores/savegame'
 
-const artStore = useArtStore()
+const saveStore = useSaveStore()
 const gameStarted = ref(false)
 const gameEnded = ref(false)
 
@@ -42,8 +42,8 @@ function endGame() {
   //there probably IS an easier way to do this that i WILL implement later :D 
   gameStarted.value = false
   gameEnded.value = true
-  console.log('combo:', artStore.combo,'total:' ,artStore.total, 'Correct:',artStore.correctCounter)
-}
+  console.log('combo:', saveStore.combo,'total:' ,saveStore.total, 'Correct:',saveStore.correctCounter)
+}saveStore.saveGame()
 
 </script>
 
