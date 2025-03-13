@@ -129,6 +129,7 @@ const submit = async () => {
   }
   addToast('success', 'Success', 'Art successfully submitted.')
   links.value = []
+  names.value = []
   files.value = []
 
   uploading.value = false
