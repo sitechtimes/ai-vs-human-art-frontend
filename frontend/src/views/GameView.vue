@@ -27,6 +27,9 @@ import GameArt from '../components/GamePage/GameArt.vue'
 import Button from 'primevue/button'
 import Dialog from 'primevue/dialog'
 import { useSaveStore } from '../stores/savegame'
+import { useUserStore } from '../stores/user'
+
+const user = useUserStore().currentUser
 
 const saveStore = useSaveStore()
 const gameStarted = ref(false)
@@ -43,7 +46,12 @@ function endGame() {
   gameStarted.value = false
   gameEnded.value = true
   console.log('combo:', saveStore.combo,'total:' ,saveStore.total, 'Correct:',saveStore.correctCounter)
-}saveStore.saveGame()
+  if(user) {
+    saveStore.saveGame(user)
+  } else {
+    console.log("user isnt logged in do something about it ")
+  }
+}
 
 </script>
 
