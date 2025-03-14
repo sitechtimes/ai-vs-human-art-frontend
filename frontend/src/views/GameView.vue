@@ -3,12 +3,12 @@
     <div class="w-full bg-[var(--p-content-background)] mt-[58px]">
       <TabsComponent class="max-w-screen w-full" />
     </div>
-    <div>
-    <Button v-if="!gameStarted" @click="startGame">Start Game</Button>
+    <div class="flex flex-col">
+    <Button v-if="!gameStarted" class="self-center w-2/5" @click="startGame">Start Game</Button>
   </div>
-    <div v-if="gameStarted">
+    <div v-if="gameStarted" class="flex flex-col">
       <GameArt />
-      <Button @click="endGame">End Game</Button>
+      <Button @click="endGame" class="self-center w-2/5">End Game</Button>
     </div>
       <Dialog :visible="gameEnded" header="Thank you for playing!" modal>
         <p>Here are your stats:</p>
@@ -49,7 +49,7 @@ function endGame() {
   if(user) {
     saveStore.saveGame(user)
   } else {
-    console.log("user isnt logged in do something about it ")
+    console.log("user isnt logged in do something about it")
   }
 }
 
