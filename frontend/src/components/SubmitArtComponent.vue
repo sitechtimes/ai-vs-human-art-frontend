@@ -34,9 +34,9 @@
             accept="image/*"
             :maxFileSize="1024 * 1024 * 15"
             customUpload
-            @select="uploadedFile"
             :multiple="isAdmin"
             label="Upload an image"
+            v-model="files[index - 1]"
           />
         </div>
         <Button
@@ -95,14 +95,8 @@ const addToast = (severity, summary, detail) => {
   })
 }
 
-const uploadedFile = (e) => {
-  files.value.push(e.files[0])
-  // file is pushed upopn upload and stays when removed :/
-  // fix later after i fygure out upload
-  addToast('success', 'Success', 'File sucessfully uploaded.')
-}
-
 const submit = async () => {
+  console.log(files.value)
   uploading.value = true
   if (!user) {
     addToast('warn', 'Warning', 'You must be logged in to submit art.')
