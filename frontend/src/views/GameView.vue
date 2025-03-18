@@ -4,17 +4,21 @@
       <TabsComponent class="max-w-screen w-full" />
     </div>
     <div class="flex flex-col">
-    <Button v-if="!gameStarted" class="self-center w-2/5" @click="startGame">Start Game</Button>
+    <Button v-if="!gameStarted" class="self-center w-2/5 mt-60" @click="startGame">Start Game</Button>
   </div>
     <div v-if="gameStarted" class="flex flex-col">
       <GameArt />
       <Button @click="endGame" class="self-center w-2/5">End Game</Button>
     </div>
-      <Dialog :visible="gameEnded" header="Thank you for playing!" modal>
+    <div id="results" class="flex flex-col">
+      <Dialog v-model:visible="gameEnded" header="Thank you for playing!" modal>
         <p>Here are your stats:</p>
         <p> {{ saveStore.correctCounter }} / {{saveStore.total}}</p>
         <p>out of {{ saveStore.total }} games you picked {{ saveStore.correctCounter }} as AI Generated pieces. Good Job!</p>
+        <br>
+        <router-link to="/sign" class="underline" v-if="!user">Please sign in to save your game</router-link>
       </Dialog>
+    </div>
     <GameFooter />
   </div>
 </template>
@@ -48,8 +52,6 @@ function endGame() {
   console.log('combo:', saveStore.combo,'total:' ,saveStore.total, 'Correct:',saveStore.correctCounter)
   if(user) {
     saveStore.saveGame(user)
-  } else {
-    console.log("user isnt logged in do something about it")
   }
 }
 
