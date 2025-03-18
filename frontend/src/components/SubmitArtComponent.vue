@@ -34,12 +34,9 @@
             accept="image/*"
             :maxFileSize="1024 * 1024 * 15"
             customUpload
-            auto
-            ref="fileUpload"
-            @select="uploadedFile(e, index)"
+            @input="uploadedFile"
             :multiple="isAdmin"
             label="Upload an image"
-            v-model="files[index - 1]"
           />
         </div>
         <Button
@@ -53,7 +50,8 @@
           :disabled="!ok"
           type="submit"
           :class="`${checked ? 'cursor-pointer' : '!cursor-not-allowed'}  fixed`"
-          >Submit</Button
+        >
+          Submit</Button
         >
         <Toast />
       </div>
@@ -98,14 +96,10 @@ const addToast = (severity, summary, detail) => {
   })
 }
 
-const uploadedFile = (e, index) => {
-  console.log(index)
-  console.log(e.files[0])
-  const imageIndex = index - 1
-  console.log(imageIndex)
-  if (files.value[imageIndex]) {
-    files.value.splice(imageIndex, 1, e.files[0])
-  } else files.value.splice(imageIndex, 0, e.files[0])
+const uploadedFile = (e) => {
+  if (files.value[pictures.value - 1]) {
+    files.value.splice(pictures.value - 1, 1, e.files[0])
+  } else files.value.splice(pictures.value - 1, 0, e.files[0])
 
   addToast('success', 'Success', 'File sucessfully uploaded.')
 }
