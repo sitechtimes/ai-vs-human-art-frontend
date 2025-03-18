@@ -34,7 +34,9 @@
             accept="image/*"
             :maxFileSize="1024 * 1024 * 15"
             customUpload
-            @select="uploadedFile"
+            auto
+            ref="fileUpload"
+            @select="uploadedFile(e, index)"
             :multiple="isAdmin"
             label="Upload an image"
           />
@@ -95,10 +97,15 @@ const addToast = (severity, summary, detail) => {
   })
 }
 
-const uploadedFile = (e) => {
-  files.value.push(e.files[0])
-  // file is pushed upopn upload and stays when removed :/
-  // fix later after i fygure out upload
+const uploadedFile = (e, index) => {
+  console.log(index)
+  console.log(e.files[0])
+  const imageIndex = index - 1
+  console.log(imageIndex)
+  if (files.value[imageIndex]) {
+    files.value.splice(imageIndex, 1, e.files[0])
+  } else files.value.splice(imageIndex, 0, e.files[0])
+
   addToast('success', 'Success', 'File sucessfully uploaded.')
 }
 
