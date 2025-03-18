@@ -39,6 +39,7 @@
             @select="uploadedFile(e, index)"
             :multiple="isAdmin"
             label="Upload an image"
+            v-model="files[index - 1]"
           />
         </div>
         <Button
@@ -110,6 +111,7 @@ const uploadedFile = (e, index) => {
 }
 
 const submit = async () => {
+  console.log(files.value)
   uploading.value = true
   if (!user) {
     addToast('warn', 'Warning', 'You must be logged in to submit art.')
@@ -136,6 +138,7 @@ const submit = async () => {
   }
   addToast('success', 'Success', 'Art successfully submitted.')
   links.value = []
+  names.value = []
   files.value = []
 
   uploading.value = false

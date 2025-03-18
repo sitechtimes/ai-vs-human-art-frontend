@@ -70,7 +70,9 @@ const portraitBools = {
 
 const getArt = async () => {
   isVisible.value = false
-  artPieces.value = [await artStore.getRandomArt('human'), await artStore.getRandomArt('ai')]
+  const humanArt = await artStore.getRandomArt('human')
+  const aiArt = await artStore.getRandomArt('ai')
+  artPieces.value = [humanArt.secure_url, aiArt.secure_url]
   gameAnswer.value = 1
   if (artPieces.value.some((el) => el === null)) {
     alert('Failed to fetch art (boowomp)')
