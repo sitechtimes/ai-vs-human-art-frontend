@@ -85,7 +85,6 @@ const getArt = async () => {
   artPieces.value = [await artStore.getRandomArt('human'), await artStore.getRandomArt('ai')]
   // await getFromBackend()
   answer.value = 1
-  artPieces.value.reverse()
   if (artPieces.value.some((el) => el === null)) {
     alert('Failed to fetch art (boowomp)')
     artPieces.value = []
@@ -103,6 +102,7 @@ const getArt = async () => {
       }
     }
   }
+  console.log(answer.value)
 }
 
 function showToast() {
