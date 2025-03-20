@@ -16,21 +16,17 @@
     <form @submit.prevent="submit">
       <div class="flex flex-auto flex-col gap-4 items-center w-full">
         <div
-          v-for="index in pictures"
+          v-for="(picture, index) in pictures"
           :key="index"
           class="flex flex-col border-2 p-8 rounded-lg w-auto"
         >
           <div class="items-center gap-2 mb-4">
             <label id="link-label" class="mr-2">Link to art source:</label>
-            <InputText
-              aria-labelledby="link-label"
-              v-model="pictures[index - 1].name"
-              :disabled="!ok"
-            />
+            <InputText aria-labelledby="link-label" v-model="picture.link" :disabled="!ok" />
           </div>
           <div class="items-center gap-2 mb-4">
             <label id="link-label" class="mr-2">Artist Name:</label>
-            <InputText aria-labelledby="link-label" v-model="names[index - 1]" :disabled="!ok" />
+            <InputText aria-labelledby="link-label" v-model="picture.name" :disabled="!ok" />
           </div>
           <FileUpload
             mode="basic"
@@ -47,7 +43,7 @@
           v-if="isAdmin"
           :disabled="!ok"
           label="Upload More"
-          @click="pictures++"
+          @click="addNewPicture"
           class="mt-8"
         />
         <Button
@@ -64,7 +60,7 @@
 </template>
 
 <script setup>
-import { computed, ref, useTemplateRef } from 'vue'
+import { computed, ref } from 'vue'
 import InputText from 'primevue/inputtext'
 import FileUpload from 'primevue/fileupload'
 import Checkbox from 'primevue/checkbox'
@@ -79,14 +75,24 @@ const imageStore = useImageStore()
 
 const checked = ref(false)
 const checked2 = ref(false)
-const links = ref([])
-const names = ref([])
-const files = ref([])
 const uploading = ref(false)
 const ok = computed(() => checked.value && checked2.value && files.value && !uploading.value)
-const pictures = ref(1)
 const toast = useToast()
-const fileUpload = useTemplateRef('fileUpload')
+const pictures = ref([
+  {
+    link: '',
+    name: '',
+    file: ''
+  }
+])
+
+const addNewPicture = () => {
+  pictures.value.push({
+    link: '',
+    name: '',
+    file: ''
+  })
+}
 
 const userStore = useUserStore()
 const user = userStore.currentUser
@@ -102,11 +108,12 @@ const addToast = (severity, summary, detail) => {
 }
 
 const uploadedFile = (e) => {
-  console.log(e.files)
-  console.log(e.files[0])
-  if (files.value[pictures.value - 1]) {
-    files.value.splice(pictures.value - 1, 1, e.files[0])
-  } else files.value.splice(pictures.value - 1, 0, e.files[0])
+  fileObject[pictures.value - 1].value.file = e.files[0]
+  // console.log(e.files)
+  // console.log(e.files[0])
+  // if (files.value[pictures.value - 1]) {
+  //   files.value.splice(pictures.value - 1, 1, e.files[0])
+  // } else files.value.splice(pictures.value - 1, 0, e.files[0])
 
   addToast('success', 'Success', 'File sucessfully uploaded.')
 }
@@ -117,7 +124,7 @@ const makeFileObject = (link, name, file) => {
   this.file = file
 }
 
-const fileObject = [makeFileObject]
+// const fileObject = [makeFileObject]
 
 const submit = async () => {
   console.log(files.value)
