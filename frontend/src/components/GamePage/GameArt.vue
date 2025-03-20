@@ -32,7 +32,7 @@
           />
         </div>
 
-        <Button label="Image 2" :disabled="buttonDisabled" class="flex self-center m-3" @click="checkAnswer(0)"></Button>
+        <Button label="Image 2" :disabled="buttonDisabled" class="flex self-center m-3" @click="checkAnswer(1)"></Button>
       </div>
     </div>
     <div>
@@ -102,11 +102,10 @@ const getArt = async () => {
       }
     }
   }
-  console.log(answer.value)
 }
 
 function showToast() {
-  if (!correct.value) {
+  if (correct.value) {
     toast.add({severity: 'success', summary: 'Correct', detail: 'This piece was AI Generated!', life: 1500})
   } else {
     toast.add({severity: 'error', summary: 'Incorrect', detail: 'This piece was made by {{artist name //placeholder?}}', life: 1500})

@@ -6,12 +6,12 @@
     <div class="flex flex-col">
     <Button v-if="!gameStarted" class="self-center w-2/5 mt-60" @click="startGame">Start Game</Button>
   </div>
-    <div v-if="gameStarted" class="flex flex-col h-full">
+    <div v-if="gameStarted" class="flex flex-col h-[calc(100%-68px)]">
       <GameArt />
       <Button @click="endGame" class="self-center w-2/5 mb-0">End Game</Button>
     </div>
     <div id="results" class="flex flex-col">
-      <Dialog v-model:visible="gameEnded" header="Thank you for playing!" modal>
+      <Dialog v-model:visible="results" header="Thank you for playing!" modal>
         <p>Here are your stats:</p>
         <p> {{ saveStore.correctCounter }} / {{saveStore.total}}</p>
         <p>out of {{ saveStore.total }} games you picked {{ saveStore.correctCounter }} as AI Generated pieces. Good Job!</p>
@@ -37,19 +37,16 @@ const user = useUserStore().currentUser
 
 const saveStore = useSaveStore()
 const gameStarted = ref(false)
-const gameEnded = ref(false)
 
-//ill make this not ass later trust
+const results = ref(false)
+
 function startGame() {
   gameStarted.value = true
-  gameEnded.value = false
 }
 
 function endGame() {
-  //there probably IS an easier way to do this that i WILL implement later :D 
   gameStarted.value = false
-  gameEnded.value = true
-  console.log('combo:', saveStore.combo,'total:' ,saveStore.total, 'Correct:',saveStore.correctCounter)
+  results.value = true
   if(user) {
     saveStore.saveGame(user)
   }
