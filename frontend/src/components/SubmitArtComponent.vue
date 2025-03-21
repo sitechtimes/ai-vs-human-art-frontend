@@ -34,8 +34,7 @@
             accept="image/*"
             :maxFileSize="1024 * 1024 * 15"
             customUpload
-            @select="uploadedFile"
-            ref="fileUpload"
+            v-model="picture.file"
             label="Upload an image"
           />
         </div>
@@ -76,7 +75,7 @@ const imageStore = useImageStore()
 const checked = ref(false)
 const checked2 = ref(false)
 const uploading = ref(false)
-const ok = computed(() => checked.value && checked2.value && files.value && !uploading.value)
+const ok = computed(() => checked.value && checked2.value && pictures.value && !uploading.value)
 const toast = useToast()
 const pictures = ref([
   {
@@ -107,48 +106,29 @@ const addToast = (severity, summary, detail) => {
   })
 }
 
-const uploadedFile = (e) => {
-  fileObject[pictures.value - 1].value.file = e.files[0]
-  // console.log(e.files)
-  // console.log(e.files[0])
-  // if (files.value[pictures.value - 1]) {
-  //   files.value.splice(pictures.value - 1, 1, e.files[0])
-  // } else files.value.splice(pictures.value - 1, 0, e.files[0])
-
-  addToast('success', 'Success', 'File sucessfully uploaded.')
-}
-
-const makeFileObject = (link, name, file) => {
-  this.link = link
-  this.name = name
-  this.file = file
-}
-
-// const fileObject = [makeFileObject]
+// const uploadedFile = (e) => {
+//   picture.file = e.files[0]
+//   addToast('success', 'Success', 'File sucessfully uploaded.')
+// }
 
 const submit = async () => {
-  console.log(files.value)
   uploading.value = true
   if (!user) {
     addToast('warn', 'Warning', 'You must be logged in to submit art.')
     throw new Error('not logged in')
   }
-  console.log(files.value, links.value)
-  if (
-    files.value.length !== links.value.length ||
-    files.value.length !== names.value.length ||
-    links.value.length !== names.value.length
-  ) {
-    addToast('warn', 'Warning', 'Missing input, please add a file, link, or name.')
-    throw new Error('there is no file')
-  }
+  pictures.value.forEach((picture) => {
+    if (picture.link === '' || picture.name === '' || picture.file === '') {
+      addToast('warn', 'Warning', 'Field is missing, all inputs are required.')
+      return
+    }
+  })
 
   const formData = new FormData()
-  files.value.forEach((file, index) => {
-    formData.append(`tags[${index}]`, links.value[index])
-    formData.append('name', names.value[index])
-    console.log(names.value[index])
-    formData.append('image', file)
+  pictures.value.forEach((picture) => {
+    formData.append(`link`, picture.link)
+    formData.append('name', picture.name)
+    formData.append('image', picture.file)
   })
   formData.append('type', 'unscreened')
 
@@ -158,11 +138,13 @@ const submit = async () => {
     throw new Error((await res.json()).error)
   }
   addToast('success', 'Success', 'Art successfully submitted.')
-  links.value = []
-  names.value = []
-  files.value = []
-  fileUpload.value = []
-
+  pictures.value = [
+    {
+      link: '',
+      name: '',
+      file: ''
+    }
+  ]
   uploading.value = false
 }
 </script>
