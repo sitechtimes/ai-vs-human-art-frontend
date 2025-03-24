@@ -6,6 +6,7 @@
       </template>
       <template #center>
         <p>COMBO: {{ saveStore.combo }}</p>
+        <p class="ml-6">High Score: {{ saveStore.highScore }}</p>
       </template>
       <template #end>
         <Button @click="toggleHelpButton">Instructions</Button>
@@ -18,7 +19,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import Toolbar from 'primevue/toolbar'
 import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'

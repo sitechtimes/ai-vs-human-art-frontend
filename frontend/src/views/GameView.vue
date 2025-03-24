@@ -50,6 +50,9 @@ function endGame() {
   if(user) {
     saveStore.saveGame(user)
   }
+  if (saveStore.combo > saveStore.highScore) {
+    saveStore.highScore = saveStore.combo
+  }
 }
 
 </script>

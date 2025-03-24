@@ -3,6 +3,7 @@ import { ref } from 'vue'
 
 export const useSaveStore = defineStore('save', () => {
     const combo = ref(0)
+    const highScore = ref(0)
     const total = ref(0)
     const correctCounter = ref(0)
 
@@ -28,6 +29,7 @@ export const useSaveStore = defineStore('save', () => {
 
     return {
         combo,
+        highScore,
         total,
         correctCounter,
         saveGame

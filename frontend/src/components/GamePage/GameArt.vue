@@ -134,7 +134,6 @@ watch(artPieces, () => {
   buttonDisabled.value = !buttonDisabled.value
 })
 
-//right, total, user 
 onMounted(() => {
   getArt()
 })
