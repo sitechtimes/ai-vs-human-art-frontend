@@ -107,7 +107,7 @@ const addToast = (severity, summary, detail) => {
 }
 
 const uploadedFile = (e) => {
-  pictures.value[pictures.value.legnth - 1].file = e.files[0]
+  picture.file = e.files[0]
   addToast('success', 'Success', 'File sucessfully uploaded.')
 }
 
@@ -127,11 +127,8 @@ const submit = async () => {
   const formData = new FormData()
   pictures.value.forEach((picture) => {
     formData.append(`link`, picture.link)
-    console.log(picture.link)
     formData.append('name', picture.name)
-    console.log(picture.name)
     formData.append('image', picture.file)
-    console.log(picture.file)
     picture.link = ''
     picture.name = ''
     picture.file = null
