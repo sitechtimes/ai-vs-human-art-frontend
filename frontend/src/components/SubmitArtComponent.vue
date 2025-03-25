@@ -34,7 +34,7 @@
             accept="image/*"
             :maxFileSize="1024 * 1024 * 15"
             customUpload
-            @select="uploadedFile"
+            @select="uploadedFile($event, index)"
             label="Upload an image"
           />
         </div>
@@ -89,7 +89,7 @@ const addNewPicture = () => {
   pictures.value.push({
     link: '',
     name: '',
-    file: null
+    file: ''
   })
 }
 
@@ -106,8 +106,8 @@ const addToast = (severity, summary, detail) => {
   })
 }
 
-const uploadedFile = (e) => {
-  picture.file = e.files[0]
+const uploadedFile = (e, index) => {
+  pictures.value[index].file = e.files[0]
   addToast('success', 'Success', 'File sucessfully uploaded.')
 }
 
@@ -129,9 +129,7 @@ const submit = async () => {
     formData.append(`link`, picture.link)
     formData.append('name', picture.name)
     formData.append('image', picture.file)
-    picture.link = ''
-    picture.name = ''
-    picture.file = null
+    console.log(picture.name, picture.file)
   })
   formData.append('type', 'unscreened')
 
