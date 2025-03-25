@@ -34,7 +34,7 @@
             accept="image/*"
             :maxFileSize="1024 * 1024 * 15"
             customUpload
-            @select="uploadedFile($event, index)"
+            @select="uploadedFile"
             label="Upload an image"
           />
         </div>
@@ -84,7 +84,6 @@ const pictures = ref([
     file: ''
   }
 ])
-const allFormData = ref([])
 
 const addNewPicture = () => {
   pictures.value.push({
@@ -107,8 +106,8 @@ const addToast = (severity, summary, detail) => {
   })
 }
 
-const uploadedFile = (e, index) => {
-  pictures.value[index].file = e.files[0]
+const uploadedFile = (e) => {
+  picture.file = e.files[0]
   addToast('success', 'Success', 'File sucessfully uploaded.')
 }
 
@@ -127,15 +126,16 @@ const submit = async () => {
 
   const formData = new FormData()
   pictures.value.forEach((picture) => {
-    formData.append(`tag`, picture.link)
+    formData.append(`link`, picture.link)
     formData.append('name', picture.name)
     formData.append('image', picture.file)
-    console.log(picture.name, picture.file)
+    picture.link = ''
+    picture.name = ''
+    picture.file = null
   })
   formData.append('type', 'unscreened')
-  allFormData.value.push(formData)
 
-  const res = await imageStore.uploadImage(allFormData)
+  const res = await imageStore.uploadImage(formData)
   if (!res.ok) {
     addToast('error', 'Error', 'Failed to submit art.')
     throw new Error((await res.json()).error)
@@ -145,10 +145,9 @@ const submit = async () => {
     {
       link: '',
       name: '',
-      file: null
+      file: ''
     }
   ]
-  allFormData.value = []
   uploading.value = false
 }
 </script>
