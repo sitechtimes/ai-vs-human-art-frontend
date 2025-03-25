@@ -6,7 +6,7 @@
       </template>
       <template #center>
         <p>COMBO: {{ saveStore.combo }}</p>
-        <p class="ml-6">High Score: {{ saveStore.highScore }}</p>
+        <p class="ml-6">High Score: {{ user.userHighScore }}</p>
       </template>
       <template #end>
         <Button @click="toggleHelpButton">Instructions</Button>
@@ -25,9 +25,11 @@ import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
 import { ref } from 'vue'
 import { useSaveStore } from '../../stores/savegame'
+import { useUserStore } from '../../stores/user'
 import HelpInstructions from './HelpInstructions.vue'
 
 const saveStore = useSaveStore()
+const user = useUserStore()
 const helpButton = ref(false)
 
 function toggleHelpButton() {

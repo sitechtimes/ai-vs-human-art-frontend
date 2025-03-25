@@ -59,7 +59,9 @@ import { useToast } from 'primevue/usetoast';
 import { ref, onMounted, watch } from 'vue'
 import { useArtStore } from '../../stores/art.ts'
 import { useSaveStore } from '@/stores/savegame.ts';
+import { useUserStore } from '@/stores/user.ts';
 
+const user = useUserStore()
 const artStore = useArtStore()
 const saveStore = useSaveStore()
 const artPieces = ref([])
@@ -122,6 +124,9 @@ const checkAnswer = (e) => {
     showToast()
     saveStore.correctCounter++
     saveStore.combo++
+    if (saveStore.combo > user.highScore) {
+    user.highScore = saveStore.combo
+  }
   }
   isVisible.value = !isVisible.value
   saveStore.total++

@@ -8,6 +8,7 @@ export const useUserStore = defineStore('user', () => {
   const token = ref('')
   const isAuthenticated = ref(false)
   const isAdmin = ref(false)
+  const userHighScore = ref(0)
 
   // actions
   const register = async (username: string, email: string, password: string) => {
@@ -49,13 +50,13 @@ export const useUserStore = defineStore('user', () => {
       if (data.user.role == 'admin') {
         isAdmin.value = true
       }
-      // token.value = data.user.refresh_token
+
+      userHighScore.value = data.highscore
       token.value = data.access_token
       userId.value = data.user._id
-      // console.log('well noting for now')
+
       localStorage.setItem('token', token.value)
       localStorage.setItem('userId', userId.value)
-      // console.log('success!! logged in')
     } catch (error) {
       console.error('Login Error', error)
     }
@@ -101,6 +102,7 @@ export const useUserStore = defineStore('user', () => {
     token,
     isAuthenticated,
     isAdmin,
+    userHighScore,
     register,
     login,
     auth,
