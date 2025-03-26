@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
+const backendUrl = import.meta.env.VITE_PUBLIC_BACKEND
 
 export const useSaveStore = defineStore('save', () => {
   const combo = ref(0)
@@ -18,7 +19,7 @@ export const useSaveStore = defineStore('save', () => {
       })
     }
     try {
-      const res = await fetch('http://localhost:3000/game/savegame', requestOptions)
+      const res = await fetch(`${backendUrl}/game/savegame`, requestOptions)
       if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`)
       }

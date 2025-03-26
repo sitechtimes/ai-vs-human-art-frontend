@@ -109,18 +109,11 @@ export const useUserStore = defineStore('user', () => {
       }
     }
     try {
-<<<<<<< Updated upstream
       const res = await fetch(`${backendUrl}/api/auth/highscore`, requestOptions)
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
     } catch (error) {
       console.error('highscore update problem', error)
     }
-=======
-      const res = await fetch(`${backendURI}/api/auth/highscore`, requestOptions)
-      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
-    } catch (error) {
-    console.error("highscore update problem", error)}
->>>>>>> Stashed changes
   }
 
   return {
@@ -133,11 +126,7 @@ export const useUserStore = defineStore('user', () => {
     register,
     login,
     auth,
-<<<<<<< Updated upstream
     logout,
     updateHighScore
-=======
-    logout
->>>>>>> Stashed changes
   }
 })
