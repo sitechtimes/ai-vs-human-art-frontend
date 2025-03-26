@@ -126,9 +126,9 @@ const submit = async () => {
 
   const formData = new FormData()
   pictures.value.forEach((picture) => {
-    formData.append(`link`, picture.link)
-    formData.append('name', picture.name)
-    formData.append('image', picture.file)
+    formData.append(`tag`, picture.link)
+    formData.append(`name`, picture.name)
+    formData.append(`image`, picture.file)
     console.log(picture.name, picture.file)
   })
   formData.append('type', 'unscreened')
