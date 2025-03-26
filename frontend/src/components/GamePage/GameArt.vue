@@ -57,7 +57,7 @@ import { useToast } from 'primevue/usetoast';
 
 
 import { ref, onMounted, watch } from 'vue'
-import { useArtStore } from '../../stores/art.ts'
+import { useArtStore } from '../../stores/art.js'
 import { useSaveStore } from '@/stores/savegame.ts';
 import { useUserStore } from '@/stores/user.ts';
 
