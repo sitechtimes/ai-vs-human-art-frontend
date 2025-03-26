@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <div class="h-[90vh]">
     <Toolbar class="fixed w-screen bottom-0">
       <template #start>
         <Button as="router-link" label="Router" to="/" id="game-home-button">Home</Button>
       </template>
       <template #center>
         <p>COMBO: {{ saveStore.combo }}</p>
-        <p class="ml-6">High Score: {{ user.userHighScore }}</p>
+        <p class="ml-6">High Score: {{ user.highScore }}</p>
       </template>
       <template #end>
         <Button @click="toggleHelpButton">Instructions</Button>

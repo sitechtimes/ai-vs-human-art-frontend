@@ -6,7 +6,7 @@
     <div class="flex flex-col">
     <Button v-if="!gameStarted" class="self-center w-2/5 mt-60" @click="startGame">Start Game</Button>
   </div>
-    <div v-if="gameStarted" class="flex flex-col h-[calc(100%-68px)]">
+    <div v-if="gameStarted" class="flex flex-col h-[75vh]">
       <GameArt />
       <Button @click="endGame" class="self-center w-2/5 mb-0">End Game</Button>
     </div>

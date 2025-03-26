@@ -8,7 +8,7 @@ export const useUserStore = defineStore('user', () => {
   const token = ref('')
   const isAuthenticated = ref(false)
   const isAdmin = ref(false)
-  const userHighScore = ref(0)
+  const highScore = ref(0)
 
   // actions
   const register = async (username: string, email: string, password: string) => {
@@ -51,7 +51,7 @@ export const useUserStore = defineStore('user', () => {
         isAdmin.value = true
       }
 
-      userHighScore.value = data.highscore
+      highScore.value = data.highscore
       token.value = data.access_token
       userId.value = data.user._id
 
@@ -102,7 +102,7 @@ export const useUserStore = defineStore('user', () => {
     token,
     isAuthenticated,
     isAdmin,
-    userHighScore,
+    highScore,
     register,
     login,
     auth,
