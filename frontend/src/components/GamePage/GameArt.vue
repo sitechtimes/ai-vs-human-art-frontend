@@ -17,7 +17,12 @@
           />
         </div>
 
-        <Button label="Image 1" :disabled="buttonDisabled" class="flex self-center m-3" @click="checkAnswer(0)"></Button>
+        <Button
+          label="Image 1"
+          :disabled="buttonDisabled"
+          class="flex self-center m-3"
+          @click="checkAnswer(0)"
+        ></Button>
       </div>
 
       <span>vs</span>
@@ -32,15 +37,20 @@
           />
         </div>
 
-        <Button label="Image 2" :disabled="buttonDisabled" class="flex self-center m-3" @click="checkAnswer(1)"></Button>
+        <Button
+          label="Image 2"
+          :disabled="buttonDisabled"
+          class="flex self-center m-3"
+          @click="checkAnswer(1)"
+        ></Button>
       </div>
     </div>
     <div>
       <div id="result">
         <Toast />
         <!-- eslint-disable vue/no-v-model-argument -->
-         <!-- i think v-model:visible is the only way to toggle visibility with this primevue component, so unfortunately were going to have to break an eslint rule -->
-<!--         <Dialog v-model:visible="isVisible" modal>
+        <!-- i think v-model:visible is the only way to toggle visibility with this primevue component, so unfortunately were going to have to break an eslint rule -->
+        <!--         <Dialog v-model:visible="isVisible" modal>
           <p>peepeepoopoo</p>
         </Dialog> -->
       </div>
@@ -52,14 +62,13 @@
 import Button from 'primevue/button'
 //import Dialog from 'primevue/dialog'
 import Image from 'primevue/image'
-import Toast from 'primevue/toast';
-import { useToast } from 'primevue/usetoast';
-
+import Toast from 'primevue/toast'
+import { useToast } from 'primevue/usetoast'
 
 import { ref, onMounted, watch } from 'vue'
 import { useArtStore } from '../../stores/art.js'
-import { useSaveStore } from '@/stores/savegame.ts';
-import { useUserStore } from '@/stores/user.ts';
+import { useSaveStore } from '../../stores/savegame'
+import { useUserStore } from '../../stores/user'
 
 const user = useUserStore()
 const artStore = useArtStore()
@@ -70,8 +79,7 @@ const answer = ref(1) // which one is ai
 const correct = ref(false)
 const buttonDisabled = ref(true)
 
-const toast = useToast();
-
+const toast = useToast()
 
 const getFromBackend = async () => {
   artPieces.value = [await artStore.getRandomArt('human'), await artStore.getRandomArt('ai')]
@@ -108,9 +116,19 @@ const getArt = async () => {
 
 function showToast() {
   if (correct.value) {
-    toast.add({severity: 'success', summary: 'Correct', detail: 'This piece was AI Generated!', life: 1500})
+    toast.add({
+      severity: 'success',
+      summary: 'Correct',
+      detail: 'This piece was AI Generated!',
+      life: 1500
+    })
   } else {
-    toast.add({severity: 'error', summary: 'Incorrect', detail: 'This piece was made by {{artist name //placeholder?}}', life: 1500})
+    toast.add({
+      severity: 'error',
+      summary: 'Incorrect',
+      detail: 'This piece was made by {{artist name //placeholder?}}',
+      life: 1500
+    })
   }
 }
 
@@ -125,14 +143,14 @@ const checkAnswer = (e) => {
     saveStore.correctCounter++
     saveStore.combo++
     if (saveStore.combo > user.highScore) {
-    user.highScore = saveStore.combo
-  }
+      user.highScore = saveStore.combo
+    }
   }
   isVisible.value = !isVisible.value
   saveStore.total++
   buttonDisabled.value = !buttonDisabled.value
 
-setTimeout(getArt, 1500)
+  setTimeout(getArt, 1500)
 }
 
 watch(artPieces, () => {
