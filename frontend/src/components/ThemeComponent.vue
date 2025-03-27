@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="overflow-hidden bottom-0 right-0">
     <!--Get icon for the change theme button or smth & move button to bottom right-->
     <Button
       type="button"

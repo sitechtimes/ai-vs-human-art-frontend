@@ -9,13 +9,13 @@
       <div class="absolute top-24 right-0 xl:right-32 mr-4">
         <img src="/logo_black_white.gif" class="mt-16 sm:mt-0" />
         <div class="relative sm:left-32 flex flex-col w-11/12 mx-auto sm:w-80 sm:mx-0 gap-10">
-          <Button as="router-link" placeholder="Overriden" class="btn" label="Gaym" to="/game" />
+          <Button as="router-link" placeholder="Overriden" class="btn" label="Game" to="/game" />
 
           <Button
             as="router-link"
             placeholder="Overriden"
             class="btn"
-            label="Submit your Art"
+            label="Submit Your Art"
             to="/submit"
           />
 

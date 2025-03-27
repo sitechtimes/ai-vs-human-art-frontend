@@ -1,13 +1,10 @@
 <template>
-  <div
-    v-if="artPieces.length"
-    class="flex flex-col items-center h-[calc(100%-68px)] w-100% overflow-hidden"
-  >
+  <div v-if="artPieces.length" class="flex flex-col items-center h-[calc(100%-68px)] w-full">
     <div
-      class="flex flex-row gap-x-10 m-[5vh] justify-between items-center max-w-[50dvw] max-h-[70dvh] md:max-w-[40dvh] sm:max-h-[90dvh]"
+      class="flex flex-col gap-10 m-[5vh] mb-[9vh] md:mb-0 mb-6vh justify-between items-center xl:max-w-[50dvw] lg:max-h-[60dvh] lg:max-w-[70dvw] max-w-full md:max-w-[80dvw] md:flex-row"
     >
       <div class="flex flex-col items-center">
-        <div class="flex overflow-hidden max-w-full max-h-full">
+        <div class="flex overflow-hidden">
           <Image
             :src="artPieces[0]"
             alt=""
@@ -17,13 +14,17 @@
           />
         </div>
 
-        <Button label="Image 1" class="flex self-center m-3" @click="checkAnswer(0)"></Button>
+        <Button
+          label="Image 1"
+          class="flex self-center m-3 scale-90 sm:scale-100"
+          @click="checkAnswer(0)"
+        ></Button>
       </div>
 
       <span>vs</span>
 
       <div class="flex flex-col items-center">
-        <div class="flex overflow-hidden max-w-full max-h-full">
+        <div class="flex overflow-hidden">
           <Image
             :src="artPieces[1]"
             class="object-contain justify-center"
@@ -32,7 +33,11 @@
           />
         </div>
 
-        <Button label="Image 2" class="flex self-center m-3" @click="checkAnswer(0)"></Button>
+        <Button
+          label="Image 2"
+          class="flex self-center m-3 scale-90 sm:scale-100"
+          @click="checkAnswer(1)"
+        ></Button>
       </div>
     </div>
     <div>
@@ -63,19 +68,9 @@ const isVisible = ref(false)
 const answer = ref(1) // which one is ai
 const correct = ref(false)
 
-const getFromBackend = async () => {
-  artPieces.value = [await artStore.getRandomArt('human'), await artStore.getRandomArt('ai')]
-  // the only reason this is pulled out is so
-}
-const portraitBools = {
-  0: ref(true),
-  1: ref(true)
-}
-
 const getArt = async () => {
   isVisible.value = false
   artPieces.value = [await artStore.getRandomArt('human'), await artStore.getRandomArt('ai')]
-  // await getFromBackend()
   answer.value = 1
   if (artPieces.value.some((el) => el === null)) {
     alert('Failed to fetch art (boowomp)')
@@ -86,22 +81,11 @@ const getArt = async () => {
     artPieces.value.reverse()
     answer.value = 0
   }
-  for (let i = 0; i < artPieces.value.length; i++) {
-    let getImg = new window.Image()
-    getImg.src = artPieces[i]
-    getImg.onload = () => {
-      if (getImg.width <= getImg.height) {
-        portraitBools[i].value = true
-        console.log(portraitBools[i].value)
-      }
-    }
-  }
 }
 const checkAnswer = (e) => {
   if (e != answer.value) {
     correct.value = false
     artStore.combo = 0
-    console.log(artStore.combo)
   } else {
     correct.value = true
     artStore.combo++

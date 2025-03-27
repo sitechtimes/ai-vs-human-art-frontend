@@ -1,8 +1,8 @@
 <template>
   <div id="themes">
-    <Tabs value="0" class="w-full">
-      <TabList class="flex flex-wrap">
-        <Tab v-for="tab in tabs" :value="tab.value" :key="tab.value" class="sm:text-[2.5vw]">{{
+    <Tabs value="0" class="w-screen">
+      <TabList class="flex flex-wrap overflow-auto">
+        <Tab v-for="tab in tabs" :value="tab.value" :key="tab.value" class="text-xs md:text-base">{{
           tab.name
         }}</Tab>
       </TabList>
@@ -16,11 +16,10 @@ import TabList from 'primevue/tablist'
 import Tab from 'primevue/tab'
 
 const tabs = [
-  { name: 'Randomized', value: '0' },
+  { name: 'Random', value: '0' },
   { name: 'Realistic', value: '1' },
   { name: 'Anime', value: '2' },
-  { name: 'Photography', value: '3' },
-  { name: 'Still Life', value: '4' }
+  { name: 'Cartoon', value: '3' }
 ]
 </script>
 
