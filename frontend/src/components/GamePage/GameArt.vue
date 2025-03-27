@@ -67,12 +67,6 @@ const artPieces = ref([])
 const isVisible = ref(false)
 const answer = ref(1) // which one is ai
 const correct = ref(false)
-<<<<<<< HEAD
-
-const getArt = async () => {
-  isVisible.value = false
-  artPieces.value = [await artStore.getRandomArt('human'), await artStore.getRandomArt('ai')]
-=======
 const humanArt = ref([])
 const aiArt = ref([])
 const populateDictionaries = async (category) => {
@@ -92,7 +86,6 @@ const getArt = () => {
     humanArt.value[Math.floor(Math.random() * humanArt.value.length)],
     aiArt.value[Math.floor(Math.random() * aiArt.value.length)]
   ]
->>>>>>> 55-making-the-different-types-of-art-work-on-game
   answer.value = 1
   if (artPieces.value.some((el) => el === null)) {
     alert('Failed to fetch art (boowomp)')
