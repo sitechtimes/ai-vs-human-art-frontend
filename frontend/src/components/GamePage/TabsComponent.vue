@@ -1,26 +1,55 @@
 <template>
   <div id="themes">
-    <Tabs value="0" class="w-screen">
-      <TabList class="flex flex-wrap overflow-auto">
-        <Tab v-for="tab in tabs" :value="tab.value" :key="tab.value" class="text-xs md:text-base">{{
-          tab.name
-        }}</Tab>
+    <Tabs value="0">
+      <TabList class="tabs grid items-stretch w-full">
+        <Tab
+          v-for="tab in tabsObject"
+          :key="tab.value"
+          :value="tab.value"
+          @click="getType(tab.name)"
+          class="text-[5vw] sm:text-[4vw] md:text-[3vw] lg:text-[2vw]"
+          :disabled="tab.disabled"
+        >
+          {{ tab.name }}
+        </Tab>
       </TabList>
     </Tabs>
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import Tabs from 'primevue/tabs'
 import TabList from 'primevue/tablist'
 import Tab from 'primevue/tab'
+import { useArtStore } from '../../stores/art.ts'
+import { ref, watch } from 'vue'
+const artStore = useArtStore()
 
-const tabs = [
-  { name: 'Random', value: '0' },
-  { name: 'Realistic', value: '1' },
-  { name: 'Anime', value: '2' },
-  { name: 'Cartoon', value: '3' }
-]
+const tabsObject = ref([
+  { name: 'Randomized', disabled: false, value: 0 },
+  { name: 'Realistic', disabled: false, value: 1 },
+  { name: 'Anime', disabled: false, value: 2 },
+  { name: 'Photography', disabled: false, value: 3 },
+  { name: 'Still Life', disabled: false }
+])
+const getType = (name) => {
+  for (let i = 0; i < tabsObject.value.length; i++) {
+    if (name == tabsObject.value[i].name) {
+      artStore.imageType = tabsObject.value[i].name
+    }
+  }
+}
+watch(
+  () => artStore.imageType,
+  async () => {
+    for (const tab of tabsObject.value) {
+      tab.disabled = true
+      setTimeout(() => {
+        tab.disabled = false
+      }, 5000)
+    }
+  }
+)
 </script>
 
 <style scoped></style>

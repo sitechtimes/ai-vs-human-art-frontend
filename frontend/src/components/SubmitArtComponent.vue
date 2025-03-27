@@ -62,9 +62,7 @@ import { useToast } from 'primevue/usetoast'
 import TermsService from './TermsService.vue'
 
 const imageStore = useImageStore()
-
 const checked = ref(false)
-const checked2 = ref(false)
 const type = ref('unscreened')
 const links = ref([''])
 const files = ref([])
@@ -104,7 +102,7 @@ async function submit() {
       toast.add({
         severity: 'warn',
         summary: 'Warning',
-        detail: "You didn't attach a file.",
+        detail: "You didn't attach a file or link.",
         life: 3000
       })
       throw new Error('there is no file')
@@ -127,6 +125,7 @@ async function submit() {
     }
     links.value = []
     files.value = []
+    // backend route for bulk uploads to push ina rray
   } catch (error) {
     console.error(error)
     toast.add({
