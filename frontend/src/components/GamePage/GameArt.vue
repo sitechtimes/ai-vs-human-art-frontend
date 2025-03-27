@@ -55,7 +55,7 @@ import Dialog from 'primevue/dialog'
 import Image from 'primevue/image'
 
 import { ref, onMounted, watch } from 'vue'
-import { useArtStore } from '../../stores/art.ts'
+import { useArtStore } from '../../stores/art.js'
 
 const artStore = useArtStore()
 const artPieces = ref([])

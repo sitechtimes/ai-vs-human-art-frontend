@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 const backend = import.meta.env.VITE_PUBLIC_BACKEND
 export const useImageStore = defineStore('image', () => {
-  const uploadImage = async (formData: FormData) => {
+  const uploadImage = async (formData) => {
     const requestOptions = {
       method: 'POST',
       headers: { Authorization: `Bearer ${localStorage.token}` },
