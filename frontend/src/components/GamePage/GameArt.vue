@@ -81,10 +81,6 @@ const buttonDisabled = ref(true)
 
 const toast = useToast()
 
-const getFromBackend = async () => {
-  artPieces.value = [await artStore.getRandomArt('human'), await artStore.getRandomArt('ai')]
-  // the only reason this is pulled out is so
-}
 const portraitBools = {
   0: ref(true),
   1: ref(true)

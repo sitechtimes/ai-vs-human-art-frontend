@@ -23,7 +23,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { ref } from 'vue'
 import GameFooter from '../components/GamePage/GameFooter.vue'
 import TabsComponent from '../components/GamePage/TabsComponent.vue'
@@ -49,6 +49,7 @@ function endGame() {
   results.value = true
   if(user) {
     saveStore.saveGame(user)
+    user.updateHighScore()
   }
 }
 

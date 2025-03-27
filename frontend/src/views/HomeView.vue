@@ -1,7 +1,3 @@
-<!-- //skibidi gyat ohio rizz rizz mr beast lunchly ksi "thick of it"
-//:3
-// - tina -->
-
 <template>
   <div>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
