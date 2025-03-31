@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
+import { ref } from 'vue'
 
-const BACKEND_URL = import.meta.env.VITE_ADDRESS
+const BACKEND_URL = import.meta.env.VITE_PUBLIC_BACKEND
 
 export const useArtStore = defineStore('art', () => {
   const combo = ref(0)

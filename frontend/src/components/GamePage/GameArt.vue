@@ -78,11 +78,6 @@ const buttonDisabled = ref(true)
 
 const toast = useToast()
 
-const portraitBools = {
-  0: ref(true),
-  1: ref(true)
-}
-
 const getArt = async () => {
   isVisible.value = false
   artPieces.value = []
@@ -144,10 +139,6 @@ watch(artPieces, () => {
   buttonDisabled.value = !buttonDisabled.value
 })
 
-onMounted(async () => {
-  await populateDictionaries()
-  getArt()
-})
 watch(
   () => artStore.imageType,
   async () => {

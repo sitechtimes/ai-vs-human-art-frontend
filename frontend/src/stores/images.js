@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 
-const BACKEND_URL = import.meta.env.VITE_ADDRESS
+const BACKEND_URL = import.meta.env.VITE_PUBLIC_BACKEND
 
 export const useImageStore = defineStore('image', () => {
   const uploadImage = async (formData) => {
