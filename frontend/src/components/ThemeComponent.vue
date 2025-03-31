@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="overflow-hidden bottom-0 right-0">
     <!--Get icon for the change theme button or smth & move button to bottom right-->
     <Button
       type="button"
@@ -45,7 +45,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { onMounted, ref } from 'vue'
 import Button from 'primevue/button'
 import Popover from 'primevue/popover'
@@ -77,7 +77,7 @@ const selected = ref('')
 // showing popover
 const themes = ref()
 const open = ref(false)
-function toggle(event: Event) {
+function toggle(event) {
   themes.value.toggle(event)
   hover.value = selected.value ?? 'emerald'
 }
@@ -107,7 +107,7 @@ function toggleDarkMode() {
   localStorage.setItem('dark', String(dark.value))
 }
 
-function changeColors(color: string) {
+function changeColors(color) {
   const palettes = {
     0: `{${color}.200}`,
     50: `{${color}.50}`,
