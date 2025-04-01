@@ -2,6 +2,10 @@
 
 This is the frontend for the website, using a MEVN stack.
 
+## SETUP
+
+Please remember to create a .env fle inside '/frontend' with the backend as `VITE_PUBLIC_BACKEND`. Thanks.
+
 ## Recommended IDE Setup
 
 [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur). We also reccommend the MongoDB extension for ease.

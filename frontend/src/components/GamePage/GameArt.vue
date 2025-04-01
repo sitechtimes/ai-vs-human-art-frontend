@@ -1,13 +1,10 @@
 <template>
-  <div
-    v-if="artPieces.length"
-    class="flex flex-col items-center h-[calc(100%-68px)] w-100% overflow-hidden"
-  >
+  <div v-if="artPieces.length" class="flex flex-col items-center h-[calc(100%-68px)] w-full">
     <div
-      class="flex flex-row gap-x-10 m-[5vh] justify-between items-center max-w-[50dvw] max-h-[70dvh] md:max-w-[40dvh] sm:max-h-[90dvh]"
+      class="flex flex-col gap-10 m-[5vh] mb-[9vh] md:mb-0 mb-6vh justify-between items-center xl:max-w-[50dvw] lg:max-h-[60dvh] lg:max-w-[70dvw] max-w-full md:max-w-[80dvw] md:flex-row"
     >
       <div class="flex flex-col items-center">
-        <div class="flex overflow-hidden max-w-full max-h-full">
+        <div class="flex overflow-hidden">
           <Image
             :src="artPieces[0]"
             alt=""
@@ -20,7 +17,7 @@
         <Button
           label="Image 1"
           :disabled="buttonDisabled"
-          class="flex self-center m-3"
+          class="flex self-center m-3 scale-90 sm:scale-100"
           @click="checkAnswer(0)"
         ></Button>
       </div>
@@ -28,7 +25,7 @@
       <span>vs</span>
 
       <div class="flex flex-col items-center">
-        <div class="flex overflow-hidden max-w-full max-h-full">
+        <div class="flex overflow-hidden">
           <Image
             :src="artPieces[1]"
             class="object-contain justify-center"
@@ -40,7 +37,7 @@
         <Button
           label="Image 2"
           :disabled="buttonDisabled"
-          class="flex self-center m-3"
+          class="flex self-center m-3 scale-90 sm:scale-100"
           @click="checkAnswer(1)"
         ></Button>
       </div>
@@ -153,9 +150,22 @@ watch(artPieces, () => {
   buttonDisabled.value = !buttonDisabled.value
 })
 
+watch(
+  () => artStore.imageType,
+  async () => {
+    //async (newType) => { .. if (artStore.imageType !== newType) {
+    artPieces.value = [] // clears art
+    await populateDictionaries(artStore.imageType) // fills dictionaries with new art
+    getArt(humanArt, aiArt) // chooses random art from new dictionaries
+  }
+)
+
 onMounted(() => {
   getArt()
 })
 </script>
 
 <style scoped></style>
+
+<!-- overall tally of all users + one of individual users -->
+<!-- dmeographic data? -->

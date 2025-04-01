@@ -20,13 +20,11 @@
   </div>
 </template>
 
-<script setup lang="ts">
-defineProps<{
-  name: string
-  image: string
-  yap: string
+<script setup>
+defineProps({
+  name: string,
+  image: string,
+  yap: string,
   color: string
-}>()
+})
 </script>
-
-<style scoped></style>
