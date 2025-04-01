@@ -4,8 +4,10 @@
       <TabsComponent class="max-w-screen w-full" />
     </div>
     <div class="flex flex-col">
-    <Button v-if="!gameStarted" class="self-center w-2/5 mt-60" @click="startGame">Start Game</Button>
-  </div>
+      <Button v-if="!gameStarted" class="self-center w-2/5 mt-60" @click="startGame"
+        >Start Game</Button
+      >
+    </div>
     <div v-if="gameStarted" class="flex flex-col h-[75vh]">
       <GameArt />
       <Button @click="endGame" class="self-center w-2/5 mb-0">End Game</Button>
@@ -13,10 +15,15 @@
     <div id="results" class="flex flex-col">
       <Dialog v-model:visible="results" header="Thank you for playing!" modal>
         <p>Here are your stats:</p>
-        <p> {{ saveStore.correctCounter }} / {{saveStore.total}}</p>
-        <p>out of {{ saveStore.total }} games you picked {{ saveStore.correctCounter }} as AI Generated pieces. Good Job!</p>
-        <br>
-        <router-link to="/sign" class="underline" v-if="!user">Please sign in to save your game</router-link>
+        <p>{{ saveStore.correctCounter }} / {{ saveStore.total }}</p>
+        <p>
+          out of {{ saveStore.total }} games you picked {{ saveStore.correctCounter }} as AI
+          Generated pieces. Good Job!
+        </p>
+        <br />
+        <router-link to="/sign" class="underline" v-if="!userStore.currentUser"
+          >Please sign in to save your game</router-link
+        >
       </Dialog>
     </div>
     <GameFooter />
@@ -33,26 +40,24 @@ import Dialog from 'primevue/dialog'
 import { useSaveStore } from '../stores/savegame'
 import { useUserStore } from '../stores/user'
 
-const user = useUserStore().currentUser
-
 const saveStore = useSaveStore()
+const userStore = useUserStore()
 const gameStarted = ref(false)
 
 const results = ref(false)
 
-function startGame() {
+const startGame = () => {
   gameStarted.value = true
 }
 
-function endGame() {
+const endGame = () => {
   gameStarted.value = false
   results.value = true
-  if(user) {
-    saveStore.saveGame(user)
-    user.updateHighScore()
+  if (user) {
+    saveStore.saveGame(userStore.currentUser)
+    user.updateHighScore(saveStore.combo, userStore.userId)
   }
 }
-
 </script>
 
 <style scoped></style>
