@@ -7,7 +7,7 @@
           :key="tab.value"
           :value="tab.value"
           @click="getType(tab.name)"
-          class="text-[5vw] sm:text-[4vw] md:text-[3vw] lg:text-[2vw]"
+          class="text-[4vw] sm:text-[3vw] md:text-[3vw] lg:text-[2vw]"
           :disabled="tab.disabled"
         >
           {{ tab.name }}

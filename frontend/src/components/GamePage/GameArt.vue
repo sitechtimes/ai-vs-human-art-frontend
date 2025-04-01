@@ -78,21 +78,32 @@ const buttonDisabled = ref(true)
 
 const toast = useToast()
 
+const portraitBools = {
+  0: ref(true),
+  1: ref(true)
+}
+
 const getArt = async () => {
   isVisible.value = false
-  artPieces.value = []
-  artPieces.value = [
-    humanArt.value[Math.floor(Math.random() * humanArt.value.length)],
-    aiArt.value[Math.floor(Math.random() * aiArt.value.length)]
-  ]
+  artPieces.value = [await artStore.getRandomArt('human'), await artStore.getRandomArt('ai')]
+  // await getFromBackend()
   answer.value = 1
   if (artPieces.value.some((el) => el === null)) {
     alert('Failed to fetch art (boowomp)')
     artPieces.value = []
-    return
   } else if (Math.random() < 0.5) {
     artPieces.value.reverse()
     answer.value = 0
+  }
+  for (let i = 0; i < artPieces.value.length; i++) {
+    let getImg = new window.Image()
+    getImg.src = artPieces[i]
+    getImg.onload = () => {
+      if (getImg.width <= getImg.height) {
+        portraitBools[i].value = true
+        console.log(portraitBools[i].value)
+      }
+    }
   }
 }
 
@@ -148,6 +159,10 @@ watch(
     getArt(humanArt, aiArt) // chooses random art from new dictionaries
   }
 )
+
+onMounted(() => {
+  getArt()
+})
 </script>
 
 <style scoped></style>
