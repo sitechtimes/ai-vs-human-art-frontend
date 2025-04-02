@@ -23,11 +23,10 @@
 import Toolbar from 'primevue/toolbar'
 import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
-import { ref, watch } from 'vue'
+import { ref, watch, reactive } from 'vue'
 import { useSaveStore } from '../../stores/savegame'
 import { useUserStore } from '../../stores/user'
 import HelpInstructions from './HelpInstructions.vue'
-import { high } from '@cloudinary/url-gen/qualifiers/videoCodecProfile'
 
 const saveStore = useSaveStore()
 const userStore = useUserStore()
@@ -38,15 +37,6 @@ const toggleHelpButton = () => {
   helpButton.value = !helpButton.value
 }
 
-watch(highScore, async (userStore.currentUser.highScore, saveStore.combo) => {
-  if (userStore.currentUser.highScore < saveStore.combo) {
-    highScore.value = saveStore.combo
-  }else if (saveStore.combo<userStore.currentUser.highScore) {
-
-  } else {
-
-  }
-})
 
 const changeHighScore = reactive(() => {
   highScore.value = userStore.currentUser.highScore
