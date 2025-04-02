@@ -87,6 +87,7 @@ const getArt = async () => {
   isVisible.value = false
   artPieces.value = [await artStore.getRandomArt('human'), await artStore.getRandomArt('ai')]
   // await getFromBackend()
+  console.log(artPieces.value)
   answer.value = 1
   if (artPieces.value.some((el) => el === null)) {
     alert('Failed to fetch art (boowomp)')
