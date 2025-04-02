@@ -6,7 +6,7 @@
       </template>
       <template #center>
         <p>COMBO: {{ saveStore.combo }}</p>
-        <p class="ml-6" v-if="userStore.currentUser">High Score: {{ highScore.value }}</p>
+        <p class="ml-6" v-if="userStore.currentUser">High Score: {{ saveStore.highScore }}</p>
       </template>
       <template #end>
         <Button @click="toggleHelpButton">Instructions</Button>
@@ -23,37 +23,18 @@
 import Toolbar from 'primevue/toolbar'
 import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 import { useSaveStore } from '../../stores/savegame'
 import { useUserStore } from '../../stores/user'
 import HelpInstructions from './HelpInstructions.vue'
-import { high } from '@cloudinary/url-gen/qualifiers/videoCodecProfile'
 
 const saveStore = useSaveStore()
 const userStore = useUserStore()
 const helpButton = ref(false)
-const highScore = ref()
 
 const toggleHelpButton = () => {
   helpButton.value = !helpButton.value
 }
-
-watch(highScore, async (userStore.currentUser.highScore, saveStore.combo) => {
-  if (userStore.currentUser.highScore < saveStore.combo) {
-    highScore.value = saveStore.combo
-  }else if (saveStore.combo<userStore.currentUser.highScore) {
-
-  } else {
-
-  }
-})
-
-const changeHighScore = reactive(() => {
-  highScore.value = userStore.currentUser.highScore
-  if (highScore.value < userStore.combo) {
-    highScore.value = userStore.combo
-  }
-})
 </script>
 
 <style scoped></style>

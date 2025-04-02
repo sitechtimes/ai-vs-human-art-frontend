@@ -53,9 +53,9 @@ const startGame = () => {
 const endGame = () => {
   gameStarted.value = false
   results.value = true
-  if (user) {
+  if (userStore.currentUser) {
     saveStore.saveGame(userStore.currentUser)
-    user.updateHighScore(saveStore.combo, userStore.userId)
+    userStore.updateHighScore(saveStore.combo, userStore.userId)
   }
 }
 </script>
