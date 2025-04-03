@@ -11,15 +11,15 @@ export const useSaveStore = defineStore('save', () => {
     highScore.value = userStore.currentUser.highScore
   }
   const total = ref(0)
-  const correctCounter = ref(0)
+  const right = ref(0)
   const user = ref(userStore.currentUser)
 
-  const saveGame = async () => {
+  const saveGame = async (right, total, user) => {
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        right: correctCounter.value,
+        right: right.value,
         total: total.value,
         user: user.value
       })
@@ -31,7 +31,7 @@ export const useSaveStore = defineStore('save', () => {
       }
       total.value = 0
       combo.value = 0
-      correctCounter.value = 0
+      right.value = 0
     } catch (error) {
       console.error('Save Error', error)
     }
@@ -51,7 +51,8 @@ export const useSaveStore = defineStore('save', () => {
     combo,
     highScore,
     total,
-    correctCounter,
+    right,
+    user,
     saveGame
   }
 })

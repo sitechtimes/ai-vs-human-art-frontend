@@ -15,10 +15,10 @@
     <div id="results" class="flex flex-col">
       <Dialog v-model:visible="results" header="Thank you for playing!" modal>
         <p>Here are your stats:</p>
-        <p>{{ saveStore.correctCounter }} / {{ saveStore.total }}</p>
+        <p>{{ saveStore.right }} / {{ saveStore.total }}</p>
         <p>
-          out of {{ saveStore.total }} games you picked {{ saveStore.correctCounter }} as AI
-          Generated pieces. Good Job!
+          out of {{ saveStore.total }} games you picked {{ saveStore.right }} as AI Generated
+          pieces. Good Job!
         </p>
         <br />
         <router-link to="/sign" class="underline" v-if="!userStore.currentUser"
@@ -50,12 +50,17 @@ const startGame = () => {
   gameStarted.value = true
 }
 
-const endGame = () => {
+const endGame = async () => {
+  console.log('ended')
   gameStarted.value = false
   results.value = true
+  console.log(userStore.currentUser)
   if (userStore.currentUser) {
-    saveStore.saveGame(userStore.currentUser)
-    userStore.updateHighScore(saveStore.combo, userStore.userId)
+    console.log('started')
+    await userStore.updateHighScore(saveStore.highScore, userStore.userId)
+    console.log('wow')
+    await saveStore.saveGame()
+    console.log('wow done')
   }
 }
 </script>

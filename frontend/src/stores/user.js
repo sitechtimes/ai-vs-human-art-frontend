@@ -10,7 +10,6 @@ export const useUserStore = defineStore('user', () => {
   const token = ref('')
   const isAuthenticated = ref(false)
   const isAdmin = ref(false)
-  const highScore = ref(0)
 
   // actions
   const register = async (username, email, password) => {
@@ -51,8 +50,6 @@ export const useUserStore = defineStore('user', () => {
       if (data.user.role == 'admin') {
         isAdmin.value = true
       }
-
-      highScore.value = data.highscore
       token.value = data.access_token
       userId.value = data.user._id
       localStorage.setItem('token', token.value)
@@ -96,7 +93,7 @@ export const useUserStore = defineStore('user', () => {
     }
   }
 
-  const updateHighScore = async () => {
+  const updateHighScore = async (highScore, userId) => {
     const requestOptions = {
       method: 'PATCH',
       headers: {
@@ -108,7 +105,7 @@ export const useUserStore = defineStore('user', () => {
       }
     }
     try {
-      const res = await fetch(`${BACKEND_URL}/api/auth/highscore`, requestOptions)
+      const res = await fetch(`${BACKEND_URL}/api/highscore`, requestOptions)
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
     } catch (error) {
       console.error('highscore update problem', error)
@@ -121,7 +118,6 @@ export const useUserStore = defineStore('user', () => {
     token,
     isAuthenticated,
     isAdmin,
-    highScore,
     register,
     login,
     auth,
