@@ -6,7 +6,7 @@
       <div class="flex flex-col items-center">
         <div class="flex overflow-hidden">
           <Image
-            :src="artPieces[0]"
+            :src="artPieces[0].url"
             alt=""
             class="object-contain justify-center"
             preview
@@ -27,7 +27,7 @@
       <div class="flex flex-col items-center">
         <div class="flex overflow-hidden">
           <Image
-            :src="artPieces[1]"
+            :src="artPieces[1].url"
             class="object-contain justify-center"
             preview
             aria-label="Image 2"
@@ -45,11 +45,6 @@
     <div>
       <div id="result">
         <Toast />
-        <!-- eslint-disable vue/no-v-model-argument -->
-        <!-- i think v-model:visible is the only way to toggle visibility with this primevue component, so unfortunately were going to have to break an eslint rule -->
-        <!--         <Dialog v-model:visible="isVisible" modal>
-          <p>peepeepoopoo</p>
-        </Dialog> -->
       </div>
     </div>
   </div>
@@ -119,7 +114,7 @@ function showToast() {
     toast.add({
       severity: 'error',
       summary: 'Incorrect',
-      detail: 'This piece was made by {{artist name //placeholder?}}',
+      detail: `This piece was made by ${ artPieces.value[answer.value].context.custom.artist_name }`,
       life: 1500
     })
   }
