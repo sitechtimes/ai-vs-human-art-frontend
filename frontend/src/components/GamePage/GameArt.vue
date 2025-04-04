@@ -6,7 +6,7 @@
       <div class="flex flex-col items-center">
         <div class="flex overflow-hidden">
           <Image
-            :src="artPieces[0]"
+            :src="artPieces[0].url"
             alt=""
             class="object-contain justify-center"
             preview
@@ -27,7 +27,7 @@
       <div class="flex flex-col items-center">
         <div class="flex overflow-hidden">
           <Image
-            :src="artPieces[1]"
+            :src="artPieces[1].url"
             class="object-contain justify-center"
             preview
             aria-label="Image 2"
@@ -68,6 +68,8 @@ const saveStore = useSaveStore()
 const artPieces = ref([])
 const isVisible = ref(false)
 const answer = ref(1) // which one is ai
+const artistPiece = ref(0)
+
 const correct = ref(false)
 const buttonDisabled = ref(true)
 
@@ -83,12 +85,14 @@ const getArt = async () => {
   artPieces.value = [await artStore.getRandomArt('human'), await artStore.getRandomArt('ai')]
   // await getFromBackend()
   answer.value = 1
+  artistPiece.value = 0
   if (artPieces.value.some((el) => el === null)) {
     alert('Failed to fetch art (boowomp)')
     artPieces.value = []
   } else if (Math.random() < 0.5) {
     artPieces.value.reverse()
     answer.value = 0
+    artistPiece.value = 1
   }
   for (let i = 0; i < artPieces.value.length; i++) {
     let getImg = new window.Image()
@@ -114,7 +118,7 @@ function showToast() {
     toast.add({
       severity: 'error',
       summary: 'Incorrect',
-      detail: `This piece was made by ${artPieces.value[answer.value].context.custom.artist_name}`,
+      detail: `This piece was made by ${artPieces.value[artistPiece.value].context.custom.artist_name}`,
       life: 1500
     })
   }
