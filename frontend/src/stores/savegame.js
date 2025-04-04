@@ -7,12 +7,16 @@ const userStore = useUserStore()
 export const useSaveStore = defineStore('save', () => {
   const combo = ref(0)
   const highScore = ref(0)
-  if (userStore.currentUser) {
-    highScore.value = userStore.currentUser.highScore
-  }
   const total = ref(0)
   const right = ref(0)
   const user = ref(userStore.currentUser)
+
+  const setScore = () => {
+    if (userStore.currentUser) {
+      highScore.value = userStore.currentUser.highScore
+      console.log(highScore.value)
+    }
+  }
 
   const saveGame = async (right, total, user) => {
     const requestOptions = {
@@ -53,6 +57,7 @@ export const useSaveStore = defineStore('save', () => {
     total,
     right,
     user,
+    setScore,
     saveGame
   }
 })

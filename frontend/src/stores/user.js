@@ -46,12 +46,13 @@ export const useUserStore = defineStore('user', () => {
       const res = await fetch(`${BACKEND_URL}/api/auth/login`, requestOptions)
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
       const data = await res.json()
+      console.log(data)
       currentUser.value = data.user
       if (data.user.role == 'admin') {
         isAdmin.value = true
       }
-      token.value = data.access_token
-      userId.value = data.user._id
+      token.value = currentUser.value.access_token
+      userId.value = currentUser.value._id
       localStorage.setItem('token', token.value)
       localStorage.setItem('userId', userId.value)
     } catch (error) {
@@ -97,12 +98,12 @@ export const useUserStore = defineStore('user', () => {
     const requestOptions = {
       method: 'PATCH',
       headers: {
-        'Content-Type': 'application/json',
-        body: JSON.stringify({
-          newHighScore: highScore,
-          userId: userId
-        })
-      }
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        newHighScore: highScore,
+        userId: userId
+      })
     }
     try {
       const res = await fetch(`${BACKEND_URL}/api/highscore`, requestOptions)

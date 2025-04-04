@@ -31,7 +31,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import GameFooter from '../components/GamePage/GameFooter.vue'
 import TabsComponent from '../components/GamePage/TabsComponent.vue'
 import GameArt from '../components/GamePage/GameArt.vue'
@@ -54,7 +54,6 @@ const endGame = async () => {
   console.log('ended')
   gameStarted.value = false
   results.value = true
-  console.log(userStore.currentUser)
   if (userStore.currentUser) {
     console.log('started')
     await userStore.updateHighScore(saveStore.highScore, userStore.userId)
@@ -63,6 +62,10 @@ const endGame = async () => {
     console.log('wow done')
   }
 }
+
+onMounted(async () => {
+  await saveStore.setScore()
+})
 </script>
 
 <style scoped></style>

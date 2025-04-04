@@ -6,7 +6,7 @@
       <div class="flex flex-col items-center">
         <div class="flex overflow-hidden">
           <Image
-            :src="artPieces[0].url"
+            :src="artPieces[0]"
             alt=""
             class="object-contain justify-center"
             preview
@@ -27,7 +27,7 @@
       <div class="flex flex-col items-center">
         <div class="flex overflow-hidden">
           <Image
-            :src="artPieces[1].url"
+            :src="artPieces[1]"
             class="object-contain justify-center"
             preview
             aria-label="Image 2"
@@ -114,7 +114,7 @@ function showToast() {
     toast.add({
       severity: 'error',
       summary: 'Incorrect',
-      detail: `This piece was made by ${ artPieces.value[answer.value].context.custom.artist_name }`,
+      detail: `This piece was made by ${artPieces.value[answer.value].context.custom.artist_name}`,
       life: 1500
     })
   }
@@ -128,7 +128,7 @@ const checkAnswer = (e) => {
   } else {
     correct.value = true
     showToast()
-    saveStore.correctCounter++
+    saveStore.right++
     saveStore.combo++
     if (saveStore.combo > user.highScore) {
       user.highScore = saveStore.combo
