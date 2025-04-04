@@ -1,14 +1,16 @@
 <template>
   <div v-if="artPieces.length" class="flex flex-col items-center h-[calc(100%-68px)] w-full">
+    <div>
+      <Image :src="artPieces[0].url" :class="dimensions"/>
+    </div>
     <div
       class="flex flex-col gap-10 m-[5vh] mb-[9vh] md:mb-0 mb-6vh justify-between items-center xl:max-w-[50dvw] lg:max-h-[60dvh] lg:max-w-[70dvw] max-w-full md:max-w-[80dvw] md:flex-row"
     >
       <div class="flex flex-col items-center">
-        <div class="flex overflow-hidden">
+        <div id="img 1" class="h-[30vw] w-[30vw] overflow-hidden">
           <Image
             :src="artPieces[0].url"
             alt=""
-            class="object-contain justify-center"
             preview
             aria-label="Image 1"
           />
@@ -25,10 +27,9 @@
       <span>vs</span>
 
       <div class="flex flex-col items-center">
-        <div class="flex overflow-hidden">
+        <div id="img 2" class="h-[30vw] w-[30vw] overflow-hidden">
           <Image
             :src="artPieces[1].url"
-            class="object-contain justify-center"
             preview
             aria-label="Image 2"
           />
@@ -75,10 +76,18 @@ const buttonDisabled = ref(true)
 
 const toast = useToast()
 
-const portraitBools = {
+/* const portraitBools = {
   0: ref(true),
   1: ref(true)
+} */
+
+const dimensions = ref("h-[10vw] w-[10vw]")
+
+function getDimensions() {
+  console.log(artPieces)
 }
+getDimensions()
+
 
 const getArt = async () => {
   isVisible.value = false
@@ -94,7 +103,7 @@ const getArt = async () => {
     answer.value = 0
     artistPiece.value = 1
   }
-  for (let i = 0; i < artPieces.value.length; i++) {
+/*   for (let i = 0; i < artPieces.value.length; i++) {
     let getImg = new window.Image()
     getImg.src = artPieces[i]
     getImg.onload = () => {
@@ -103,7 +112,7 @@ const getArt = async () => {
         console.log(portraitBools[i].value)
       }
     }
-  }
+  } */
 }
 
 function showToast() {
