@@ -60,12 +60,18 @@ const menuItems = ref([
         label: 'Acknowledgements'
       }
     ]
-  },
-  {
-    route: null,
-    label: ''
   }
 ])
+
+const items = computed(() => {
+  const itemsValue = [...menuItems.value]
+  if (!signedIn.value)
+    itemsValue.push({
+      route: '/sign',
+      label: 'Sign In'
+    })
+  return itemsValue
+})
 </script>
 
 <style scoped>

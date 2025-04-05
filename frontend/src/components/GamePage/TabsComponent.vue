@@ -21,7 +21,7 @@
 import Tabs from 'primevue/tabs'
 import TabList from 'primevue/tablist'
 import Tab from 'primevue/tab'
-import { useArtStore } from '../../stores/art.ts'
+import { useArtStore } from '../../stores/art.js'
 import { ref, watch } from 'vue'
 const artStore = useArtStore()
 

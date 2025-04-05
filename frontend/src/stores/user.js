@@ -48,7 +48,7 @@ export const useUserStore = defineStore('user', () => {
       isAdmin.value = data.user.role === 'admin'
       accessToken.value = data.access_token
       userId.value = data.user._id
-      localStorage.setItem('token', token.value)
+      localStorage.setItem('token', accessToken.value)
       localStorage.setItem('userId', userId.value)
     } catch (error) {
       console.error('Login Error', error)

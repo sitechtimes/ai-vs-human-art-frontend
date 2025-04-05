@@ -5,13 +5,7 @@
     >
       <div class="flex flex-col items-center">
         <div class="flex overflow-hidden">
-          <Image
-            :src="artPieces[0]"
-            alt=""
-            class="object-contain justify-center"
-            preview
-            aria-label="Image 1"
-          />
+          <Image :src="artPieces[0]" alt="" class="object-contain justify-center" preview />
         </div>
 
         <Button
@@ -25,23 +19,14 @@
 
       <div class="flex flex-col items-center">
         <div class="flex overflow-hidden">
-          <Image
-            :src="artPieces[1]"
-            class="object-contain justify-center"
-            preview
-            aria-label="Image 2"
-          />
+          <Image :src="artPieces[1]" class="object-contain justify-center" preview />
         </div>
 
-        <<<<<<< HEAD
-        <Button label="Image 2" class="flex self-center m-3" @click="checkAnswer(1)"></Button>
-        =======
         <Button
           label="Image 2"
           class="flex self-center m-3 scale-90 sm:scale-100"
           @click="checkAnswer(1)"
         ></Button>
-        >>>>>>> dev
       </div>
     </div>
     <div>
@@ -49,8 +34,8 @@
         <!-- eslint-disable vue/no-v-model-argument -->
         <Dialog v-model:visible="isVisible" modal>
           <!-- i think v-model:visible is the only way to toggle visibility with this primevue component, so unfortunately were going to have to break an eslint rule -->
-          <p v-if="isCorrect">Your answer is isCorrect!</p>
-          <p v-else>Your answer is inisCorrect!</p>
+          <p v-if="isCorrect">Your answer is correct!</p>
+          <p v-else>Your answer is incorrect!</p>
           <Button label="Try Again?" class="flex self-center" @click="getArt"></Button>
         </Dialog>
       </div>
@@ -63,14 +48,14 @@ import Button from 'primevue/button'
 import Dialog from 'primevue/dialog'
 import Image from 'primevue/image'
 
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import { useArtStore } from '../../stores/art.js'
 
 const artStore = useArtStore()
 const artPieces = ref([])
 const isVisible = ref(false)
-const answer = ref(1) // which one is ai
-const correct = ref(false)
+const gameAnswer = ref(1) // which one is ai
+const isCorrect = ref(false)
 const humanArt = ref([])
 const aiArt = ref([])
 const populateDictionaries = async (category) => {
@@ -90,7 +75,7 @@ const getArt = () => {
     humanArt.value[Math.floor(Math.random() * humanArt.value.length)],
     aiArt.value[Math.floor(Math.random() * aiArt.value.length)]
   ]
-  answer.value = 1
+  gameAnswer.value = 1
   if (artPieces.value.some((el) => el === null)) {
     alert('Failed to fetch art (boowomp)')
     artPieces.value = []
@@ -102,7 +87,7 @@ const getArt = () => {
 }
 
 const checkAnswer = (e) => {
-  if (e != gameAnswer.value) {
+  if (e !== gameAnswer.value) {
     isCorrect.value = false
     artStore.combo = 0
   } else {

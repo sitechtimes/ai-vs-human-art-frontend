@@ -1,14 +1,7 @@
 <template>
   <div class="overflow-hidden bottom-0 right-0">
     <!--Get icon for the change theme button or smth & move button to bottom right-->
-    <Button
-      type="button"
-      class="button"
-      label="Change Theme"
-      @click="toggle"
-      aria-haspopup="true"
-      aria-controls="overlay_tmenu"
-    />
+    <Button type="button" class="button" label="Change Theme" @click="toggle" />
     <Popover ref="themes" id="popover" @show="open = true" @hide="open = false">
       <div id="popped-over">
         <label id="dark">
@@ -43,7 +36,6 @@
               }"
               @click="changeColors(color)"
               @mouseenter="hover = color"
-              :aria-label="color"
             ></button>
           </div>
         </div>
