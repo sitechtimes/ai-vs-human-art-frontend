@@ -1,18 +1,29 @@
 <template>
-  <div v-if="user">
-    <h1 class="my-2 text-center text-2xl font-bold mt-6 underline">Profile Information</h1>
-    <div class="flex flex-col space-y-2.5 mt-8 w-full space-y-8 items-center place-content-center">
-      <div>
-        <Fieldset legend="Username" class="w-80">
-          <p>{{ user.username }}</p>
-        </Fieldset>
+  <div class="mt-[58px]">
+    <Message severity="error"
+      >You are not
+      <RouterLink to="/sign" class="underline">logged in</RouterLink>
+    </Message>
+    <div v-if="user">
+      <div class="flex justify-center items-center">
+        <img src="/nagi.jpg" alt="placeholder avatar" class="rounded-full h-36 m-3" />
+        <Button>Change Photo</Button>
       </div>
-      <div>
-        <Fieldset legend="Email" class="w-80">
-          <p>{{ user.email }}</p>
-        </Fieldset>
+      <div class="flex-col space-y-2.5 w-96 place-items-center place-self-center">
+        <div>
+          <Fieldset legend="Username" class="w-96">
+            <p>{{ username }}</p>
+          </Fieldset>
+        </div>
+        <div>
+          <Fieldset legend="Email" class="w-96">
+            <p>{{ email }}</p>
+          </Fieldset>
+        </div>
       </div>
-      <Button @click="logout" class="w-80" aria-label="Log Out">Log Out</Button>
+      <div class="mt-1">
+        <Button @click="logout">Log Out</Button>
+      </div>
     </div>
   </div>
 </template>
@@ -21,15 +32,25 @@
 import { useUserStore } from '../stores/user'
 import Fieldset from 'primevue/fieldset'
 import Button from 'primevue/button'
-import { useRouter } from 'vue-router'
-
-const router = useRouter()
+import Message from 'primevue/message'
 const userStore = useUserStore()
+import { useRouter } from 'vue-router'
 const user = userStore.currentUser
-
+const username = ref('')
+const email = ref('')
+const router = useRouter()
 const logout = () => {
   userStore.logout()
   router.push({ path: '/' })
+}
+
+function getData(user) {
+  username.value = user.username
+  email.value = user.email
+}
+
+if (user) {
+  getData(user)
 }
 </script>
 

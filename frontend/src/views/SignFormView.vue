@@ -70,7 +70,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import InputText from 'primevue/inputtext'
 import Password from 'primevue/password'
 import Button from 'primevue/button'
@@ -105,12 +105,12 @@ const signIn = async () => {
   }
 }
 
-// clear an existing warning if user matches password
-// will not add warning as user types out password, because that's annoying
 const evilMatch = () => {
   return (notMatch.value = password.value !== passwordConfirm.value)
 }
 
+// clear an existing warning if user matches password
+// will not add warning as user types out password, because that's annoying
 watch([password, passwordConfirm], () => {
   if (notMatch.value) evilMatch()
 })

@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
-const backendUrl = import.meta.env.VITE_PUBLIC_BACKEND
+
+const BACKEND_URL = import.meta.env.VITE_ADDRESS
 
 export const useImageStore = defineStore('image', () => {
   const uploadImage = async (formData) => {
@@ -9,7 +10,7 @@ export const useImageStore = defineStore('image', () => {
       body: formData
     }
 
-    const res = await fetch(`${backendUrl}/items/upload`, requestOptions)
+    const res = await fetch(`${BACKEND_URL}/items/upload`, requestOptions)
     if (!res.ok) console.error(`HTTP error! status: ${res.status}`)
     return res
   }

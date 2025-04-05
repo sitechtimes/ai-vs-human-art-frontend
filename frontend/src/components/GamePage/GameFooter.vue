@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <Toolbar class="fixed w-screen bottom-0">
+  <div class="m-0 max-w-full">
+    <Toolbar class="!rounded-none !fixed w-screen !bottom-0 z-40">
       <template #start>
         <Button as="RouterLink" label="Router" to="/" id="game-home-button">Home</Button>
       </template>
@@ -24,7 +24,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import Toolbar from 'primevue/toolbar'
 import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'

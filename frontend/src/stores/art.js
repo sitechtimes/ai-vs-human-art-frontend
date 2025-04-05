@@ -1,9 +1,11 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-const backendUrl = import.meta.env.VITE_PUBLIC_BACKEND
+
+const BACKEND_URL = import.meta.env.VITE_ADDRESS
 
 export const useArtStore = defineStore('art', () => {
-  const gameCombo = ref(0)
+  const combo = ref(0)
+  const imageType = ref('Randomized')
   //actions
 
   /**
@@ -18,18 +20,55 @@ export const useArtStore = defineStore('art', () => {
       }
     }
     try {
-      const res = await fetch(`${backendUrl}/items/random?type=${type}`, requestOptions)
+      const res = await fetch(`${BACKEND_URL}/items/random?type=${type}`, requestOptions)
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
       const data = await res.json()
       return data
     } catch (error) {
       console.error('failed to fetch art 💥', error)
-      return error
+      return null
+    }
+  }
+  const getArtByType = async (type, category) => {
+    const requestOptions = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+    try {
+      const res = await fetch(`${BACKEND_URL}/items/tags/${category}?type=${type}`, requestOptions)
+      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
+      const data = await res.json()
+      return data
+    } catch (error) {
+      console.error('failed to fetch art 💥', error)
+      return null
+    }
+  }
+  const getAllArt = async (type) => {
+    const requestOptions = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+    try {
+      const res = await fetch(`${BACKEND_URL}/items/gallery?type=${type}`, requestOptions)
+      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
+      const data = await res.json()
+      return data[0]
+    } catch (error) {
+      console.error('failed to fetch art 💥', error)
+      return null
     }
   }
 
   return {
-    gameCombo,
-    getRandomArt
+    combo,
+    getRandomArt,
+    getArtByType,
+    imageType,
+    getAllArt
   }
 })

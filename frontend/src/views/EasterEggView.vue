@@ -23,10 +23,10 @@
 
 <script setup lang="ts">
 import LyricComponent from '../components/LyricComponent.vue'
-type Line = {
-  line: string
-  singer: string
-  time: number
+const Line = {
+  line: String,
+  singer: String,
+  time: Number
 }
 
 const lyrics: { [key: number]: Line[] } = {

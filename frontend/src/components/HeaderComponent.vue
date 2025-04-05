@@ -1,22 +1,19 @@
 <template>
-  <div>
-    <Menubar id="header" :model="menuItems" class="!rounded-none !absolute w-full top-0 z-40">
+  <div class="max-w-full">
+    <Menubar id="header" :model="items" class="!rounded-none !absolute w-screen top-0 z-40">
       <template #start>
         <img src="/fatfatpankocat-panko.gif" alt="placeholder logo" class="mr-0" />
       </template>
       <template #item="{ item, props }">
-        <RouterLink v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
-          <span :href="href" v-bind="props.action" @click="navigate">{{ item.label }}</span>
-        </RouterLink>
-        <RouterLink
-          v-if="item.route == null && !signedIn"
-          v-slot="{ href, navigate }"
-          :to="'/sign'"
-        >
-          <span :href="href" v-bind="props.action" @click="navigate">
-            {{ signedIn ? null : 'Sign In' }}
-          </span>
-        </RouterLink>
+        <router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
+          <a :href="href" v-bind="props.action" @click="navigate">
+            <span>{{ item.label }}</span>
+          </a>
+        </router-link>
+        <!--         <a v-else :href="item.url" :target="item.target" v-bind="props.action">
+            <span class="ml-2">{{ item.label }}</span>
+            put something here to indicate that this is a dropdown i don't know
+          </a> -->
       </template>
       <template #end>
         <div class="flex items-center gap-0.5" v-if="userStore.currentUser">
@@ -29,7 +26,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { ref, computed } from 'vue'
 import Menubar from 'primevue/menubar'
 import { useUserStore } from '../stores/user'

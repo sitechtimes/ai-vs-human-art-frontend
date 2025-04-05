@@ -71,9 +71,10 @@ import { useToast } from 'primevue/usetoast'
 import TermsService from './TermsService.vue'
 
 const imageStore = useImageStore()
-
 const checked = ref(false)
-const checked2 = ref(false)
+const type = ref('unscreened')
+const links = ref([''])
+const files = ref([])
 const uploading = ref(false)
 const ok = computed(() => checked.value && checked2.value && pictures.value && !uploading.value)
 const toast = useToast()
@@ -97,7 +98,8 @@ const userStore = useUserStore()
 const user = userStore.currentUser
 const isAdmin = userStore.isAdmin
 
-const addToast = (severity, summary, detail) => {
+async function uploadedFile(e) {
+  files.value.push(e.files[0])
   toast.add({
     severity: severity,
     summary: summary,
@@ -106,9 +108,57 @@ const addToast = (severity, summary, detail) => {
   })
 }
 
-const uploadedFile = (e, index) => {
-  pictures.value[index].file = e.files[0]
-  addToast('success', 'Success', 'File sucessfully uploaded.')
+async function submit() {
+  try {
+    uploading.value = true
+    if (!user) {
+      toast.add({
+        severity: 'warn',
+        summary: 'Warning',
+        detail: 'You must be logged in to submit art.',
+        life: 3000
+      })
+      throw new Error('not logged in')
+    }
+
+    if (files.value.length != links.value.length) {
+      toast.add({
+        severity: 'warn',
+        summary: 'Warning',
+        detail: "You didn't attach a file or link.",
+        life: 3000
+      })
+      throw new Error('there is no file')
+    }
+
+    for (let i = 0; i < links.value.length; i++) {
+      const formData = new FormData()
+      formData.append('type', type.value)
+      formData.append('link', links.value[i])
+      formData.append('image', files.value[i])
+      const res = await imageStore.uploadImage(formData)
+      if (res?.ok) {
+        toast.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Art successfully submitted.',
+          life: 3000
+        })
+      } else throw new Error((await res.json()).error)
+    }
+    links.value = []
+    files.value = []
+    // backend route for bulk uploads to push ina rray
+  } catch (error) {
+    console.error(error)
+    toast.add({
+      severity: 'error',
+      summary: 'Error',
+      detail: 'Failed to submit art.',
+      life: 3000
+    })
+  }
+  uploading.value = false
 }
 
 const submit = async () => {

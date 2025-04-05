@@ -14,7 +14,7 @@
             as="RouterLink"
             placeholder="Overriden"
             class="btn"
-            label="Submit your Art"
+            label="Submit Your Art"
             to="/submit"
           />
 

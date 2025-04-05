@@ -1,16 +1,14 @@
 <template>
   <div>
-    <div class="w-full bg-[var(--p-content-background)] mt-[58px]">
-      <TabsComponent class="max-w-screen w-full" />
+    <div class="w-full bg-[var(--p-content-background)]">
+      <TabsComponent class="w-min mx-auto mt-12" />
     </div>
-    <div>
-      <GameArt />
-      <GameFooter />
-    </div>
+    <GameArt />
+    <GameFooter />
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import GameFooter from '../components/GamePage/GameFooter.vue'
 import TabsComponent from '../components/GamePage/TabsComponent.vue'
 import GameArt from '../components/GamePage/GameArt.vue'
