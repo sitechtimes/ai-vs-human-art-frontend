@@ -21,12 +21,14 @@
           class="flex flex-col border-2 p-8 rounded-lg w-auto"
         >
           <div class="items-center gap-2 mb-4">
-            <label class="mr-2 link-label">Link to art source:</label>
-            <InputText v-model="picture.link" :disabled="!termsAgreedTo" />
+            <label class="mr-2 link-label"
+              >Link to art source: <InputText v-model="picture.link" :disabled="!termsAgreedTo"
+            /></label>
           </div>
           <div class="items-center gap-2 mb-4">
-            <label class="mr-2 artist-label">Artist Name:</label>
-            <InputText v-model="picture.name" :disabled="!termsAgreedTo" />
+            <label class="mr-2 artist-label"
+              >Artist Name: <InputText v-model="picture.name" :disabled="!termsAgreedTo"
+            /></label>
           </div>
           <FileUpload
             mode="basic"
