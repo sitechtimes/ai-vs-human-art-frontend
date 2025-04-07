@@ -13,7 +13,7 @@
       <Button @click="endGame" class="self-center w-2/5 mb-0">End Game</Button>
     </div>
     <div id="results" class="flex flex-col">
-      <Dialog v-model:visible="results" header="Thank you for playing!" modal>
+      <Dialog v-model:visible="results" header="Thank you for playing!" modal class="max-w-[80vw]">
         <p>Here are your stats:</p>
         <p>{{ saveStore.right }} / {{ saveStore.total }}</p>
         <p>
