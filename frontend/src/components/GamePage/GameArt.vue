@@ -42,8 +42,8 @@
         ></Button>
       </div>
     </div>
-    <div id="result">
-      <Toast />
+    <div id="result" >
+      <Toast position="top-center" class="h-[50vw]"/>
     </div>
   </div>
 </template>

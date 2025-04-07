@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <div class="w-full bg-[var(--p-content-background)] mt-[58px]">
+    <div class="w-full bg-[var(--p-content-background)] mt-[58px] h-full">
       <TabsComponent />
     </div>
     <div class="flex flex-col">

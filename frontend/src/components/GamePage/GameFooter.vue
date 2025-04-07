@@ -5,8 +5,10 @@
         <Button as="router-link" label="Router" to="/" id="game-home-button">Home</Button>
       </template>
       <template #center>
-        <p>COMBO: {{ saveStore.combo }}</p>
-        <p class="ml-6" v-if="userStore.currentUser">High Score: {{ saveStore.highScore }}</p>
+        <div class="flex flex-col items-center md:flex-row lg-flex-row">
+          <p>COMBO: {{ saveStore.combo }}</p>
+          <p class="md:ml-4 lg:ml-8" v-if="userStore.currentUser">High Score: {{ saveStore.highScore }}</p>
+        </div>
       </template>
       <template #end>
         <Button @click="toggleHelpButton">Instructions</Button>
