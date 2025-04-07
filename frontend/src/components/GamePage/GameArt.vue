@@ -6,7 +6,7 @@
       <div class="flex flex-col items-center">
         <div class="flex overflow-hidden">
           <Image
-            :src="artPieces[0].url"
+            :src="artPieces[0]"
             alt=""
             class="object-contain justify-center"
             preview
@@ -27,7 +27,7 @@
       <div class="flex flex-col items-center">
         <div class="flex overflow-hidden">
           <Image
-            :src="artPieces[1].url"
+            :src="artPieces[1]"
             class="object-contain justify-center"
             preview
             aria-label="Image 2"
