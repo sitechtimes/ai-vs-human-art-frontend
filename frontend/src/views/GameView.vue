@@ -1,7 +1,7 @@
 <template>
   <div class="">
     <div class="w-full bg-[var(--p-content-background)] mt-[58px]">
-      <TabsComponent class="max-w-screen w-full" />
+      <TabsComponent />
     </div>
     <div class="flex flex-col">
       <Button v-if="!gameStarted" class="self-center w-2/5 mt-60" @click="startGame"

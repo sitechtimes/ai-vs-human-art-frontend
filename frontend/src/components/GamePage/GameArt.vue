@@ -1,18 +1,16 @@
 <template>
   <div v-if="artPieces.length" class="flex flex-col items-center h-[calc(100%-68px)] w-full">
-    <div>
-      <Image :src="artPieces[0].url" :class="dimensions"/>
-    </div>
     <div
-      class="flex flex-col gap-10 m-[5vh] mb-[9vh] md:mb-0 mb-6vh justify-between items-center xl:max-w-[50dvw] lg:max-h-[60dvh] lg:max-w-[70dvw] max-w-full md:max-w-[80dvw] md:flex-row"
+      class="flex flex-row gap-5 m-[5vh] mb-[9vh] flex justify-center items-center h-screen md:justify-between md:gap-10 items-center lg:gap-10 xl:max-w-[50dvw] lg:max-h-[60dvh] lg:max-w-[70dvw] max-w-full md:max-w-[80dvw] md:flex-row"
     >
       <div class="flex flex-col items-center">
-        <div id="img 1" class="h-[30vw] w-[30vw] overflow-hidden">
+        <div id="img 1" class="h-[40vw] w-[40vw] lg:h-[30vw] lg:w-[30vw] md:h-[30vw] md:w-[30vw] xl:h-[20vw] xl:w-[20vw]">
           <Image
             :src="artPieces[0].url"
             alt=""
             preview
             aria-label="Image 1"
+             :class="dimensions"
           />
         </div>
 
@@ -24,14 +22,15 @@
         ></Button>
       </div>
 
-      <span>vs</span>
+      <span class="mb-16">vs</span>
 
       <div class="flex flex-col items-center">
-        <div id="img 2" class="h-[30vw] w-[30vw] overflow-hidden">
+        <div id="img 2" class="h-[40vw] w-[40vw] lg:h-[30vw] lg:w-[30vw] md:h-[30vw] md:w-[30vw] xl:h-[20vw] xl:w-[20vw]">
           <Image
             :src="artPieces[1].url"
             preview
             aria-label="Image 2"
+             :class="dimensions"
           />
         </div>
 
@@ -43,10 +42,8 @@
         ></Button>
       </div>
     </div>
-    <div>
-      <div id="result">
-        <Toast />
-      </div>
+    <div id="result">
+      <Toast />
     </div>
   </div>
 </template>
@@ -81,7 +78,7 @@ const toast = useToast()
   1: ref(true)
 } */
 
-const dimensions = ref("h-[10vw] w-[10vw]")
+const dimensions = ref("w-full h-full object-contain overflow-hidden justify-center items-center")
 
 function getDimensions() {
   console.log(artPieces)
