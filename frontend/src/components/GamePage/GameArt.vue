@@ -10,7 +10,7 @@
             alt=""
             preview
             aria-label="Image 1"
-             :class="dimensions"
+            class="w-full h-full object-contain overflow-hidden justify-center items-center"
           />
         </div>
 
@@ -30,7 +30,7 @@
             :src="artPieces[1].url"
             preview
             aria-label="Image 2"
-             :class="dimensions"
+            class="w-full h-full object-contain overflow-hidden justify-center items-center"
           />
         </div>
 
@@ -77,8 +77,6 @@ const toast = useToast()
   0: ref(true),
   1: ref(true)
 } */
-
-const dimensions = ref("w-full h-full object-contain overflow-hidden justify-center items-center")
 
 function getDimensions() {
   console.log(artPieces)
