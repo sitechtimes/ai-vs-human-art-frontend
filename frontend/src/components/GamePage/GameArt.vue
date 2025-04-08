@@ -4,9 +4,12 @@
       class="flex flex-row gap-5 m-[5vh] mb-[9vh] flex justify-center items-center h-screen md:justify-between md:gap-10 items-center lg:gap-10 xl:max-w-[50dvw] lg:max-h-[60dvh] lg:max-w-[70dvw] max-w-full md:max-w-[80dvw] md:flex-row"
     >
       <div class="flex flex-col items-center">
-        <div id="img 1" class="h-[40vw] w-[40vw] lg:h-[30vw] lg:w-[30vw] md:h-[30vw] md:w-[30vw] xl:h-[20vw] xl:w-[20vw]">
+        <div
+          id="img 1"
+          class="h-[40vw] w-[40vw] lg:h-[30vw] lg:w-[30vw] md:h-[30vw] md:w-[30vw] xl:h-[20vw] xl:w-[20vw]"
+        >
           <Image
-            :src="artPieces[0].url"
+            :src="artPieces[0]"
             alt=""
             preview
             aria-label="Image 1"
@@ -25,9 +28,12 @@
       <span class="mb-16">vs</span>
 
       <div class="flex flex-col items-center">
-        <div id="img 2" class="h-[40vw] w-[40vw] lg:h-[30vw] lg:w-[30vw] md:h-[30vw] md:w-[30vw] xl:h-[20vw] xl:w-[20vw]">
+        <div
+          id="img 2"
+          class="h-[40vw] w-[40vw] lg:h-[30vw] lg:w-[30vw] md:h-[30vw] md:w-[30vw] xl:h-[20vw] xl:w-[20vw]"
+        >
           <Image
-            :src="artPieces[1].url"
+            :src="artPieces[1]"
             preview
             aria-label="Image 2"
             class="w-full h-full object-contain overflow-hidden justify-center items-center"
@@ -42,8 +48,8 @@
         ></Button>
       </div>
     </div>
-    <div id="result" >
-      <Toast position="top-center" class="h-[50vw]"/>
+    <div id="result">
+      <Toast position="top-center" class="h-[50vw]" />
     </div>
   </div>
 </template>
@@ -73,16 +79,10 @@ const buttonDisabled = ref(true)
 
 const toast = useToast()
 
-/* const portraitBools = {
-  0: ref(true),
-  1: ref(true)
-} */
-
 function getDimensions() {
   console.log(artPieces)
 }
 getDimensions()
-
 
 const getArt = async () => {
   isVisible.value = false
@@ -98,16 +98,6 @@ const getArt = async () => {
     answer.value = 0
     artistPiece.value = 1
   }
-/*   for (let i = 0; i < artPieces.value.length; i++) {
-    let getImg = new window.Image()
-    getImg.src = artPieces[i]
-    getImg.onload = () => {
-      if (getImg.width <= getImg.height) {
-        portraitBools[i].value = true
-        console.log(portraitBools[i].value)
-      }
-    }
-  } */
 }
 
 function showToast() {
