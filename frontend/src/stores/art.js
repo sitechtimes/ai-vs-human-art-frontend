@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
-const BACKEND_URL = import.meta.env.VITE_ADDRESS
+const BACKEND_URL = import.meta.env.VITE_PUBLIC_BACKEND
 
 export const useArtStore = defineStore('art', () => {
   const combo = ref(0)
@@ -12,7 +12,7 @@ export const useArtStore = defineStore('art', () => {
    * get a random art piece from human/ai category
    * @returns {string} url to the art piece
    */
-  const getRandomArt = async (type: 'human' | 'ai') => {
+  const getRandomArt = async (type) => {
     const requestOptions = {
       method: 'GET',
       headers: {
@@ -29,7 +29,7 @@ export const useArtStore = defineStore('art', () => {
       return null
     }
   }
-  const getArtByType = async (type: 'human' | 'ai', category: string) => {
+  const getArtByType = async (type, category) => {
     const requestOptions = {
       method: 'GET',
       headers: {
@@ -37,10 +37,7 @@ export const useArtStore = defineStore('art', () => {
       }
     }
     try {
-      const res = await fetch(
-        `http://localhost:3000/items/tags/${category}?type=${type}`,
-        requestOptions
-      )
+      const res = await fetch(`${BACKEND_URL}/items/tags/${category}?type=${type}`, requestOptions)
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
       const data = await res.json()
       return data
@@ -49,7 +46,7 @@ export const useArtStore = defineStore('art', () => {
       return null
     }
   }
-  const getAllArt = async (type: 'human' | 'ai') => {
+  const getAllArt = async (type) => {
     const requestOptions = {
       method: 'GET',
       headers: {
@@ -57,7 +54,7 @@ export const useArtStore = defineStore('art', () => {
       }
     }
     try {
-      const res = await fetch(`http://localhost:3000/items/gallery?type=${type}`, requestOptions)
+      const res = await fetch(`${BACKEND_URL}/items/gallery?type=${type}`, requestOptions)
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
       const data = await res.json()
       return data[0]

@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
-const BACKEND_URL = import.meta.env.VITE_ADDRESS
+const BACKEND_URL = import.meta.env.VITE_PUBLIC_BACKEND
 
 export const useUserStore = defineStore('user', () => {
   // state
@@ -12,7 +12,7 @@ export const useUserStore = defineStore('user', () => {
   const isAdmin = ref(false)
 
   // actions
-  const register = async (username: string, email: string, password: string) => {
+  const register = async (username, email, password) => {
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -33,7 +33,7 @@ export const useUserStore = defineStore('user', () => {
     }
   }
 
-  const login = async (email: string, password: string) => {
+  const login = async (email, password) => {
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -46,13 +46,13 @@ export const useUserStore = defineStore('user', () => {
       const res = await fetch(`${BACKEND_URL}/api/auth/login`, requestOptions)
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
       const data = await res.json()
+      console.log(data)
       currentUser.value = data.user
       if (data.user.role == 'admin') {
         isAdmin.value = true
       }
-      // token.value = data.user.refresh_token
-      token.value = data.access_token
-      userId.value = data.user._id
+      token.value = currentUser.value.access_token
+      userId.value = currentUser.value._id
       localStorage.setItem('token', token.value)
       localStorage.setItem('userId', userId.value)
     } catch (error) {
@@ -94,6 +94,25 @@ export const useUserStore = defineStore('user', () => {
     }
   }
 
+  const updateHighScore = async (highScore, userId) => {
+    const requestOptions = {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        newHighScore: highScore,
+        userId: userId
+      })
+    }
+    try {
+      const res = await fetch(`${BACKEND_URL}/api/highscore`, requestOptions)
+      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
+    } catch (error) {
+      console.error('highscore update problem', error)
+    }
+  }
+
   return {
     currentUser,
     userId,
@@ -103,6 +122,7 @@ export const useUserStore = defineStore('user', () => {
     register,
     login,
     auth,
-    logout
+    logout,
+    updateHighScore
   }
 })
