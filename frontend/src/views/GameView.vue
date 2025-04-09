@@ -57,8 +57,7 @@ const endGame = async () => {
   if (userStore.currentUser) {
     console.log('started')
     await userStore.updateHighScore(saveStore.highScore, userStore.userId)
-    console.log('wow')
-    await saveStore.saveGame()
+    await saveStore.saveGame(saveStore.right, saveStore.total, userStore.userId)
     console.log('wow done')
   }
 }

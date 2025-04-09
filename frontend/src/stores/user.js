@@ -46,7 +46,6 @@ export const useUserStore = defineStore('user', () => {
       const res = await fetch(`${BACKEND_URL}/api/auth/login`, requestOptions)
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
       const data = await res.json()
-      console.log(data)
       currentUser.value = data.user
       if (data.user.role == 'admin') {
         isAdmin.value = true
@@ -96,7 +95,7 @@ export const useUserStore = defineStore('user', () => {
 
   const updateHighScore = async (highScore, userId) => {
     const requestOptions = {
-      method: 'PATCH',
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -106,7 +105,7 @@ export const useUserStore = defineStore('user', () => {
       })
     }
     try {
-      const res = await fetch(`${BACKEND_URL}/api/highscore`, requestOptions)
+      const res = await fetch(`${BACKEND_URL}/api/auth/highscore`, requestOptions)
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
     } catch (error) {
       console.error('highscore update problem', error)

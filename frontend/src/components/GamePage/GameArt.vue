@@ -100,38 +100,29 @@ const getArt = async () => {
     getImg.onload = () => {
       if (getImg.width <= getImg.height) {
         portraitBools[i].value = true
-        console.log(portraitBools[i].value)
       }
     }
   }
 }
 
-function showToast() {
-  if (correct.value) {
-    toast.add({
-      severity: 'success',
-      summary: 'Correct',
-      detail: 'This piece was AI Generated!',
-      life: 1500
-    })
-  } else {
+const checkAnswer = (e) => {
+  if (e !== answer.value) {
+    correct.value = false
+    saveStore.combo = 0
     toast.add({
       severity: 'error',
       summary: 'Incorrect',
       detail: `This piece was made by ${artPieces.value[artistPiece.value].context.custom.artist_name}`,
       life: 1500
     })
-  }
-}
-
-const checkAnswer = (e) => {
-  if (e != answer.value) {
-    correct.value = false
-    saveStore.combo = 0
-    showToast()
   } else {
     correct.value = true
-    showToast()
+    toast.add({
+      severity: 'success',
+      summary: 'Correct',
+      detail: 'This piece was AI Generated!',
+      life: 1500
+    })
     saveStore.right++
     saveStore.combo++
     if (saveStore.combo > user.highScore) {
