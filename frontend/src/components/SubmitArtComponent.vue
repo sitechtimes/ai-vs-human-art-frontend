@@ -4,14 +4,14 @@
     <TermsService />
     <div class="flex items-center gap-2 mt-4">
       <label id="tos-label">I confirm that I have read and agree to these terms.</label>
-      <Checkbox ariaLabelledby="tos-label" v-model="checked" :binary="true" />
+      <Checkbox v-model="checked" :binary="true" />
     </div>
     <div class="flex items-center gap-2 mb-4">
       <label id="tos-label"
         >I confirm that I have not uploaded any NSFW/suggestive, heavy gore, nor hateful
         content.</label
       >
-      <Checkbox ariaLabelledby="tos-label" v-model="checked2" :binary="true" />
+      <Checkbox v-model="checked2" :binary="true" />
     </div>
     <form @submit.prevent="submit">
       <div class="flex flex-auto flex-col gap-4 items-center w-full">
@@ -21,28 +21,33 @@
           class="flex flex-col border-2 p-8 rounded-lg w-auto"
         >
           <div class="items-center gap-2 mb-4">
-            <label id="link-label" class="mr-2">Link to art source:</label>
-            <InputText aria-labelledby="link-label" v-model="links[index]" :disabled="!ok" />
+            <label class="mr-2 link-label"
+              >Link to art source: <InputText v-model="picture.link" :disabled="!termsAgreedTo"
+            /></label>
+          </div>
+          <div class="items-center gap-2 mb-4">
+            <label class="mr-2 artist-label"
+              >Artist Name: <InputText v-model="picture.name" :disabled="!termsAgreedTo"
+            /></label>
           </div>
           <FileUpload
             mode="basic"
-            :disabled="!ok"
+            :disabled="!termsAgreedTo"
             accept="image/*"
             :maxFileSize="1024 * 1024 * 15"
             customUpload
-            @select="uploadedFile"
-            :multiple="isAdmin"
+            @select="uploadedFile($event, index)"
             label="Upload an image"
-            class=""
           />
-          <Button
-            :disabled="!ok"
-            type="submit"
-            :class="`${checked ? 'cursor-pointer' : '!cursor-not-allowed'} mt-8 fixed`"
-            >Submit</Button
-          >
         </div>
-        <Button v-if="isAdmin" :disabled="!ok" label="Upload More" @click="addUpload()" />
+        <Button
+          v-if="isAdmin"
+          :disabled="!termsAgreedTo"
+          label="Upload More"
+          @click="addNewPicture"
+          class="mt-8"
+        />
+        <Button :disabled="!termsAgreedTo" type="submit"> Submit</Button>
         <Toast />
       </div>
     </form>
@@ -63,83 +68,81 @@ import TermsService from './TermsService.vue'
 
 const imageStore = useImageStore()
 const checked = ref(false)
-const type = ref('unscreened')
-const links = ref([''])
+const checked2 = ref(false)
 const files = ref([])
 const uploading = ref(false)
-const ok = computed(() => checked.value && checked2.value && files.value && !uploading.value)
-const pictures = ref(1)
+const termsAgreedTo = computed(
+  () => checked.value && checked2.value && pictures.value && !uploading.value
+)
 const toast = useToast()
+const addToast = (severity, summary, detail) => {
+  toast.add({
+    severity: severity,
+    summary: summary,
+    detail: detail,
+    life: 3000
+  })
+}
+const pictures = ref([
+  {
+    link: '',
+    name: '',
+    file: ''
+  }
+])
+
+const addNewPicture = () => {
+  pictures.value.push({
+    link: '',
+    name: '',
+    file: ''
+  })
+}
 
 const userStore = useUserStore()
 const user = userStore.currentUser
 const isAdmin = userStore.isAdmin
 
-async function uploadedFile(e) {
+const uploadedFile = (e) => {
   files.value.push(e.files[0])
-  toast.add({
-    severity: 'success',
-    summary: 'Success',
-    detail: 'File successfully uploaded.',
-    life: 3000
-  })
+  addToast('success', 'Success', 'File uploaded successfully.')
 }
 
-async function submit() {
-  try {
-    uploading.value = true
-    if (!user) {
-      toast.add({
-        severity: 'warn',
-        summary: 'Warning',
-        detail: 'You must be logged in to submit art.',
-        life: 3000
-      })
-      throw new Error('not logged in')
-    }
-
-    if (files.value.length != links.value.length) {
-      toast.add({
-        severity: 'warn',
-        summary: 'Warning',
-        detail: "You didn't attach a file or link.",
-        life: 3000
-      })
-      throw new Error('there is no file')
-    }
-
-    for (let i = 0; i < links.value.length; i++) {
-      const formData = new FormData()
-      formData.append('type', type.value)
-      formData.append('link', links.value[i])
-      formData.append('image', files.value[i])
-      const res = await imageStore.uploadImage(formData)
-      if (res?.ok) {
-        toast.add({
-          severity: 'success',
-          summary: 'Success',
-          detail: 'Art successfully submitted.',
-          life: 3000
-        })
-      } else throw new Error((await res.json()).error)
-    }
-    links.value = []
-    files.value = []
-    // backend route for bulk uploads to push ina rray
-  } catch (error) {
-    console.error(error)
-    toast.add({
-      severity: 'error',
-      summary: 'Error',
-      detail: 'Failed to submit art.',
-      life: 3000
-    })
+const submit = async () => {
+  uploading.value = true
+  if (!user) {
+    addToast('warn', 'Warning', 'You must be logged in to submit art.')
+    return
   }
-  uploading.value = false
-}
+  pictures.value.forEach((picture) => {
+    if (picture.link === '' || picture.name === '' || picture.file === '') {
+      addToast('warn', 'Warning', 'Field is missing, all inputs are required.')
+      return
+    }
+  })
 
-const addUpload = () => {
-  pictures.value++
+  const formData = new FormData()
+  pictures.value.forEach((picture) => {
+    formData.append(`tag`, picture.link)
+    formData.append(`name`, picture.name)
+    formData.append(`image`, picture.file)
+  })
+  formData.append('type', 'unscreened')
+
+  const res = await imageStore.uploadImage(formData)
+  if (!res.ok) {
+    addToast('error', 'Error', 'Failed to submit art.')
+    return
+  }
+  addToast('success', 'Success', 'Art successfully submitted.')
+  pictures.value = [
+    {
+      link: '',
+      name: '',
+      file: ''
+    }
+  ]
+  uploading.value = false
 }
 </script>
 

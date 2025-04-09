@@ -1,69 +1,58 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-
-const BACKEND_URL = import.meta.env.VITE_PUBLIC_BACKEND
+const BACKEND_URL = import.meta.env.VITE_ADDRESS
 
 export const useUserStore = defineStore('user', () => {
   // state
   const currentUser = ref(null)
   const userId = ref('')
-  const token = ref('')
+  const accessToken = ref('')
   const isAuthenticated = ref(false)
   const isAdmin = ref(false)
 
-  // actions
-  const register = async (username, email, password) => {
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        username: username,
-        email: email,
-        password: password
-      })
+  // requestEndpoitn stealing
+  const requestEndpoint = async (endpoint, method, body) => {
+    const options = {}
+    if (method) {
+      options.method = method
+      options.headers = { 'Content-Type': 'application/json' }
+      options.body = JSON.stringify(body)
     }
     try {
-      const res = await fetch(`${BACKEND_URL}/api/auth/register`, requestOptions)
+      const res = await fetch(`${BACKEND_URL}${endpoint}`, options)
       if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`)
       }
+      return await res.json()
     } catch (error) {
-      console.error('Registration Error', error)
-      // gonna have to do more than console log this later
+      console.error(error)
     }
   }
 
+  // actions
+  const register = async (username, email, password) => {
+    await requestEndpoint('/api/auth/register', 'POST', {
+      username,
+      email,
+      password
+    })
+  }
+
   const login = async (email, password) => {
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        email: email,
-        password: password
-      })
-    }
-    try {
-      const res = await fetch(`${BACKEND_URL}/api/auth/login`, requestOptions)
-      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
-      const data = await res.json()
-      console.log(data)
-      currentUser.value = data.user
-      if (data.user.role == 'admin') {
-        isAdmin.value = true
-      }
-      token.value = currentUser.value.access_token
-      userId.value = currentUser.value._id
-      localStorage.setItem('token', token.value)
-      localStorage.setItem('userId', userId.value)
-    } catch (error) {
-      console.error('Login Error', error)
-    }
+    const data = await requestEndpoint('/api/auth/login', 'POST', { email, password })
+
+    currentUser.value = data.user
+    isAdmin.value = data.user.role === 'admin'
+    accessToken.value = data.access_token
+    userId.value = data.user._id
+    localStorage.setItem('token', accessToken.value)
+    localStorage.setItem('userId', userId.value)
   }
 
   const auth = async () => {
     const requestOptions = {
       method: 'GET',
-      headers: { Authorization: `Bearer ${localStorage.token}` }
+      headers: { Authorization: `Bearer ${localStorage.accessToken}` }
     }
     try {
       const res = await fetch(`${BACKEND_URL}/api/auth`, requestOptions)
@@ -84,7 +73,7 @@ export const useUserStore = defineStore('user', () => {
       const res = await fetch(`${BACKEND_URL}/api/auth/logout`, requestOptions)
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
       currentUser.value = null
-      token.value = ''
+      accessToken.value = ''
       isAuthenticated.value = false
       isAdmin.value = false
       localStorage.removeItem('token')
@@ -116,7 +105,7 @@ export const useUserStore = defineStore('user', () => {
   return {
     currentUser,
     userId,
-    token,
+    accessToken,
     isAuthenticated,
     isAdmin,
     register,

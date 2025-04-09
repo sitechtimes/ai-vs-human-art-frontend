@@ -5,11 +5,11 @@
         <img src="/fatfatpankocat-panko.gif" alt="placeholder logo" class="mr-0" />
       </template>
       <template #item="{ item, props }">
-        <router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
+        <RouterLink v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
           <a :href="href" v-bind="props.action" @click="navigate">
             <span>{{ item.label }}</span>
           </a>
-        </router-link>
+        </RouterLink>
         <!--         <a v-else :href="item.url" :target="item.target" v-bind="props.action">
             <span class="ml-2">{{ item.label }}</span>
             put something here to indicate that this is a dropdown i don't know
@@ -17,9 +17,9 @@
       </template>
       <template #end>
         <div class="flex items-center gap-0.5" v-if="userStore.currentUser">
-          <router-link to="/profile">
+          <RouterLink to="/profile">
             <img src="/userImg.svg" alt="placeholder avatar" class="rounded-full dark:invert" />
-          </router-link>
+          </RouterLink>
         </div>
       </template>
     </Menubar>
@@ -32,7 +32,7 @@ import Menubar from 'primevue/menubar'
 import { useUserStore } from '../stores/user'
 
 const userStore = useUserStore()
-const signedIn = computed(() => !!userStore.currentUser)
+const signedIn = computed(() => userStore.currentUser)
 
 const menuItems = ref([
   {
@@ -43,26 +43,18 @@ const menuItems = ref([
     route: '/game',
     label: 'Game'
   },
-  // {
-  //   route: '/about',
-  //   label: 'About Us'
-  // },
   {
     route: '/submit',
     label: 'Submit Your Art'
   },
   {
-    route: false,
+    route: '/about',
     label: 'About',
     items: [
       {
         route: '/team',
         label: 'The Team'
       },
-      // {
-      //   route: '/submit',
-      //   label: 'Submit Your Art'
-      // }, //make this into its own button
       {
         route: '/credits',
         label: 'Acknowledgements'

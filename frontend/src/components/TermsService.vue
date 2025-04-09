@@ -1,7 +1,7 @@
 <template>
   <div class="tos flex flex-col rounded p-4 self-center">
     <ScrollPanel class="h-36 w-full">
-      <div v-for="text in tos" :key="text">
+      <div v-for="text in serviceTerms" :key="text">
         <p class="font-bold">{{ text.heading }}</p>
         <p v-for="words in text.text" :key="words">{{ words }}</p>
         <br />
@@ -14,7 +14,7 @@
 <script setup>
 import ScrollPanel from 'primevue/scrollpanel'
 
-const tos = [
+const serviceTerms = [
   {
     heading: 'INTRODUCTION',
     text: [

@@ -29,7 +29,6 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
 import { useUserStore } from '../stores/user'
 import Fieldset from 'primevue/fieldset'
 import Button from 'primevue/button'
