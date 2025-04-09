@@ -13,7 +13,7 @@
       <Button @click="endGame" class="self-center w-2/5 mb-0">End Game</Button>
     </div>
     <div id="results" class="flex flex-col">
-      <Dialog v-model:visible="results" header="Thank you for playing!" modal>
+      <Dialog v-model:visible="results" header="Thank you for playing!" modal> 
         <p>Here are your stats:</p>
         <p>{{ saveStore.right }} / {{ saveStore.total }}</p>
         <p>
@@ -31,7 +31,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, onUnmounted } from 'vue'
 import GameFooter from '../components/GamePage/GameFooter.vue'
 import TabsComponent from '../components/GamePage/TabsComponent.vue'
 import GameArt from '../components/GamePage/GameArt.vue'
@@ -51,20 +51,20 @@ const startGame = () => {
 }
 
 const endGame = async () => {
-  console.log('ended')
   gameStarted.value = false
   results.value = true
   if (userStore.currentUser) {
-    console.log('started')
     await userStore.updateHighScore(saveStore.highScore, userStore.userId)
-    console.log('wow')
     await saveStore.saveGame()
-    console.log('wow done')
   }
 }
 
 onMounted(async () => {
   await saveStore.setScore()
+})
+
+onUnmounted(() => {
+  endGame()
 })
 </script>
 
