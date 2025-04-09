@@ -100,7 +100,7 @@ const getArt = async () => {
   }
 }
 
-function showToast() {
+const showToast = () => {
   if (correct.value) {
     toast.add({
       severity: 'success',
