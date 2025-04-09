@@ -10,19 +10,26 @@ export const useUserStore = defineStore('user', () => {
   const isAuthenticated = ref(false)
   const isAdmin = ref(false)
 
+  // requestEndpoitn stealing
+  const requestEndpoint = async (method, body) => {
+    const options = {}
+    if (method) {
+      options.method = method
+      options.headers = { 'Content-Type': 'application/json' }
+      options.body = JSON.stringify(body)
+      console.log(options)
+    }
+  }
+
   // actions
   const register = async (username, email, password) => {
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        username: username,
-        email: email,
-        password: password
-      })
-    }
+    const request = requestEndpoint('POST', {
+      username,
+      email,
+      password
+    })
     try {
-      const res = await fetch(`${BACKEND_URL}/api/auth/register`, requestOptions)
+      const res = await fetch(`${BACKEND_URL}/api/auth/register`, request)
       if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`)
       }
@@ -32,17 +39,13 @@ export const useUserStore = defineStore('user', () => {
   }
 
   const login = async (email, password) => {
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        email: email,
-        password: password
-      })
-    }
+    const request = requestEndpoint('POST', { email, password })
+
     try {
-      const res = await fetch(`${BACKEND_URL}/api/auth/login`, requestOptions)
+      const res = await fetch(`${BACKEND_URL}/api/auth/login`, request)
+      console.log(res)
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
+
       const data = await res.json()
       currentUser.value = data.user
       isAdmin.value = data.user.role === 'admin'
