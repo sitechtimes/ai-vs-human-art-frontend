@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-const backend = import.meta.env.VITE_PUBLIC_BACKEND
+
+const BACKEND_URL = import.meta.env.VITE_PUBLIC_BACKEND
+
 export const useArtStore = defineStore('art', () => {
   const combo = ref(0)
   const imageType = ref('Randomized')
@@ -18,7 +20,7 @@ export const useArtStore = defineStore('art', () => {
       }
     }
     try {
-      const res = await fetch(`${backend}/items/random?type=${type}`, requestOptions)
+      const res = await fetch(`${BACKEND_URL}/items/random?type=${type}`, requestOptions)
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
       const data = await res.json()
       return data
@@ -35,10 +37,7 @@ export const useArtStore = defineStore('art', () => {
       }
     }
     try {
-      const res = await fetch(
-        `http://localhost:3000/items/tags/${category}?type=${type}`,
-        requestOptions
-      )
+      const res = await fetch(`${BACKEND_URL}/items/tags/${category}?type=${type}`, requestOptions)
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
       const data = await res.json()
       return data
@@ -55,7 +54,7 @@ export const useArtStore = defineStore('art', () => {
       }
     }
     try {
-      const res = await fetch(`http://localhost:3000/items/gallery?type=${type}`, requestOptions)
+      const res = await fetch(`${BACKEND_URL}/items/gallery?type=${type}`, requestOptions)
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
       const data = await res.json()
       return data[0]
@@ -64,7 +63,6 @@ export const useArtStore = defineStore('art', () => {
       return null
     }
   }
-  // tyr having backend send two images at once to prevent ispecg element network cheating
 
   return {
     combo,

@@ -1,13 +1,13 @@
 <template>
   <div id="themes">
     <Tabs value="0">
-      <TabList class="tabs grid items-stretch w-full">
+      <TabList class="flex w-full max-w-screen overflow-x-auto">
         <Tab
           v-for="tab in tabsObject"
           :key="tab.value"
           :value="tab.value"
           @click="getType(tab.name)"
-          class="text-[5vw] sm:text-[4vw] md:text-[3vw] lg:text-[2vw]"
+          class="text-[4vw] sm:text-[3vw] md:text-[3vw] lg:text-[2vw]"
           :disabled="tab.disabled"
         >
           {{ tab.name }}
