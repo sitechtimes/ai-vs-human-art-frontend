@@ -77,6 +77,7 @@ onMounted(async () => {
 
 onUnmounted(() => {
   endGame()
+  saveStore.combo = 0
 })
 </script>
 
