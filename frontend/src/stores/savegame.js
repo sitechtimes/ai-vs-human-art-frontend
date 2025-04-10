@@ -31,8 +31,7 @@ export const useSaveStore = defineStore('save', () => {
       if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`)
       }
-      console.log('success')
-      console.log(total.value)
+      ;('success')
     } catch (error) {
       console.error('Save Error', error)
     }

@@ -58,13 +58,11 @@ const endGame = async () => {
       await userStore.updateHighScore(saveStore.highScore, userStore.userId)
     }
     await saveStore.saveGame()
-    console.log('wow done')
   }
 }
 
 watch(results, (newResult) => {
   if (newResult === false) {
-    console.log('hai')
     saveStore.total = 0
     saveStore.right = 0
     saveStore.combo = 0
