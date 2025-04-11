@@ -1,6 +1,6 @@
 <template>
   <div class="tos flex flex-col rounded p-4 self-center">
-    <ScrollPanel class="h-36 w-full">
+    <ScrollPanel class="h-[20vw] w-full">
       <div v-for="text in tos" :key="text">
         <p class="font-bold">{{ text.heading }}</p>
         <p v-for="words in text.text" :key="words">{{ words }}</p>

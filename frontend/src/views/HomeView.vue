@@ -11,7 +11,6 @@
             class="btn"
             label="Game"
             to="/game"
-            @click=""
           />
 
           <Button

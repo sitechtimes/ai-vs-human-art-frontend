@@ -63,8 +63,6 @@ export const useArtStore = defineStore('art', () => {
       return null
     }
   }
-  // tyr having backend send two images at once to prevent ispecg element network cheating
-
   return {
     combo,
     getRandomArt,

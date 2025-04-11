@@ -29,7 +29,6 @@ export const useUserStore = defineStore('user', () => {
       }
     } catch (error) {
       console.error('Registration Error', error)
-      // gonna have to do more than console log this later
     }
   }
 

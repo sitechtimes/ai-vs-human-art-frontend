@@ -82,7 +82,6 @@ const portraitBools = {
 const getArt = async () => {
   isVisible.value = false
   artPieces.value = [await artStore.getRandomArt('human'), await artStore.getRandomArt('ai')]
-  // await getFromBackend()
   answer.value = 1
   artistPiece.value = 0
   if (artPieces.value.some((el) => el === null)) {
@@ -142,7 +141,6 @@ watch(artPieces, () => {
 watch(
   () => artStore.imageType,
   async () => {
-    //async (newType) => { .. if (artStore.imageType !== newType) {
     artPieces.value = [] // clears art
     await populateDictionaries(artStore.imageType) // fills dictionaries with new art
     getArt(humanArt, aiArt) // chooses random art from new dictionaries
@@ -155,6 +153,3 @@ onMounted(() => {
 </script>
 
 <style scoped></style>
-
-<!-- overall tally of all users + one of individual users -->
-<!-- dmeographic data? -->
