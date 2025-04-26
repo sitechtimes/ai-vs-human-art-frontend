@@ -14,7 +14,6 @@ export const useSaveStore = defineStore('save', () => {
   const setScore = () => {
     if (userStore.currentUser) {
       highScore.value = userStore.currentUser.highScore
-      console.log(highScore.value)
     }
   }
 

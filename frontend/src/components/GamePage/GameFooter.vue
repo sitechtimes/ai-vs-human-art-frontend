@@ -34,7 +34,8 @@ import Toolbar from 'primevue/toolbar'
 import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
 import { ref } from 'vue'
-import { useArtStore } from '../../stores/art'
+import { useSaveStore } from '../../stores/savegame'
+import { useUserStore } from '../../stores/user'
 
 const saveStore = useSaveStore()
 const userStore = useUserStore()

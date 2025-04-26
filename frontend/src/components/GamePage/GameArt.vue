@@ -47,15 +47,13 @@
 
 <script setup>
 import Button from 'primevue/button'
-//import Dialog from 'primevue/dialog'
+import Dialog from 'primevue/dialog'
 import Image from 'primevue/image'
-import Toast from 'primevue/toast'
-import { useToast } from 'primevue/usetoast'
+import { useSaveStore } from '../../stores/savegame.js'
 
 import { ref, onMounted, watch } from 'vue'
 import { useArtStore } from '../../stores/art.js'
 
-const user = useUserStore()
 const artStore = useArtStore()
 const saveStore = useSaveStore()
 const artPieces = ref([])
@@ -64,6 +62,8 @@ const gameAnswer = ref(1) // which one is ai
 const isCorrect = ref(false)
 const humanArt = ref([])
 const aiArt = ref([])
+const buttonDisabled = ref(true)
+
 const populateDictionaries = async (category) => {
   artPieces.value = []
   if (!category || category == 'Randomized') {
@@ -74,7 +74,6 @@ const populateDictionaries = async (category) => {
     aiArt.value = await artStore.getArtByType('ai', `${category}`)
   }
 }
-getDimensions()
 
 const getArt = async () => {
   isVisible.value = false
