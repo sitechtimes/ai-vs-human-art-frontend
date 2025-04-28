@@ -5,7 +5,17 @@
     >
       <div class="flex flex-col items-center">
         <div class="flex overflow-hidden">
+          <<<<<<< HEAD
           <Image :src="artPieces[0]" alt="" class="object-contain justify-center" preview />
+          =======
+          <Image
+            :src="artPieces[0]"
+            alt=""
+            class="object-contain justify-center"
+            preview
+            aria-label="Image 1"
+          />
+          >>>>>>> 72-changes-to-game-for-stats-reasons
         </div>
 
         <Button
@@ -20,7 +30,16 @@
 
       <div class="flex flex-col items-center">
         <div class="flex overflow-hidden">
+          <<<<<<< HEAD
           <Image :src="artPieces[1]" class="object-contain justify-center" preview />
+          =======
+          <Image
+            :src="artPieces[1]"
+            class="object-contain justify-center"
+            preview
+            aria-label="Image 2"
+          />
+          >>>>>>> 72-changes-to-game-for-stats-reasons
         </div>
 
         <Button
@@ -47,7 +66,6 @@
 
 <script setup>
 import Button from 'primevue/button'
-import Dialog from 'primevue/dialog'
 import Image from 'primevue/image'
 import { useSaveStore } from '../../stores/savegame.js'
 
@@ -58,7 +76,7 @@ const artStore = useArtStore()
 const saveStore = useSaveStore()
 const artPieces = ref([])
 const isVisible = ref(false)
-const gameAnswer = ref(1) // which one is ai
+const answer = ref(1) // which one is ai
 const isCorrect = ref(false)
 const humanArt = ref([])
 const aiArt = ref([])
@@ -77,28 +95,51 @@ const populateDictionaries = async (category) => {
 
 const getArt = async () => {
   isVisible.value = false
-  artPieces.value = []
-  artPieces.value = [
-    humanArt.value[Math.floor(Math.random() * humanArt.value.length)],
-    aiArt.value[Math.floor(Math.random() * aiArt.value.length)]
-  ]
-  gameAnswer.value = 1
+  artPieces.value = [await artStore.getRandomArt('human'), await artStore.getRandomArt('ai')]
+  answer.value = 1
+  artistPiece.value = 0
   if (artPieces.value.some((el) => el === null)) {
     alert('Failed to fetch art (boowomp)')
     artPieces.value = []
   } else if (Math.random() < 0.5) {
     artPieces.value.reverse()
-    gameAnswer.value = 0
+    answer.value = 0
+    artistPiece.value = 1
+  }
+  for (let i = 0; i < artPieces.value.length; i++) {
+    let getImg = new window.Image()
+    getImg.src = artPieces[i]
+    getImg.onload = () => {
+      if (getImg.width <= getImg.height) {
+        portraitBools[i].value = true
+      }
+    }
   }
 }
 
 const checkAnswer = (e) => {
-  if (e !== gameAnswer.value) {
-    isCorrect.value = false
-    artStore.combo = 0
+  if (e !== answer.value) {
+    correct.value = false
+    saveStore.combo = 0
+    toast.add({
+      severity: 'error',
+      summary: 'Incorrect',
+      detail: `This piece was made by ${artPieces.value[artistPiece.value].context.custom.artist_name}`,
+      life: 1500
+    })
   } else {
-    isCorrect.value = true
-    artStore.combo++
+    correct.value = true
+    toast.add({
+      severity: 'success',
+      summary: 'Correct',
+      detail: 'This piece was AI Generated!',
+      life: 1500
+    })
+    saveStore.right++
+    saveStore.combo++
+    if (saveStore.combo > user.highScore) {
+      user.highScore = saveStore.combo
+    }
   }
   isVisible.value = !isVisible.value
   saveStore.total++
@@ -114,7 +155,6 @@ watch(artPieces, () => {
 watch(
   () => artStore.imageType,
   async () => {
-    //async (newType) => { .. if (artStore.imageType !== newType) {
     artPieces.value = [] // clears art
     await populateDictionaries(artStore.imageType) // fills dictionaries with new art
     getArt(humanArt, aiArt) // chooses random art from new dictionaries
@@ -127,6 +167,3 @@ onMounted(() => {
 </script>
 
 <style scoped></style>
-
-<!-- overall tally of all users + one of individual users -->
-<!-- dmeographic data? -->

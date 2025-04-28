@@ -16,7 +16,6 @@
         <Button @click="helpButton = !helpButton">Instructions</Button>
       </template>
     </Toolbar>
-    <!-- eslint-disable vue/no-v-model-argument -->
     <Dialog v-model:visible="helpButton" header="Instructions / How to play" class="w-4/5" modal>
       <div>
         <div v-for="instruction in gameInstructions" :key="instruction">
