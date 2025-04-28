@@ -48,12 +48,16 @@
 <script setup>
 import Button from 'primevue/button'
 import Image from 'primevue/image'
+import Dialog from 'primevue/dialog'
 import { useSaveStore } from '../../stores/savegame.js'
-
 import { ref, onMounted, watch } from 'vue'
 import { useArtStore } from '../../stores/art.js'
+import { useUserStore } from '../../stores/user.js'
+import { useToast } from 'primevue/usetoast'
 
 const artStore = useArtStore()
+const userStore = useUserStore()
+const user = userStore.currentUser
 const saveStore = useSaveStore()
 const artPieces = ref([])
 const isVisible = ref(false)
@@ -61,7 +65,8 @@ const answer = ref(1) // which one is ai
 const isCorrect = ref(false)
 const humanArt = ref([])
 const aiArt = ref([])
-const buttonDisabled = ref(true)
+const buttonDisabled = ref(false)
+const toast = useToast()
 
 const populateDictionaries = async (category) => {
   artPieces.value = []
@@ -78,14 +83,12 @@ const getArt = async () => {
   isVisible.value = false
   artPieces.value = [await artStore.getRandomArt('human'), await artStore.getRandomArt('ai')]
   answer.value = 1
-  artistPiece.value = 0
   if (artPieces.value.some((el) => el === null)) {
     alert('Failed to fetch art (boowomp)')
     artPieces.value = []
   } else if (Math.random() < 0.5) {
     artPieces.value.reverse()
     answer.value = 0
-    artistPiece.value = 1
   }
   for (let i = 0; i < artPieces.value.length; i++) {
     let getImg = new window.Image()
@@ -100,16 +103,16 @@ const getArt = async () => {
 
 const checkAnswer = (e) => {
   if (e !== answer.value) {
-    correct.value = false
+    isCorrect.value = false
     saveStore.combo = 0
     toast.add({
       severity: 'error',
       summary: 'Incorrect',
-      detail: `This piece was made by ${artPieces.value[artistPiece.value].context.custom.artist_name}`,
+      detail: `This piece was made by ${artPieces.value[answer.value].context.custom.artist_name}`,
       life: 1500
     })
   } else {
-    correct.value = true
+    isCorrect.value = true
     toast.add({
       severity: 'success',
       summary: 'Correct',
@@ -142,8 +145,9 @@ watch(
   }
 )
 
-onMounted(() => {
-  getArt()
+onMounted(async () => {
+  await populateDictionaries(artStore.imageType) // fills dictionaries with new art
+  getArt(humanArt, aiArt)
 })
 </script>
 
