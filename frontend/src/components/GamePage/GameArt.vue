@@ -5,17 +5,7 @@
     >
       <div class="flex flex-col items-center">
         <div class="flex overflow-hidden">
-          <<<<<<< HEAD
           <Image :src="artPieces[0]" alt="" class="object-contain justify-center" preview />
-          =======
-          <Image
-            :src="artPieces[0]"
-            alt=""
-            class="object-contain justify-center"
-            preview
-            aria-label="Image 1"
-          />
-          >>>>>>> 72-changes-to-game-for-stats-reasons
         </div>
 
         <Button
@@ -30,16 +20,7 @@
 
       <div class="flex flex-col items-center">
         <div class="flex overflow-hidden">
-          <<<<<<< HEAD
           <Image :src="artPieces[1]" class="object-contain justify-center" preview />
-          =======
-          <Image
-            :src="artPieces[1]"
-            class="object-contain justify-center"
-            preview
-            aria-label="Image 2"
-          />
-          >>>>>>> 72-changes-to-game-for-stats-reasons
         </div>
 
         <Button
