@@ -47,23 +47,27 @@
 
 <script setup>
 import Button from 'primevue/button'
-//import Dialog from 'primevue/dialog'
 import Image from 'primevue/image'
-import Toast from 'primevue/toast'
-import { useToast } from 'primevue/usetoast'
-
+import Dialog from 'primevue/dialog'
+import { useSaveStore } from '../../stores/savegame.js'
 import { ref, onMounted, watch } from 'vue'
 import { useArtStore } from '../../stores/art.js'
+import { useUserStore } from '../../stores/user.js'
+import { useToast } from 'primevue/usetoast'
 
-const user = useUserStore()
 const artStore = useArtStore()
+const userStore = useUserStore()
+const user = userStore.currentUser
 const saveStore = useSaveStore()
 const artPieces = ref([])
 const isVisible = ref(false)
-const gameAnswer = ref(1) // which one is ai
+const answer = ref(1) // which one is ai
 const isCorrect = ref(false)
 const humanArt = ref([])
 const aiArt = ref([])
+const buttonDisabled = ref(false)
+const toast = useToast()
+
 const populateDictionaries = async (category) => {
   artPieces.value = []
   if (!category || category == 'Randomized') {
@@ -74,32 +78,52 @@ const populateDictionaries = async (category) => {
     aiArt.value = await artStore.getArtByType('ai', `${category}`)
   }
 }
-getDimensions()
 
 const getArt = async () => {
   isVisible.value = false
-  artPieces.value = []
-  artPieces.value = [
-    humanArt.value[Math.floor(Math.random() * humanArt.value.length)],
-    aiArt.value[Math.floor(Math.random() * aiArt.value.length)]
-  ]
-  gameAnswer.value = 1
+  artPieces.value = [await artStore.getRandomArt('human'), await artStore.getRandomArt('ai')]
+  answer.value = 1
   if (artPieces.value.some((el) => el === null)) {
     alert('Failed to fetch art (boowomp)')
     artPieces.value = []
   } else if (Math.random() < 0.5) {
     artPieces.value.reverse()
-    gameAnswer.value = 0
+    answer.value = 0
+  }
+  for (let i = 0; i < artPieces.value.length; i++) {
+    let getImg = new window.Image()
+    getImg.src = artPieces[i]
+    getImg.onload = () => {
+      if (getImg.width <= getImg.height) {
+        portraitBools[i].value = true
+      }
+    }
   }
 }
 
 const checkAnswer = (e) => {
-  if (e !== gameAnswer.value) {
+  if (e !== answer.value) {
     isCorrect.value = false
-    artStore.combo = 0
+    saveStore.combo = 0
+    toast.add({
+      severity: 'error',
+      summary: 'Incorrect',
+      detail: `This piece was made by ${artPieces.value[answer.value].context.custom.artist_name}`,
+      life: 1500
+    })
   } else {
     isCorrect.value = true
-    artStore.combo++
+    toast.add({
+      severity: 'success',
+      summary: 'Correct',
+      detail: 'This piece was AI Generated!',
+      life: 1500
+    })
+    saveStore.right++
+    saveStore.combo++
+    if (saveStore.combo > user.highScore) {
+      user.highScore = saveStore.combo
+    }
   }
   isVisible.value = !isVisible.value
   saveStore.total++
@@ -115,19 +139,16 @@ watch(artPieces, () => {
 watch(
   () => artStore.imageType,
   async () => {
-    //async (newType) => { .. if (artStore.imageType !== newType) {
     artPieces.value = [] // clears art
     await populateDictionaries(artStore.imageType) // fills dictionaries with new art
     getArt(humanArt, aiArt) // chooses random art from new dictionaries
   }
 )
 
-onMounted(() => {
-  getArt()
+onMounted(async () => {
+  await populateDictionaries(artStore.imageType) // fills dictionaries with new art
+  getArt(humanArt, aiArt)
 })
 </script>
 
 <style scoped></style>
-
-<!-- overall tally of all users + one of individual users -->
-<!-- dmeographic data? -->

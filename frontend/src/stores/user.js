@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-const BACKEND_URL = import.meta.env.VITE_ADDRESS
+const BACKEND_URL = import.meta.env.VITE_PUBLIC_BACKEND
 
 export const useUserStore = defineStore('user', () => {
   // state
@@ -25,7 +25,7 @@ export const useUserStore = defineStore('user', () => {
       }
       return await res.json()
     } catch (error) {
-      console.error(error)
+      console.error('Registration Error', error)
     }
   }
 
@@ -39,14 +39,29 @@ export const useUserStore = defineStore('user', () => {
   }
 
   const login = async (email, password) => {
-    const data = await requestEndpoint('/api/auth/login', 'POST', { email, password })
-
-    currentUser.value = data.user
-    isAdmin.value = data.user.role === 'admin'
-    accessToken.value = data.access_token
-    userId.value = data.user._id
-    localStorage.setItem('token', accessToken.value)
-    localStorage.setItem('userId', userId.value)
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: email,
+        password: password
+      })
+    }
+    try {
+      const res = await fetch(`${BACKEND_URL}/api/auth/login`, requestOptions)
+      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
+      const data = await res.json()
+      currentUser.value = data.user
+      if (data.user.role == 'admin') {
+        isAdmin.value = true
+      }
+      accessToken.value = currentUser.value.access_token
+      userId.value = currentUser.value._id
+      localStorage.setItem('token', accessToken.value)
+      localStorage.setItem('userId', userId.value)
+    } catch (error) {
+      console.error('Login Error', error)
+    }
   }
 
   const auth = async () => {
@@ -85,7 +100,7 @@ export const useUserStore = defineStore('user', () => {
 
   const updateHighScore = async (highScore, userId) => {
     const requestOptions = {
-      method: 'PATCH',
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -95,7 +110,7 @@ export const useUserStore = defineStore('user', () => {
       })
     }
     try {
-      const res = await fetch(`${BACKEND_URL}/api/highscore`, requestOptions)
+      const res = await fetch(`${BACKEND_URL}/api/auth/highscore`, requestOptions)
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
     } catch (error) {
       console.error('highscore update problem', error)

@@ -1,7 +1,7 @@
 <template>
-  <div class="">
-    <div class="w-full bg-[var(--p-content-background)] mt-[58px] h-full">
-      <TabsComponent />
+  <div>
+    <div class="w-full bg-[var(--p-content-background)] mt-[58px]">
+      <TabsComponent class="max-w-screen w-full" />
     </div>
     <div class="flex flex-col">
       <Button v-if="!gameStarted" class="self-center w-2/5 mt-60" @click="startGame"
@@ -31,7 +31,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, onUnmounted, watch } from 'vue'
 import GameFooter from '../components/GamePage/GameFooter.vue'
 import TabsComponent from '../components/GamePage/TabsComponent.vue'
 import GameArt from '../components/GamePage/GameArt.vue'
@@ -51,20 +51,33 @@ const startGame = () => {
 }
 
 const endGame = async () => {
-  console.log('ended')
   gameStarted.value = false
   results.value = true
   if (userStore.currentUser) {
-    console.log('started')
-    await userStore.updateHighScore(saveStore.highScore, userStore.userId)
-    console.log('wow')
+    if (userStore.currentUser.highScore < saveStore.highScore) {
+      await userStore.updateHighScore(saveStore.highScore, userStore.userId)
+    }
     await saveStore.saveGame()
-    console.log('wow done')
   }
 }
 
+watch(results, (newResult) => {
+  if (newResult === false) {
+    saveStore.total = 0
+    saveStore.right = 0
+    saveStore.combo = 0
+  } else {
+    return
+  }
+})
+
 onMounted(async () => {
   await saveStore.setScore()
+})
+
+onUnmounted(() => {
+  endGame()
+  saveStore.combo = 0
 })
 </script>
 

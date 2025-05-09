@@ -9,23 +9,21 @@ export const useSaveStore = defineStore('save', () => {
   const highScore = ref(0)
   const total = ref(0)
   const right = ref(0)
-  const user = ref(userStore.currentUser)
 
   const setScore = () => {
     if (userStore.currentUser) {
       highScore.value = userStore.currentUser.highScore
-      console.log(highScore.value)
     }
   }
 
-  const saveGame = async (right, total, user) => {
+  const saveGame = async () => {
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         right: right.value,
         total: total.value,
-        user: user.value
+        userId: userStore.userId
       })
     }
     try {
@@ -33,9 +31,7 @@ export const useSaveStore = defineStore('save', () => {
       if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`)
       }
-      total.value = 0
-      combo.value = 0
-      right.value = 0
+      ;('success')
     } catch (error) {
       console.error('Save Error', error)
     }
@@ -56,7 +52,6 @@ export const useSaveStore = defineStore('save', () => {
     highScore,
     total,
     right,
-    user,
     setScore,
     saveGame
   }
