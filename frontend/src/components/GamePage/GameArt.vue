@@ -67,7 +67,7 @@ const humanArt = ref([])
 const aiArt = ref([])
 const populateDictionaries = async (category) => {
   artPieces.value = []
-  if (!category || category == 'Randomized') {
+  if (!category || category === 'Randomized') {
     humanArt.value = await artStore.getAllArt('human')
     aiArt.value = await artStore.getAllArt('ai')
   } else {
@@ -118,13 +118,15 @@ watch(
     //async (newType) => { .. if (artStore.imageType !== newType) {
     artPieces.value = [] // clears art
     await populateDictionaries(artStore.imageType) // fills dictionaries with new art
-    getArt(humanArt, aiArt) // chooses random art from new dictionaries
+    getArt() // chooses random art from new dictionaries
   }
-)
+) //if image type clears
 
 onMounted(() => {
+  populateDictionaries(artStore.imageType)
   getArt()
 })
+
 </script>
 
 <style scoped></style>

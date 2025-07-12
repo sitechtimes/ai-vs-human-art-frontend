@@ -66,6 +66,7 @@ const endGame = async () => {
 onMounted(async () => {
   await saveStore.setScore()
 })
+
 </script>
 
 <style scoped></style>
