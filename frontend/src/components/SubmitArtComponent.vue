@@ -1,5 +1,8 @@
 <template>
-  <div class="flex flex-col gap-4 items-center m-8">
+  <div v-if="userIsNull">
+    <span>Hello, please sign in in order to upload images</span>
+  </div>
+  <div v-else class="flex flex-col gap-4 items-center m-8">
     <h2 class="text-xl underline self-center font-bold">TERMS OF SERVICE & FAQ</h2>
     <TermsService />
     <div class="flex items-center gap-2 mt-4">
@@ -55,7 +58,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import InputText from 'primevue/inputtext'
 import FileUpload from 'primevue/fileupload'
 import Checkbox from 'primevue/checkbox'
@@ -101,6 +104,7 @@ const addNewPicture = () => {
 
 const userStore = useUserStore()
 const user = userStore.currentUser
+const userIsNull = ref(false)
 const isAdmin = userStore.isAdmin
 
 const uploadedFile = (e) => {
@@ -144,6 +148,13 @@ const submit = async () => {
   ]
   uploading.value = false
 }
+
+const check = () => {
+  if (user.currentUser === null){
+    console.log('not logged in')
+  }
+}
+
 </script>
 
 <style scoped></style>

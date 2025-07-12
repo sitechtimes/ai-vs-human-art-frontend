@@ -1,7 +1,7 @@
 <template>
   <div v-if="artPieces.length" class="flex flex-col items-center h-[calc(100%-68px)] w-full">
     <div
-      class="flex flex-row gap-5 m-[5vh] mb-[9vh] flex justify-center items-center h-screen md:justify-between md:gap-10 items-center lg:gap-10 xl:max-w-[50dvw] lg:max-h-[60dvh] lg:max-w-[70dvw] max-w-full md:max-w-[80dvw] md:flex-row"
+      class="flex flex-row md:grid md:grid-cols-3 gap-5 m-[5vh] mb-[9vh] flex justify-center items-center h-screen md:justify-between md:gap-10 items-center lg:gap-10 xl:max-w-[50dvw] lg:max-h-[60dvh] lg:max-w-[70dvw] max-w-full md:max-w-[80dvw] md:flex-row"
     >
       <div class="flex flex-col items-center">
         <div class="flex overflow-hidden">
@@ -10,7 +10,6 @@
 
         <Button
           label="Image 1"
-          :disabled="buttonDisabled"
           class="flex self-center m-3 scale-90 sm:scale-100"
           @click="checkAnswer(0)"
         ></Button>
@@ -25,7 +24,6 @@
 
         <Button
           label="Image 2"
-          :disabled="buttonDisabled"
           class="flex self-center m-3 scale-90 sm:scale-100"
           @click="checkAnswer(1)"
         ></Button>
@@ -104,8 +102,6 @@ const checkAnswer = (e) => {
   }
   isVisible.value = !isVisible.value
   saveStore.total++
-
-  setTimeout(getArt, 1500)
 }
 
 watch(artPieces, () => {
@@ -122,9 +118,9 @@ watch(
   }
 ) //if image type clears
 
-onMounted(() => {
-  populateDictionaries(artStore.imageType)
-  getArt()
+onMounted(async() => {
+  await populateDictionaries(artStore.imageType)
+  await getArt()
 })
 
 </script>
