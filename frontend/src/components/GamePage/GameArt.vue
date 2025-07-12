@@ -47,15 +47,16 @@
 
 <script setup>
 import Button from 'primevue/button'
-//import Dialog from 'primevue/dialog'
+import Dialog from 'primevue/dialog'
 import Image from 'primevue/image'
 import Toast from 'primevue/toast'
 import { useToast } from 'primevue/usetoast'
 
 import { ref, onMounted, watch } from 'vue'
 import { useArtStore } from '../../stores/art.js'
+import { useSaveStore } from '../../stores/savegame.js'
 
-const user = useUserStore()
+const buttonDisabled = ref(true)
 const artStore = useArtStore()
 const saveStore = useSaveStore()
 const artPieces = ref([])
@@ -74,7 +75,7 @@ const populateDictionaries = async (category) => {
     aiArt.value = await artStore.getArtByType('ai', `${category}`)
   }
 }
-getDimensions()
+//getDimensions()
 
 const getArt = async () => {
   isVisible.value = false
@@ -103,7 +104,6 @@ const checkAnswer = (e) => {
   }
   isVisible.value = !isVisible.value
   saveStore.total++
-  buttonDisabled.value = !buttonDisabled.value
 
   setTimeout(getArt, 1500)
 }

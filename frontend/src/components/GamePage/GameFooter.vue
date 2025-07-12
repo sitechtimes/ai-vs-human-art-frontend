@@ -33,6 +33,8 @@
 import Toolbar from 'primevue/toolbar'
 import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
+import { useSaveStore } from '../../stores/savegame.js'
+import { useUserStore }  from '../../stores/user'
 import { ref } from 'vue'
 import { useArtStore } from '../../stores/art'
 
