@@ -1,6 +1,8 @@
 <template>
-  <div v-if="userIsNull">
-    <span>Hello, please sign in in order to upload images</span>
+  <div v-if="isUserNull">
+    <span class="text-xl">Hello, please sign in 
+      <RouterLink to="/sign" class="underline text-blue-600">here</RouterLink>
+      order to upload images</span>
   </div>
   <div v-else class="flex flex-col gap-4 items-center m-8">
     <h2 class="text-xl underline self-center font-bold">TERMS OF SERVICE & FAQ</h2>
@@ -104,7 +106,7 @@ const addNewPicture = () => {
 
 const userStore = useUserStore()
 const user = userStore.currentUser
-const userIsNull = ref(false)
+const isUserNull = ref(true)
 const isAdmin = userStore.isAdmin
 
 const uploadedFile = (e) => {
@@ -149,11 +151,17 @@ const submit = async () => {
   uploading.value = false
 }
 
-const check = () => {
-  if (user.currentUser === null){
-    console.log('not logged in')
+function checkAccess(){
+  if (user != null){
+    isUserNull.value =! isUserNull.value
   }
 }
+
+onMounted(() => {
+  checkAccess()
+  
+})
+
 
 </script>
 

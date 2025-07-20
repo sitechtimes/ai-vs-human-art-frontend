@@ -3,10 +3,13 @@
     <div class="w-full bg-[var(--p-content-background)] mt-[58px] h-full">
       <TabsComponent />
     </div>
-    <div class="flex flex-col">
-      <Button v-if="!gameStarted" class="self-center w-2/5 md:w-1/5 mt-60" @click="startGame"
-        >Start Game</Button
-      >
+    <div v-if="!gameStarted" class="grid grid-flow-row auto-rows-max mx-4 md:mx-8">
+      <ConsentForm class="my-4"/>
+      <div class="flex flex-col md:flex-row items-center md:place-content-center gap-2 mb-4 text-center">
+        <label>I confirm I have read and understood these instructions and give my consent to participate in the experiment.</label>
+        <Checkbox v-model="checked" :binary="true"/>
+      </div>
+      <Button class="w-2/5 md:w-1/5 place-self-center" @click="startGame" :disabled="!checked">Start Game</Button>
     </div>
     <div v-if="gameStarted" class="flex flex-col h-[75vh]">
       <GameArt />
@@ -31,20 +34,25 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, computed } from 'vue'
 import GameFooter from '../components/GamePage/GameFooter.vue'
 import TabsComponent from '../components/GamePage/TabsComponent.vue'
 import GameArt from '../components/GamePage/GameArt.vue'
 import Button from 'primevue/button'
 import Dialog from 'primevue/dialog'
+import Checkbox from 'primevue/checkbox'
 import { useSaveStore } from '../stores/savegame'
 import { useUserStore } from '../stores/user'
+import ConsentForm from '@/components/ConsentForm.vue'
+import { disposePinia } from 'pinia'
 
 const saveStore = useSaveStore()
 const userStore = useUserStore()
 const gameStarted = ref(false)
 
 const results = ref(false)
+
+const checked = ref(false)
 
 const startGame = () => {
   gameStarted.value = true

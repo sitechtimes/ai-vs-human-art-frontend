@@ -48,6 +48,10 @@ const menuItems = ref([
     label: 'Submit Your Art'
   },
   {
+    route: '/tos',
+    label: 'TOS & Consent'
+  },
+  {
     route: '/about',
     label: 'About',
     items: [
