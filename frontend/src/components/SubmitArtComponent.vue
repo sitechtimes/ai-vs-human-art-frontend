@@ -1,6 +1,6 @@
 <template>
   <div v-if="isUserNull">
-    <span class="text-xl">Hello, please sign in 
+    <span class="text-xl">Hello, please sign in
       <RouterLink to="/sign" class="underline text-blue-600">here</RouterLink>
       order to upload images</span>
   </div>

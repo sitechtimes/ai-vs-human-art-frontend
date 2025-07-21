@@ -1,11 +1,11 @@
 <template>
   <div v-if="artPieces.length" class="flex flex-col items-center h-[calc(100%-68px)] w-full">
     <div
-      class="flex flex-row md:grid md:grid-cols-3 gap-5 m-[5vh] mb-[9vh] flex justify-center items-center h-screen md:justify-between md:gap-10 items-center lg:gap-10 xl:max-w-[50dvw] lg:max-h-[60dvh] lg:max-w-[70dvw] max-w-full md:max-w-[80dvw] md:flex-row"
+      class=" flex-row md:grid md:grid-cols-3 gap-5 m-[5vh] mb-[9vh] flex justify-center h-screen md:justify-between md:gap-10 items-center lg:gap-10 xl:max-w-[50dvw] lg:max-h-[60dvh] lg:max-w-[70dvw] max-w-full md:max-w-[80dvw] md:flex-row"
     >
       <div class="flex flex-col items-center">
         <div class="flex overflow-hidden">
-          <Image :src="artPieces[0]" alt="" class="object-contain justify-center" preview />
+          <Image :src="artPieces[0].secure_url" alt="" class="object-contain justify-center" preview />
         </div>
 
         <Button
@@ -20,7 +20,7 @@
 
       <div class="flex flex-col items-center">
         <div class="flex overflow-hidden">
-          <Image :src="artPieces[1]" class="object-contain justify-center" preview />
+          <Image :src="artPieces[1].secure_url" class="object-contain justify-center" preview />
         </div>
 
         <Button
@@ -62,7 +62,7 @@ const toast = useToast()
 const buttonDisabled = ref(false)
 const artStore = useArtStore()
 const saveStore = useSaveStore()
-const artPieces = ref([])
+const  artPieces = ref([])
 const isVisible = ref(false)
 const gameAnswer = ref(1) // which one is ai
 const isCorrect = ref(false)
@@ -87,8 +87,6 @@ const getArt = async () => {
     humanArt.value[Math.floor(Math.random() * humanArt.value.length)],
     aiArt.value[Math.floor(Math.random() * aiArt.value.length)]
   ]
-
-  console.log(humanArt)
   gameAnswer.value = 1
   if (artPieces.value.some((el) => el === null)) {
     alert('Failed to fetch art (boowomp)')
@@ -106,7 +104,7 @@ const checkAnswer = (e) => {
     toast.add({
       severity: 'error',
       summary: 'Incorrect',
-      detail: `hi`,
+      detail: `This piece was Human Made!`,
       life: 1500
     })
   } else {

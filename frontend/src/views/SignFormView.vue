@@ -22,23 +22,24 @@
       <div>
         <form @submit.prevent="signUp ? registerInfo() : signIn()">
           <TransitionGroup>
-            <div class="grid grid-flow-row auto-rows-max w-1/9 md:w-1/7 xl:w-1/5 place-self-center items-center text-lg gap-y-2">
-              <div v-if="signUp" class="flex flex-col">
-              <label for="username" key="username.label">Username</label>
-              <InputText
+            <div class="grid grid-flow-row auto-rows-max w-1/9 md:w-1/7 xl:w-1/5 place-self-center text-center items-center text-lg gap-y-2
+            ">
+              <div v-if="signUp" class="flex flex-col items-center w-full">
+                <label for="username" key="username.label">Username</label>
+                <InputText
                 id="username"
                 v-model="username"
                 placeholder="Username"
                 key="username.input"
-              />
+                />
               </div>
-              <div class="flex flex-col">
-              <label for="email" key="email.label">Email</label>
-              <InputText id="email" v-model="email" placeholder="Email" key="email.input" />
+              <div class="flex flex-col items-center w-full">
+                <label for="email" key="email.label">Email</label>
+                <InputText id="email" v-model="email" placeholder="Email" key="email.input" />
               </div>
-              <div class="flex flex-col">
-              <label for="password" key="password.label">Password</label>
-              <Password
+              <div class="flex flex-col items-center w-full">
+                <label for="password" key="password.label">Password</label>
+                <Password
                 v-model="password"
                 inputId="password"
                 :feedback="false"
@@ -46,9 +47,9 @@
                 placeholder="Password"
                 key="password.input"
                 class="flex flex-col"
-              />
+                />
               </div>
-              <div v-if="signUp" class="flex flex-col">
+              <div v-if="signUp" class="flex flex-col items-center w-full">
               <label for="password-confirm" key="password-confirm.label">Confirm Password</label>
               <Password
                 inputId="password-confirm"
@@ -70,7 +71,7 @@
             <div class="flex flex-col items-center w-4/5 md:w-full place-self-center">
               <div v-if="signUp" class="flex items-center gap-2 mt-2 text-center">
                 <label id="tos-label">I confirm that I am 18+ and have agreed to the 
-                  <RouterLink to="/tos" class="underline text-blue-600">consent forms.</RouterLink> 
+                  <RouterLink to="/tos" class="underline text-blue-600">consent forms.</RouterLink>
                 </label>
                 <Checkbox v-model="checked" :binary="true" />
               </div>
@@ -80,7 +81,7 @@
                 </label>
                 <Checkbox v-model="checked2" :binary="true" />
               </div>
-              <Button 
+              <Button
                 :label="signUp ? 'Sign Up' : 'Sign In'"
                 :disabled="signUp ? !termsAgreedTo: notMatch"
                 :class="notMatch ? '!cursor-not-allowed' : 'cursor-pointer'"
@@ -92,7 +93,6 @@
             </div>
           </TransitionGroup>
         </form>
-        
       </div>
     </div>
   </div>
