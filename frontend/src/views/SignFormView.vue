@@ -22,24 +22,23 @@
       <div>
         <form @submit.prevent="signUp ? registerInfo() : signIn()">
           <TransitionGroup>
-            <div class="grid grid-flow-row auto-rows-max w-1/9 md:w-1/7 xl:w-1/5 place-self-center text-center items-center text-lg gap-y-2
-            ">
-              <div v-if="signUp" class="flex flex-col items-center w-full">
-                <label for="username" key="username.label">Username</label>
-                <InputText
+            <div class="grid grid-flow-row auto-rows-max w-1/9 md:w-1/7 xl:w-1/5 place-self-center items-center text-lg gap-y-2" key="info-grid">
+              <div v-if="signUp" class="flex flex-col" key="username-div">
+              <label for="username" key="username.label">Username</label>
+              <InputText
                 id="username"
                 v-model="username"
                 placeholder="Username"
                 key="username.input"
-                />
+              />
               </div>
-              <div class="flex flex-col items-center w-full">
+              <div class="flex flex-col">
                 <label for="email" key="email.label">Email</label>
                 <InputText id="email" v-model="email" placeholder="Email" key="email.input" />
               </div>
-              <div class="flex flex-col items-center w-full">
-                <label for="password" key="password.label">Password</label>
-                <Password
+              <div class="flex flex-col">
+              <label for="password" key="password.label">Password</label>
+              <Password
                 v-model="password"
                 inputId="password"
                 :feedback="false"
@@ -49,7 +48,7 @@
                 class="flex flex-col"
                 />
               </div>
-              <div v-if="signUp" class="flex flex-col items-center w-full">
+              <div v-if="signUp" class="flex flex-col">
               <label for="password-confirm" key="password-confirm.label">Confirm Password</label>
               <Password
                 inputId="password-confirm"
@@ -68,7 +67,7 @@
             <p v-if="signUp" class="text-rose-600 place-self-center text-center mt-2" key="not-match-notif">
                 Usernames must be at least 4 letters long.
             </p>
-            <div class="flex flex-col items-center w-4/5 md:w-full place-self-center">
+            <div class="flex flex-col items-center w-4/5 md:w-full place-self-center" key="submit-button-and-checkboxes">
               <div v-if="signUp" class="flex items-center gap-2 mt-2 text-center">
                 <label id="tos-label">I confirm that I am 18+ and have agreed to the 
                   <RouterLink to="/tos" class="underline text-blue-600">consent forms.</RouterLink>

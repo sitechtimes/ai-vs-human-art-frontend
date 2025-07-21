@@ -5,7 +5,7 @@
     >
       <div class="flex flex-col items-center">
         <div class="flex overflow-hidden">
-          <Image :src="artPieces[0].secure_url" alt="" class="object-contain justify-center" preview />
+          <Image :src="artPieces[0]" alt="" class="object-contain justify-center" preview />
         </div>
 
         <Button
@@ -20,7 +20,7 @@
 
       <div class="flex flex-col items-center">
         <div class="flex overflow-hidden">
-          <Image :src="artPieces[1].secure_url" class="object-contain justify-center" preview />
+          <Image :src="artPieces[1]" class="object-contain justify-center" preview />
         </div>
 
         <Button
@@ -62,17 +62,22 @@ const toast = useToast()
 const buttonDisabled = ref(false)
 const artStore = useArtStore()
 const saveStore = useSaveStore()
-const  artPieces = ref([])
+const artPieces = ref([])
 const isVisible = ref(false)
 const gameAnswer = ref(1) // which one is ai
 const isCorrect = ref(false)
 const humanArt = ref([])
+const displayedArtist = ref(0)
+const humanArtists = ref([])
 const aiArt = ref([])
 const populateDictionaries = async (category) => {
   artPieces.value = []
   if (!category || category === 'Randomized') {
-    humanArt.value = await artStore.getAllArt('human')
-    aiArt.value = await artStore.getAllArt('ai')
+    const getAllHumanArt = await artStore.getAllArt('human')
+    humanArt.value = getAllHumanArt.map((art) => art.secure_url)
+    humanArtists.value = getAllHumanArt.map((art) => art.context)
+    const getAllAiArt = await artStore.getAllArt('ai')
+    aiArt.value = getAllAiArt.map((ai) => ai.secure_url)
   } else {
     humanArt.value = await artStore.getArtByType('human', `${category}`)
     aiArt.value = await artStore.getArtByType('ai', `${category}`)
@@ -82,9 +87,11 @@ const populateDictionaries = async (category) => {
 
 const getArt = async () => {
   isVisible.value = false
+  const artNumber = Math.floor(Math.random() * humanArt.value.length)
+  displayedArtist.value = artNumber
   artPieces.value = []
   artPieces.value = [
-    humanArt.value[Math.floor(Math.random() * humanArt.value.length)],
+    humanArt.value[artNumber],
     aiArt.value[Math.floor(Math.random() * aiArt.value.length)]
   ]
   gameAnswer.value = 1
@@ -104,7 +111,7 @@ const checkAnswer = (e) => {
     toast.add({
       severity: 'error',
       summary: 'Incorrect',
-      detail: `This piece was Human Made!`,
+      detail: `This piece was made by ${humanArtists.value[displayedArtist.value].custom.artist_name}!`,
       life: 1500
     })
   } else {
