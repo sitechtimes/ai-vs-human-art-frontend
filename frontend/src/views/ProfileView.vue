@@ -1,10 +1,11 @@
 <template>
-  <div class="mt-[58px]">
-    <Message severity="error"
+  <div class="mt-20">
+    <!-- <Message severity="error"
       >You are not
       <RouterLink to="/sign" class="underline">logged in</RouterLink>
-    </Message>
+    </Message> -->
     <div v-if="user">
+      <div class="grid grid-flow-row auto-rows-max place-items-center gap-y-4">
       <div class="flex justify-center items-center">
         <img src="/nagi.jpg" alt="placeholder avatar" class="rounded-full h-36 m-3" />
         <Button>Change Photo</Button>
@@ -23,6 +24,7 @@
       </div>
       <div class="mt-1">
         <Button @click="logout">Log Out</Button>
+      </div>
       </div>
     </div>
   </div>

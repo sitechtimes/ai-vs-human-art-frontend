@@ -12,10 +12,11 @@
           label="Image 1"
           class="flex self-center m-3 scale-90 sm:scale-100"
           @click="checkAnswer(0)"
+          :disabled="buttonDisabled"
         ></Button>
       </div>
 
-      <span class="mb-16">vs</span>
+      <span class="mb-16 place-self-center">vs</span>
 
       <div class="flex flex-col items-center">
         <div class="flex overflow-hidden">
@@ -26,18 +27,20 @@
           label="Image 2"
           class="flex self-center m-3 scale-90 sm:scale-100"
           @click="checkAnswer(1)"
+          :disabled="buttonDisabled"
         ></Button>
       </div>
     </div>
     <div>
       <div id="result">
+        <Toast/>
         <!-- eslint-disable vue/no-v-model-argument -->
-        <Dialog v-model:visible="isVisible" modal>
+        <!-- <Dialog v-model:visible="isVisible" modal> -->
           <!-- i think v-model:visible is the only way to toggle visibility with this primevue component, so unfortunately were going to have to break an eslint rule -->
-          <p v-if="isCorrect">Your answer is correct!</p>
+          <!-- <p v-if="isCorrect">Your answer is correct!</p>
           <p v-else>Your answer is incorrect!</p>
           <Button label="Try Again?" class="flex self-center" @click="getArt"></Button>
-        </Dialog>
+        </Dialog> -->
       </div>
     </div>
   </div>
@@ -54,7 +57,9 @@ import { ref, onMounted, watch } from 'vue'
 import { useArtStore } from '../../stores/art.js'
 import { useSaveStore } from '../../stores/savegame.js'
 
-const buttonDisabled = ref(true)
+const toast = useToast()
+
+const buttonDisabled = ref(false)
 const artStore = useArtStore()
 const saveStore = useSaveStore()
 const artPieces = ref([])
@@ -82,6 +87,8 @@ const getArt = async () => {
     humanArt.value[Math.floor(Math.random() * humanArt.value.length)],
     aiArt.value[Math.floor(Math.random() * aiArt.value.length)]
   ]
+
+  console.log(humanArt)
   gameAnswer.value = 1
   if (artPieces.value.some((el) => el === null)) {
     alert('Failed to fetch art (boowomp)')
@@ -95,13 +102,29 @@ const getArt = async () => {
 const checkAnswer = (e) => {
   if (e !== gameAnswer.value) {
     isCorrect.value = false
-    artStore.combo = 0
+    saveStore.combo = 0
+    toast.add({
+      severity: 'error',
+      summary: 'Incorrect',
+      detail: `hi`,
+      life: 1500
+    })
   } else {
     isCorrect.value = true
-    artStore.combo++
+    saveStore.right++
+    saveStore.combo++
+    toast.add({
+      severity: 'success',
+      summary: 'Correct',
+      detail: 'This piece was AI Generated!',
+      life: 1500
+    })
+
   }
-  isVisible.value = !isVisible.value
+  //isVisible.value = !isVisible.value for dialog
   saveStore.total++
+  buttonDisabled.value = !buttonDisabled.value
+  setTimeout(getArt, 1250) //set timeout is for toast, remove if using the commented out dialog
 }
 
 watch(artPieces, () => {

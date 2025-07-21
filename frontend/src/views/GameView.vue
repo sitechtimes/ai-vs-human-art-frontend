@@ -5,10 +5,11 @@
     </div>
     <div v-if="!gameStarted" class="grid grid-flow-row auto-rows-max mx-4 md:mx-8">
       <ConsentForm class="my-4"/>
-      <div class="flex flex-col md:flex-row items-center md:place-content-center gap-2 mb-4 text-center">
+      <div class="flex flex-col md:flex-row items-center md:place-content-center gap-2 mb-2 text-center">
         <label>I confirm I have read and understood these instructions and give my consent to participate in the experiment.</label>
         <Checkbox v-model="checked" :binary="true"/>
       </div>
+      <span class="place-self-center mb-4 text-center">In order to gain a point, guess the AI generated piece. Thank you!</span>
       <Button class="w-2/5 md:w-1/5 place-self-center" @click="startGame" :disabled="!checked">Start Game</Button>
     </div>
     <div v-if="gameStarted" class="flex flex-col h-[75vh]">
