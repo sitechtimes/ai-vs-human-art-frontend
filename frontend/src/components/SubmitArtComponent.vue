@@ -92,7 +92,7 @@ const pictures = ref([
   {
     link: '',
     name: '',
-    file: ''
+    file: null
   }
 ])
 
@@ -100,7 +100,7 @@ const addNewPicture = () => {
   pictures.value.push({
     link: '',
     name: '',
-    file: ''
+    file: null
   })
 }
 
@@ -109,8 +109,8 @@ const user = userStore.currentUser
 const isUserNull = ref(true)
 const isAdmin = userStore.isAdmin
 
-const uploadedFile = (e) => {
-  files.value.push(e.files[0])
+async function uploadedFile(e, i) {
+  pictures.value[i].file = e.files[0]
   addToast('success', 'Success', 'File uploaded successfully.')
 }
 
@@ -134,7 +134,6 @@ const submit = async () => {
     formData.append(`image`, picture.file)
   })
   formData.append('type', 'unscreened')
-
   const res = await imageStore.uploadImage(formData)
   if (!res.ok) {
     addToast('error', 'Error', 'Failed to submit art.')
