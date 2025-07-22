@@ -121,7 +121,7 @@ const checkAnswer = (e) => {
     toast.add({
       severity: 'success',
       summary: 'Correct',
-      detail: 'This piece was AI Generated!',
+      detail: `This piece was AI Generated! The real art was made by ${humanArtists.value[displayedArtist.value].custom.artist_name}!`,
       life: 1500
     })
 

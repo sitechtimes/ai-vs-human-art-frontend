@@ -7,7 +7,7 @@
     <div v-if="user">
       <div class="grid grid-flow-row auto-rows-max place-items-center gap-y-4">
       <div class="flex justify-center items-center">
-        <img src="/nagi.jpg" alt="placeholder avatar" class="rounded-full h-36 m-3" />
+        <img :src="profile_picture" alt="placeholder avatar" class="rounded-full h-36 m-3" />
         <Button>Change Photo</Button>
       </div>
       <div class="flex-col space-y-2.5 w-96 place-items-center place-self-center">
@@ -19,6 +19,11 @@
         <div>
           <Fieldset legend="Email" class="w-96">
             <p>{{ email }}</p>
+          </Fieldset>
+        </div>
+        <div>
+          <Fieldset legend="High Score" class="w-96">
+            <p>Your highest score was {{ highScore }}!</p>
           </Fieldset>
         </div>
       </div>
@@ -42,6 +47,8 @@ const user = userStore.currentUser
 const username = ref('')
 const email = ref('')
 const router = useRouter()
+const profile_picture = ref('')
+const highScore=ref(0)
 const logout = () => {
   userStore.logout()
   router.push({ path: '/' })
@@ -50,6 +57,8 @@ const logout = () => {
 function getData(user) {
   username.value = user.username
   email.value = user.email
+  profile_picture.value = user.profile_picture
+  highScore.value = user.highScore
 }
 
 if (user) {
