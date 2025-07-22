@@ -11,12 +11,15 @@ export const useUserStore = defineStore('user', () => {
   const isAdmin = ref(false)
 
   // requestEndpoitn stealing
-  const requestEndpoint = async (endpoint, method, body) => {
+  const requestEndpoint = async (endpoint, method, body, credentials) => {
     const options = {}
     if (method) {
       options.method = method
       options.headers = { 'Content-Type': 'application/json' }
       options.body = JSON.stringify(body)
+    }
+    if (credentials) {
+      options.credentials = credentials // include, same-origin, *omit -- include for login cookies
     }
     try {
       const res = await fetch(`${BACKEND_URL}${endpoint}`, options)
@@ -40,19 +43,17 @@ export const useUserStore = defineStore('user', () => {
 
   const login = async (email, password) => {
     const data = await requestEndpoint('/api/auth/login', 'POST', { email, password })
-
     currentUser.value = data.user
     isAdmin.value = data.user.role === 'admin'
     accessToken.value = data.access_token
     userId.value = data.user._id
-    localStorage.setItem('token', accessToken.value)
     localStorage.setItem('userId', userId.value)
   }
 
   const auth = async () => {
     const requestOptions = {
       method: 'GET',
-      headers: { Authorization: `Bearer ${localStorage.accessToken}` }
+      headers: { Authorization: `Bearer ${accessToken.value}` }
     }
     try {
       const res = await fetch(`${BACKEND_URL}/api/auth`, requestOptions)
@@ -61,6 +62,38 @@ export const useUserStore = defineStore('user', () => {
     } catch (error) {
       console.error('authentication problem', error)
       isAuthenticated.value = false
+    }
+  }
+
+  const validateToken = async () => {
+    const res = await requestEndpoint(
+      '/api/auth/validate',
+      'POST',
+      {
+        accessToken: accessToken.value
+      },
+      'include'
+    )
+
+    currentUser.value = res.user
+  }
+
+  const refresh = async () => {
+    try {
+      const res = await requestEndpoint('/api/auth/refresh', 'POST', {}, 'include')
+      if (res.access_token) {
+        accessToken.value = res.access_token
+        validateToken(accessToken.value)
+        return true
+      } else {
+        throw new Error('Could not refresh token: Access token not found in response')
+      }
+    } catch (error) {
+      console.error('Token refresh problem', error)
+      await logout()
+      accessToken.value = ''
+      localStorage.removeItem('userId')
+      return false
     }
   }
 
@@ -76,7 +109,6 @@ export const useUserStore = defineStore('user', () => {
       accessToken.value = ''
       isAuthenticated.value = false
       isAdmin.value = false
-      localStorage.removeItem('token')
       localStorage.removeItem('userId')
     } catch (error) {
       console.error('logout problem', error)
@@ -112,6 +144,8 @@ export const useUserStore = defineStore('user', () => {
     login,
     auth,
     logout,
-    updateHighScore
+    updateHighScore,
+    refresh,
+    validateToken
   }
 })
