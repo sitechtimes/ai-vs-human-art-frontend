@@ -81,8 +81,8 @@ export const useUserStore = defineStore('user', () => {
   const refresh = async () => {
     try {
       const res = await requestEndpoint('/api/auth/refresh', 'POST', {}, 'include')
-      if (res.access_token) {
-        accessToken.value = res.access_token
+      if (res.accessToken) {
+        accessToken.value = res.accessToken
         validateToken(accessToken.value)
         return true
       } else {
