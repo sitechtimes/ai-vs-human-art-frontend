@@ -9,9 +9,8 @@ onMounted(async () => {
   if (userStore.currentUser == null) {
     try {
       await userStore.refresh()
-      console.log('User logged in via refresh token')
-    } catch {
-      console.log('No refresh token found, user not logged in')
+    } catch (error) {
+      console.log('User not logged in via refresh token', error)
     }
   }
 })
