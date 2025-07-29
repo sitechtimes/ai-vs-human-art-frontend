@@ -17,7 +17,7 @@
       <Button @click="endGame" class="self-center w-2/5 md:w-1/5 mb-0">End Game</Button>
     </div>
     <div id="results" class="flex flex-col">
-      <Dialog v-model:visible="results" header="Thank you for playing!" modal class="max-w-[80vw]">
+      <Dialog v-model:visible="results" @click=check header="Thank you for playing!" modal class="max-w-[80vw]">
         <p>Here are your stats:</p>
         <p>{{ saveStore.right }} / {{ saveStore.total }}</p>
         <p>
@@ -70,6 +70,13 @@ const endGame = async () => {
     console.log('xd')
   }
 }
+
+const check = async () => {
+  saveStore.total = 0
+  saveStore.combo = 0
+  saveStore.right = 0
+}
+
 
 onMounted(async () => {
   await saveStore.setScore()
