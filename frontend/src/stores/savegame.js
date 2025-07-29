@@ -18,14 +18,14 @@ export const useSaveStore = defineStore('save', () => {
     }
   }
 
-  const saveGame = async (right, total, user) => {
+  const saveGame = async (yes, tot) => {
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        right: right.value,
-        total: total.value,
-        user: user.value
+        right: yes,
+        total: tot
+        //user: user.value
       })
     }
     try {
