@@ -33,9 +33,6 @@ export const useSaveStore = defineStore('save', () => {
       if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`)
       }
-      // total.value = 0
-      // combo.value = 0
-      // right.value = 0
     } catch (error) {
       console.error('Save Error', error)
     }
