@@ -116,11 +116,11 @@ export const useUserStore = defineStore('user', () => {
       },
       body: JSON.stringify({
         newHighScore: highScore,
-        userId: userId
+        userid: userId
       })
     }
     try {
-      const res = await fetch(`${BACKEND_URL}/api/highscore`, requestOptions)
+      const res = await fetch(`${BACKEND_URL}/api/auth/highscore`, requestOptions)
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
     } catch (error) {
       console.error('highscore update problem', error)
