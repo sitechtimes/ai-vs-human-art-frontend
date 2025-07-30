@@ -24,7 +24,7 @@
           </div>
         </div>
         <div class="mt-1">
-          <Button @click="logout">Log Out</Button>
+          <Button aria-label="Logout" @click="logout">Log Out</Button>
         </div>
       </div>
     </div>
@@ -51,8 +51,9 @@ const email = ref('')
 const router = useRouter()
 const profile_picture = ref('')
 const highScore = ref(0)
-const logout = () => {
-  userStore.logout()
+const logout = async () => {
+  await userStore.logout()
+  router.go(0)
   router.push({ path: '/' })
 }
 

@@ -100,7 +100,7 @@ export const useUserStore = defineStore('user', () => {
 
   const logout = async () => {
     const res = await requestEndpoint('/api/auth/logout', 'POST', {}, 'include') //include cookies to logout with
-    if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
+    if (!res.message) throw new Error(`HTTP error! status: ${res.status}`)
     currentUser.value = null
     accessToken.value = ''
     isAuthenticated.value = false
