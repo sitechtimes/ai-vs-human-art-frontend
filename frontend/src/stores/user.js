@@ -95,7 +95,7 @@ export const useUserStore = defineStore('user', () => {
         throw new Error('No refresh token cookie found')
       }
     } catch (error) {
-      console.log('Token refresh problem: ', error)
+      //console.log('Token refresh problem: ', error)
       if (currentUser.value) await logout()
       accessToken.value = ''
       localStorage.removeItem('userId')
