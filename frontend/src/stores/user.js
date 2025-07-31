@@ -47,6 +47,7 @@ export const useUserStore = defineStore('user', () => {
     isAdmin.value = data.user.role === 'admin'
     accessToken.value = data.access_token
     userId.value = data.user._id
+    localStorage.setItem('isAdmin', isAdmin.value)
     localStorage.setItem('userId', userId.value)
   }
 
@@ -59,6 +60,7 @@ export const useUserStore = defineStore('user', () => {
       const res = await fetch(`${BACKEND_URL}/api/auth`, requestOptions)
       if (!res.ok) throw new Error(`HTTP error status: ${res.status}`)
       isAuthenticated.value = true
+      //localStorage.setItem('auth', isAuthenticated.value)
     } catch (error) {
       console.error('authentication problem', error)
       isAuthenticated.value = false
@@ -85,6 +87,9 @@ export const useUserStore = defineStore('user', () => {
         const res = await requestEndpoint('/api/auth/refresh', 'POST', {}, 'include')
         accessToken.value = res.accessToken
         validateToken(accessToken.value)
+        userId.value = localStorage.getItem('userId')
+        //isAuthenticated.value = localStorage.getItem('auth')
+        isAdmin.value = localStorage.getItem('isAdmin')
         return true
       } else {
         throw new Error('No refresh token cookie found')
@@ -94,6 +99,8 @@ export const useUserStore = defineStore('user', () => {
       if (currentUser.value) await logout()
       accessToken.value = ''
       localStorage.removeItem('userId')
+      localStorage.removeItem('isAdmin')
+      //localStorage.removeItem('auth')
       return false
     }
   }
@@ -106,6 +113,8 @@ export const useUserStore = defineStore('user', () => {
     isAuthenticated.value = false
     isAdmin.value = false
     localStorage.removeItem('userId')
+    localStorage.removeItem('isAdmin')
+    //localStorage.removeItem('auth')
   }
 
   const updateHighScore = async (highScore, userId) => {
@@ -116,7 +125,7 @@ export const useUserStore = defineStore('user', () => {
       },
       body: JSON.stringify({
         newHighScore: highScore,
-        userid: userId
+        userId: userId
       })
     }
     try {

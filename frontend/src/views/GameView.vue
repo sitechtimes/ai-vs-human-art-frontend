@@ -65,9 +65,7 @@ const endGame = async () => {
   results.value = true
   await saveStore.saveGame(saveStore.right, saveStore.total)
   if (userStore.currentUser) {
-    console.log('started')
     await userStore.updateHighScore(saveStore.highScore, userStore.userId)
-    console.log('xd')
   }
 }
 
