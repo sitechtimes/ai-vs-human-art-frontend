@@ -4,20 +4,35 @@
       <TabsComponent />
     </div>
     <div v-if="!gameStarted" class="grid grid-flow-row auto-rows-max mx-4 md:mx-8">
-      <ConsentForm class="my-4"/>
-      <div class="flex flex-col md:flex-row items-center md:place-content-center gap-2 mb-2 text-center">
-        <label>I confirm I have read and understood these instructions and give my consent to participate in the experiment.</label>
-        <Checkbox v-model="checked" :binary="true"/>
+      <ConsentForm class="my-4" />
+      <div
+        class="flex flex-col md:flex-row items-center md:place-content-center gap-2 mb-2 text-center"
+      >
+        <label
+          >I confirm I have read and understood these instructions and give my consent to
+          participate in the experiment.</label
+        >
+        <Checkbox v-model="checked" :binary="true" />
       </div>
-      <span class="place-self-center mb-4 text-center">In order to gain a point, guess the AI generated piece. Thank you!</span>
-      <Button class="w-2/5 md:w-1/5 place-self-center" @click="startGame" :disabled="!checked">Start Game</Button>
+      <span class="place-self-center mb-4 text-center"
+        >In order to gain a point, guess the AI generated piece. Thank you!</span
+      >
+      <Button class="w-2/5 md:w-1/5 place-self-center" @click="startGame" :disabled="!checked"
+        >Start Game</Button
+      >
     </div>
     <div v-if="gameStarted" class="flex flex-col h-[75vh]">
       <GameArt />
       <Button @click="endGame" class="self-center w-2/5 md:w-1/5 mb-0">End Game</Button>
     </div>
     <div id="results" class="flex flex-col">
-      <Dialog v-model:visible="results" @click=check header="Thank you for playing!" modal class="max-w-[80vw]">
+      <Dialog
+        v-model:visible="results"
+        @click="check"
+        header="Thank you for playing!"
+        modal
+        class="max-w-[80vw]"
+      >
         <p>Here are your stats:</p>
         <p>{{ saveStore.right }} / {{ saveStore.total }}</p>
         <p>
@@ -35,7 +50,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, computed } from 'vue'
+import { onMounted, ref } from 'vue'
 import GameFooter from '../components/GamePage/GameFooter.vue'
 import TabsComponent from '../components/GamePage/TabsComponent.vue'
 import GameArt from '../components/GamePage/GameArt.vue'
@@ -45,7 +60,6 @@ import Checkbox from 'primevue/checkbox'
 import { useSaveStore } from '../stores/savegame'
 import { useUserStore } from '../stores/user'
 import ConsentForm from '@/components/ConsentForm.vue'
-import { disposePinia } from 'pinia'
 
 const saveStore = useSaveStore()
 const userStore = useUserStore()
@@ -75,11 +89,9 @@ const check = async () => {
   saveStore.right = 0
 }
 
-
 onMounted(async () => {
   await saveStore.setScore()
 })
-
 </script>
 
 <style scoped></style>

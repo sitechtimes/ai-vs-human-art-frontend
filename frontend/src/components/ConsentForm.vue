@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-primary-100 dark:!bg-primary-900 flex flex-col rounded p-4 self-center">
+  <div class="bg-primary-100 dark:!bg-primary-900 flex flex-col rounded p-4 self-center">
     <ScrollPanel class="h-36 w-full">
       <!-- <div v-for="text in consentForm" :key="text">
         <p class="font-bold">{{ text.heading }}</p>
@@ -14,9 +14,6 @@
 
 <script setup>
 import ScrollPanel from 'primevue/scrollpanel'
-
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

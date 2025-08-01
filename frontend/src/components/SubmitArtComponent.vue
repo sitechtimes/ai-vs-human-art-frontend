@@ -1,8 +1,10 @@
 <template>
   <div v-if="isUserNull">
-    <span class="text-xl">Hello, please sign in
+    <span class="text-xl"
+      >Hello, please sign in
       <RouterLink to="/sign" class="underline text-blue-600">here</RouterLink>
-      order to upload images</span>
+      in order to upload images</span
+    >
   </div>
   <div v-else class="flex flex-col gap-4 items-center m-8">
     <h2 class="text-xl underline self-center font-bold">TERMS OF SERVICE & FAQ</h2>
@@ -74,7 +76,6 @@ import TermsService from './TermsService.vue'
 const imageStore = useImageStore()
 const checked = ref(false)
 const checked2 = ref(false)
-const files = ref([])
 const uploading = ref(false)
 const termsAgreedTo = computed(
   () => checked.value && checked2.value && pictures.value && !uploading.value
@@ -150,18 +151,15 @@ const submit = async () => {
   uploading.value = false
 }
 
-function checkAccess(){
-  if (user != null){
-    isUserNull.value =! isUserNull.value
+function checkAccess() {
+  if (user != null) {
+    isUserNull.value = !isUserNull.value
   }
 }
 
 onMounted(() => {
   checkAccess()
-  
 })
-
-
 </script>
 
 <style scoped></style>

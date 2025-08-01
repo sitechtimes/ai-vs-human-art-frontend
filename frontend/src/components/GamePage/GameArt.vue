@@ -1,7 +1,7 @@
 <template>
   <div v-if="artPieces.length" class="flex flex-col items-center h-[calc(100%-68px)] w-full">
     <div
-      class=" flex-row md:grid md:grid-cols-3 gap-5 m-[5vh] mb-[9vh] flex justify-center h-screen md:justify-between md:gap-10 items-center lg:gap-10 xl:max-w-[50dvw] lg:max-h-[60dvh] lg:max-w-[70dvw] max-w-full md:max-w-[80dvw] md:flex-row"
+      class="flex-row md:grid md:grid-cols-3 gap-5 m-[5vh] mb-[9vh] flex justify-center h-screen md:justify-between md:gap-10 items-center lg:gap-10 xl:max-w-[50dvw] lg:max-h-[60dvh] lg:max-w-[70dvw] max-w-full md:max-w-[80dvw] md:flex-row"
     >
       <div class="flex flex-col items-center">
         <div class="flex overflow-hidden">
@@ -33,11 +33,11 @@
     </div>
     <div>
       <div id="result">
-        <Toast/>
+        <Toast />
         <!-- eslint-disable vue/no-v-model-argument -->
         <!-- <Dialog v-model:visible="isVisible" modal> -->
-          <!-- i think v-model:visible is the only way to toggle visibility with this primevue component, so unfortunately were going to have to break an eslint rule -->
-          <!-- <p v-if="isCorrect">Your answer is correct!</p>
+        <!-- i think v-model:visible is the only way to toggle visibility with this primevue component, so unfortunately were going to have to break an eslint rule -->
+        <!-- <p v-if="isCorrect">Your answer is correct!</p>
           <p v-else>Your answer is incorrect!</p>
           <Button label="Try Again?" class="flex self-center" @click="getArt"></Button>
         </Dialog> -->
@@ -48,7 +48,6 @@
 
 <script setup>
 import Button from 'primevue/button'
-import Dialog from 'primevue/dialog'
 import Image from 'primevue/image'
 import Toast from 'primevue/toast'
 import { useToast } from 'primevue/usetoast'
@@ -124,7 +123,6 @@ const checkAnswer = (e) => {
       detail: `This piece was AI Generated! The real art was made by ${humanArtists.value[displayedArtist.value].custom.artist_name}!`,
       life: 1500
     })
-
   }
   //isVisible.value = !isVisible.value for dialog
   saveStore.total++
@@ -146,11 +144,10 @@ watch(
   }
 ) //if image type clears
 
-onMounted(async() => {
+onMounted(async () => {
   await populateDictionaries(artStore.imageType)
   await getArt()
 })
-
 </script>
 
 <style scoped></style>
