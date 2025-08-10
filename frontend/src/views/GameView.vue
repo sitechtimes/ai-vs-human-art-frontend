@@ -23,7 +23,10 @@
     </div>
     <div v-if="gameStarted" class="flex flex-col h-[75vh]">
       <GameArt />
-      <Button @click="endGame" class="self-center w-2/5 md:w-1/5 mb-0">End Game</Button>
+      <!-- <Button @click="endGame" class="self-center w-2/5 md:w-1/5 mb-0">End Game</Button> -->
+       <p class="text-rose-600 place-self-center text-center text-sm mb-20" key="not-match-notif">
+          Play 10 rounds in order to end the game! <br> Your game will not save if you exit the tab or refresh.
+        </p>
     </div>
     <div id="results" class="flex flex-col">
       <Dialog
@@ -50,7 +53,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import GameFooter from '../components/GamePage/GameFooter.vue'
 import TabsComponent from '../components/GamePage/TabsComponent.vue'
 import GameArt from '../components/GamePage/GameArt.vue'
@@ -82,6 +85,13 @@ const endGame = async () => {
     await userStore.updateHighScore(saveStore.highScore, userStore.userId)
   }
 }
+
+watch(async() => {
+  if (saveStore.total === 10){
+    await endGame()
+  }
+}
+)
 
 const check = async () => {
   saveStore.total = 0
