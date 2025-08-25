@@ -24,7 +24,7 @@
 <script setup>
 const persons = [
   { name: 'Katherine Z', blurb: null, image: null },
-  { name: 'Tina G', blurb: null, image: null },
+  { name: 'Tina G', blurb: 'Staten Island Technical High School graduate and self  taught artist!! I love making keychains and other types of merch for my favorite characters <3. AND the coolest person you will ever meet.', image: '../../public/tinaabout.png'  },
   { name: 'Richard M', blurb: null, image: null },
   { name: 'Yifan Z', blurb: 'Graduated from Staten Island Technical High School in 2025. A big fan of fish and virtual fishing. You can probably find me reading manga.', image: '../../public/worm.png' }
 ]
