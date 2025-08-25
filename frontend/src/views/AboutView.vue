@@ -26,7 +26,7 @@ const persons = [
   { name: 'Katherine Z', blurb: null, image: null },
   { name: 'Tina G', blurb: null, image: null },
   { name: 'Richard M', blurb: null, image: null },
-  { name: 'Yifan Z', blurb: null, image: null }
+  { name: 'Yifan Z', blurb: 'Graduated from Staten Island Technical High School in 2025. A big fan of fish and virtual fishing. You can probably find me reading manga.', image: '../../public/worm.png' }
 ]
 </script>
 
