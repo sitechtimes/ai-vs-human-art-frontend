@@ -5,13 +5,13 @@
       We ask you to please review and agree to our TOS and Consent Form before proceeding further.
       Thank you!
     </p>
-    <div class="card">
+    <div class="card" >
       <Accordion value="0">
         <AccordionPanel value="0">
           <AccordionHeader>Consent Form</AccordionHeader>
           <AccordionContent>
             <p class="m-0">
-              <ConsentForm />
+              <ConsentForm/>
             </p>
           </AccordionContent>
         </AccordionPanel>
