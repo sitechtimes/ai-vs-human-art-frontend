@@ -82,7 +82,6 @@ const populateDictionaries = async (category) => {
     aiArt.value = await artStore.getArtByType('ai', `${category}`)
   }
 }
-//getDimensions()
 
 const getArt = async () => {
   isVisible.value = false
@@ -111,7 +110,7 @@ const checkAnswer = (e) => {
       severity: 'error',
       summary: 'Incorrect',
       detail: `This piece was made by ${humanArtists.value[displayedArtist.value].custom.artist_name}!`,
-      life: 1500
+      life: 5000
     })
   } else {
     isCorrect.value = true
@@ -121,7 +120,7 @@ const checkAnswer = (e) => {
       severity: 'success',
       summary: 'Correct',
       detail: `This piece was AI Generated! The real art was made by ${humanArtists.value[displayedArtist.value].custom.artist_name}!`,
-      life: 1500
+      life: 5000
     })
   }
   //isVisible.value = !isVisible.value for dialog

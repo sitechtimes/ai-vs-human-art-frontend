@@ -1,9 +1,9 @@
 <template>
   <div v-if="isUserNull">
-    <span class="text-xl"
+    <p class="text-lg ml-4"
       >Hello, please sign in
       <RouterLink to="/sign" class="underline text-blue-600">here</RouterLink>
-      in order to upload images</span
+      in order to upload images. If you don't want to create an account in order to upload images, feel free to contact project.aatm@gmail.com directly.</p
     >
   </div>
   <div v-else class="flex flex-col gap-4 items-center m-8">
