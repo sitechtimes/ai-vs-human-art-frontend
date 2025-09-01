@@ -10,7 +10,7 @@
     <h2 class="text-xl underline self-center font-bold">TERMS OF SERVICE & FAQ</h2>
     <TermsService />
     <div class="flex items-center gap-2 mt-4">
-      <label id="tos-label">I confirm that I have read and agree to these terms.</label>
+      <label id="tos-label">I confirm that I have read and agree to these terms and am 18+.</label>
       <Checkbox v-model="checked" :binary="true" />
     </div>
     <div class="flex items-center gap-2 mb-4">

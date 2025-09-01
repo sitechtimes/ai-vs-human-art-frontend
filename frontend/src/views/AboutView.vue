@@ -22,7 +22,7 @@
       </div>
     </div>
 
-    <h1 class="font-bold text-xl md:text-2xl text-center underline">Contributers</h1>
+    <h1 class="font-bold text-xl md:text-2xl text-center underline">Contributors</h1>
     <p class="text-center text-sm">Though not officially part of the team, they helped a LOT (thank you) </p>
     <div class="grid grid-cols-1 md:grid-cols-2 place-self-center">
       <div 

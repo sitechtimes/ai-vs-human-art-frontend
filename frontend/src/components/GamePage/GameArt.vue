@@ -86,11 +86,12 @@ const populateDictionaries = async (category) => {
 const getArt = async () => {
   isVisible.value = false
   const artNumber = Math.floor(Math.random() * humanArt.value.length)
+  const aiNumber = Math.floor(Math.random() * aiArt.value.length)
   displayedArtist.value = artNumber
   artPieces.value = []
   artPieces.value = [
     humanArt.value[artNumber],
-    aiArt.value[Math.floor(Math.random() * aiArt.value.length)]
+    aiArt.value[aiNumber]
   ]
   gameAnswer.value = 1
   if (artPieces.value.some((el) => el === null)) {
@@ -111,6 +112,7 @@ const checkAnswer = (e) => {
       summary: 'Incorrect',
       detail: `This piece was made by ${humanArtists.value[displayedArtist.value].custom.artist_name}!`,
       life: 5000
+      
     })
   } else {
     isCorrect.value = true
@@ -120,7 +122,8 @@ const checkAnswer = (e) => {
       severity: 'success',
       summary: 'Correct',
       detail: `This piece was AI Generated! The real art was made by ${humanArtists.value[displayedArtist.value].custom.artist_name}!`,
-      life: 5000
+      life: 5000,
+      class: 'w-20'
     })
   }
   //isVisible.value = !isVisible.value for dialog

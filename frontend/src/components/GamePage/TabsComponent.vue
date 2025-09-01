@@ -1,7 +1,7 @@
 <template>
   <div id="themes">
     <Tabs value="0">
-      <TabList class="flex w-full max-w-screen overflow-x-auto">
+      <TabList class="flex w-full max-w-screen overflow-x-auto overflow-y-hidden">
         <Tab
           v-for="tab in tabsObject"
           :key="tab.value"
