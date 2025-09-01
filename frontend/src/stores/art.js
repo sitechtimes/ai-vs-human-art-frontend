@@ -63,7 +63,6 @@ export const useArtStore = defineStore('art', () => {
       return null
     }
   }
-
   return {
     combo,
     getRandomArt,

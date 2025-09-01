@@ -21,6 +21,7 @@ onMounted(async () => {
     <HeaderComponent />
     <ThemeComponent />
     <RouterView />
+    <ThemeComponent/>
   </div>
 </template>
 

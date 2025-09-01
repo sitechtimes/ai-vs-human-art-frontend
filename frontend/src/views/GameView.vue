@@ -1,7 +1,7 @@
 <template>
-  <div class="">
-    <div class="w-full bg-[var(--p-content-background)] mt-[58px] h-full">
-      <TabsComponent />
+  <div>
+    <div class="w-full bg-[var(--p-content-background)] mt-[58px]">
+      <TabsComponent class="max-w-screen w-full" />
     </div>
     <div v-if="!gameStarted" class="grid grid-flow-row auto-rows-max mx-4 md:mx-8">
       <ConsentForm class="my-4" />
@@ -83,7 +83,6 @@ const startGame = () => {
 }
 
 const endGame = async () => {
-  console.log('ended')
   gameStarted.value = false
   results.value = true
   await saveStore.saveGame(saveStore.right, saveStore.total)
@@ -105,8 +104,14 @@ const check = async () => {
   saveStore.right = 0
 }
 
+
 onMounted(async () => {
   await saveStore.setScore()
+})
+
+onUnmounted(() => {
+  endGame()
+  saveStore.combo = 0
 })
 </script>
 

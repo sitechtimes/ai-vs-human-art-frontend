@@ -9,7 +9,6 @@ export const useImageStore = defineStore('image', () => {
       headers: { Authorization: `Bearer ${localStorage.token}` },
       body: formData
     }
-
     const res = await fetch(`${BACKEND_URL}/items/upload`, requestOptions)
     if (!res.ok) console.error(`HTTP error! status: ${res.status}`)
     return res

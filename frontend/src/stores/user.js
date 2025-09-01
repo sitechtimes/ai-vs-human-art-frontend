@@ -28,7 +28,7 @@ export const useUserStore = defineStore('user', () => {
       }
       return await res.json()
     } catch (error) {
-      console.error(error)
+      console.error('Registration Error', error)
     }
   }
 
@@ -119,7 +119,7 @@ export const useUserStore = defineStore('user', () => {
 
   const updateHighScore = async (highScore, userId) => {
     const requestOptions = {
-      method: 'PATCH',
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
       },

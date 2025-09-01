@@ -3,7 +3,7 @@
     <div
       class="flex-row md:grid md:grid-cols-3 gap-5 m-[5vh] mb-[9vh] flex justify-center h-screen md:justify-between md:gap-10 items-center lg:gap-10 xl:max-w-[50dvw] lg:max-h-[50dvh] lg:max-w-[70dvw] max-w-full md:max-w-[80dvw] md:flex-row"
     >
-      <div class="flex flex-col items-center">
+      <div class="flex flex-col items-center
         <div class="flex overflow-hidden">
           <Image :src="artPieces[0]" alt="" class="object-contain justify-center" preview />
         </div>
@@ -49,9 +49,8 @@
 <script setup>
 import Button from 'primevue/button'
 import Image from 'primevue/image'
-import Toast from 'primevue/toast'
-import { useToast } from 'primevue/usetoast'
-
+import Dialog from 'primevue/dialog'
+import { useSaveStore } from '../../stores/savegame.js'
 import { ref, onMounted, watch } from 'vue'
 import { useArtStore } from '../../stores/art.js'
 import { useSaveStore } from '../../stores/savegame.js'
@@ -59,16 +58,22 @@ import { useSaveStore } from '../../stores/savegame.js'
 const toast = useToast()
 
 const buttonDisabled = ref(false)
+
 const artStore = useArtStore()
+const userStore = useUserStore()
+const user = userStore.currentUser
 const saveStore = useSaveStore()
 const artPieces = ref([])
 const isVisible = ref(false)
-const gameAnswer = ref(1) // which one is ai
+const answer = ref(1) // which one is ai
 const isCorrect = ref(false)
 const humanArt = ref([])
 const displayedArtist = ref(0)
 const humanArtists = ref([])
 const aiArt = ref([])
+const buttonDisabled = ref(false)
+const toast = useToast()
+
 const populateDictionaries = async (category) => {
   artPieces.value = []
   if (!category || category === 'Randomized') {
@@ -101,12 +106,21 @@ const getArt = async () => {
     artPieces.value = []
   } else if (Math.random() < 0.5) {
     artPieces.value.reverse()
-    gameAnswer.value = 0
+    answer.value = 0
+  }
+  for (let i = 0; i < artPieces.value.length; i++) {
+    let getImg = new window.Image()
+    getImg.src = artPieces[i]
+    getImg.onload = () => {
+      if (getImg.width <= getImg.height) {
+        portraitBools[i].value = true
+      }
+    }
   }
 }
 
 const checkAnswer = (e) => {
-  if (e !== gameAnswer.value) {
+  if (e !== answer.value) {
     isCorrect.value = false
     saveStore.combo = 0
     toast.add({
@@ -141,7 +155,6 @@ watch(artPieces, () => {
 watch(
   () => artStore.imageType,
   async () => {
-    //async (newType) => { .. if (artStore.imageType !== newType) {
     artPieces.value = [] // clears art
     await populateDictionaries(artStore.imageType) // fills dictionaries with new art
     getArt() // chooses random art from new dictionaries
@@ -155,6 +168,3 @@ onMounted(async () => {
 </script>
 
 <style scoped></style>
-
-<!-- overall tally of all users + one of individual users -->
-<!-- dmeographic data? -->

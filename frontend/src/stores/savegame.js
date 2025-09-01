@@ -19,6 +19,7 @@ export const useSaveStore = defineStore('save', () => {
   }
 
   const saveGame = async (yes, tot) => {
+
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -26,6 +27,7 @@ export const useSaveStore = defineStore('save', () => {
         right: yes,
         total: tot
         //user: user.value
+
       })
     }
     try {
@@ -33,7 +35,9 @@ export const useSaveStore = defineStore('save', () => {
       if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`)
       }
+
       gameId.value = await res.json()
+
     } catch (error) {
       console.error('Save Error', error)
     }
