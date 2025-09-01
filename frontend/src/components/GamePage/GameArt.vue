@@ -90,8 +90,11 @@ const getArt = async () => {
   const artNumber = Math.floor(Math.random() * humanArt.value.length)
   const aiNumber = Math.floor(Math.random() * aiArt.value.length)
   if(usedHuman.includes(artNumber) || usedAI.includes(aiNumber)){
-    getArt()
+    console.log('we')
+    return getArt()
   }
+  usedHuman.push(artNumber)
+  usedAI.push(aiNumber)
   displayedArtist.value = artNumber
   artPieces.value = []
   artPieces.value = [
