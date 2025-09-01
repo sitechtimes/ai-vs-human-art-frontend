@@ -82,11 +82,16 @@ const populateDictionaries = async (category) => {
     aiArt.value = await artStore.getArtByType('ai', `${category}`)
   }
 }
+const usedHuman = []
+const usedAI = []
 
 const getArt = async () => {
   isVisible.value = false
   const artNumber = Math.floor(Math.random() * humanArt.value.length)
   const aiNumber = Math.floor(Math.random() * aiArt.value.length)
+  if(usedHuman.includes(artNumber) || usedAI.includes(aiNumber)){
+    getArt()
+  }
   displayedArtist.value = artNumber
   artPieces.value = []
   artPieces.value = [
@@ -100,7 +105,7 @@ const getArt = async () => {
   } else if (Math.random() < 0.5) {
     artPieces.value.reverse()
     gameAnswer.value = 0
-  }
+  } 
 }
 
 const checkAnswer = (e) => {
