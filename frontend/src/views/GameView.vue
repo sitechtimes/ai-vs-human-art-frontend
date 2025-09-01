@@ -41,11 +41,17 @@
         <p>
           out of {{ saveStore.total }} games you picked {{ saveStore.right }} as AI Generated
           pieces. Good Job!
+
+          <br><br>
+          Your game code is: {{ saveStore.gameId }}! 
+          <br>
+          You can use this to answer our second optional survey: <a href="https://forms.gle/2MXfJ3DRfF6uUstV8" class="underline">https://forms.gle/2MXfJ3DRfF6uUstV8</a>
         </p>
         <br />
-        <router-link to="/sign" class="underline" v-if="!userStore.currentUser"
+        <!-- <router-link to="/sign" class="underline" v-if="!userStore.currentUser"
           >Please sign in to save your game</router-link
-        >
+        > -->
+        
       </Dialog>
     </div>
     <GameFooter />
