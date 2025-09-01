@@ -3,27 +3,55 @@
     <div class="w-full bg-[var(--p-content-background)] mt-[58px]">
       <TabsComponent class="max-w-screen w-full" />
     </div>
-    <div class="flex flex-col">
-      <Button v-if="!gameStarted" class="self-center w-2/5 mt-60" @click="startGame"
+    <div v-if="!gameStarted" class="grid grid-flow-row auto-rows-max mx-4 md:mx-8">
+      <ConsentForm class="my-4" />
+      <div
+        class="flex flex-col md:flex-row items-center md:place-content-center gap-2 mb-2 text-center"
+      >
+        <label
+          >I confirm I have read and understood these instructions and give my consent to
+          participate in the experiment.</label
+        >
+        <Checkbox v-model="checked" :binary="true" />
+      </div>
+      <span class="place-self-center mb-4 text-center"
+        >In order to gain a point, guess the AI generated piece. Thank you!</span
+      >
+      <Button class="w-2/5 md:w-1/5 place-self-center" @click="startGame" :disabled="!checked"
         >Start Game</Button
       >
     </div>
     <div v-if="gameStarted" class="flex flex-col h-[75vh]">
       <GameArt />
-      <Button @click="endGame" class="self-center w-2/5 mb-0">End Game</Button>
+      <!-- <Button @click="endGame" class="self-center w-2/5 md:w-1/5 mb-0">End Game</Button> -->
+       <p class="text-rose-600 place-self-center text-center text-sm mb-20" key="not-match-notif">
+          Play 10 rounds in order to end the game! <br> Your game will not save if you exit the tab or refresh.
+        </p>
     </div>
     <div id="results" class="flex flex-col">
-      <Dialog v-model:visible="results" header="Thank you for playing!" modal class="max-w-[80vw]">
+      <Dialog
+        v-model:visible="results"
+        @click="check"
+        header="Thank you for playing!"
+        modal
+        class="max-w-[80vw]"
+      >
         <p>Here are your stats:</p>
         <p>{{ saveStore.right }} / {{ saveStore.total }}</p>
         <p>
           out of {{ saveStore.total }} games you picked {{ saveStore.right }} as AI Generated
           pieces. Good Job!
+
+          <br><br>
+          Your game code is: {{ saveStore.gameId }}! 
+          <br>
+          You can use this to answer our second optional survey: <a href="https://forms.gle/2MXfJ3DRfF6uUstV8" class="underline">https://forms.gle/2MXfJ3DRfF6uUstV8</a>
         </p>
         <br />
-        <router-link to="/sign" class="underline" v-if="!userStore.currentUser"
+        <!-- <router-link to="/sign" class="underline" v-if="!userStore.currentUser"
           >Please sign in to save your game</router-link
-        >
+        > -->
+        
       </Dialog>
     </div>
     <GameFooter />
@@ -31,20 +59,24 @@
 </template>
 
 <script setup>
-import { onMounted, ref, onUnmounted, watch } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import GameFooter from '../components/GamePage/GameFooter.vue'
 import TabsComponent from '../components/GamePage/TabsComponent.vue'
 import GameArt from '../components/GamePage/GameArt.vue'
 import Button from 'primevue/button'
 import Dialog from 'primevue/dialog'
+import Checkbox from 'primevue/checkbox'
 import { useSaveStore } from '../stores/savegame'
 import { useUserStore } from '../stores/user'
+import ConsentForm from '@/components/ConsentForm.vue'
 
 const saveStore = useSaveStore()
 const userStore = useUserStore()
 const gameStarted = ref(false)
 
 const results = ref(false)
+
+const checked = ref(false)
 
 const startGame = () => {
   gameStarted.value = true
@@ -53,23 +85,25 @@ const startGame = () => {
 const endGame = async () => {
   gameStarted.value = false
   results.value = true
+  await saveStore.saveGame(saveStore.right, saveStore.total)
   if (userStore.currentUser) {
-    if (userStore.currentUser.highScore < saveStore.highScore) {
-      await userStore.updateHighScore(saveStore.highScore, userStore.userId)
-    }
-    await saveStore.saveGame()
+    await userStore.updateHighScore(saveStore.highScore, userStore.userId)
   }
 }
 
-watch(results, (newResult) => {
-  if (newResult === false) {
-    saveStore.total = 0
-    saveStore.right = 0
-    saveStore.combo = 0
-  } else {
-    return
+watch(async() => {
+  if (saveStore.total === 10){
+    await endGame()
   }
-})
+}
+)
+
+const check = async () => {
+  saveStore.total = 0
+  saveStore.combo = 0
+  saveStore.right = 0
+}
+
 
 onMounted(async () => {
   await saveStore.setScore()

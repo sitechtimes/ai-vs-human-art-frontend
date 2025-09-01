@@ -35,6 +35,11 @@ const router = createRouter({
       component: () => import('../views/AboutView.vue')
     },
     {
+      path: '/credits',
+      name: 'credits',
+      component: () => import('../views/Acknowledgements.vue')
+    },
+    {
       path: '/submit',
       name: 'submit',
       component: () => import('../views/SubmitArtView.vue')
@@ -51,6 +56,11 @@ const router = createRouter({
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/ErrorView.vue')
+    },
+    {
+      path: '/tos',
+      name: 'tos',
+      component: () => import('../views/TOSView.vue')
     }
   ]
 })

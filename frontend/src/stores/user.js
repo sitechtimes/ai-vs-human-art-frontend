@@ -11,12 +11,15 @@ export const useUserStore = defineStore('user', () => {
   const isAdmin = ref(false)
 
   // requestEndpoitn stealing
-  const requestEndpoint = async (endpoint, method, body) => {
+  const requestEndpoint = async (endpoint, method, body, credentials) => {
     const options = {}
     if (method) {
       options.method = method
       options.headers = { 'Content-Type': 'application/json' }
       options.body = JSON.stringify(body)
+    }
+    if (credentials) {
+      options.credentials = credentials // include, same-origin, *omit -- include for login cookies
     }
     try {
       const res = await fetch(`${BACKEND_URL}${endpoint}`, options)
@@ -39,63 +42,79 @@ export const useUserStore = defineStore('user', () => {
   }
 
   const login = async (email, password) => {
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        email: email,
-        password: password
-      })
-    }
-    try {
-      const res = await fetch(`${BACKEND_URL}/api/auth/login`, requestOptions)
-      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
-      const data = await res.json()
-      currentUser.value = data.user
-      if (data.user.role == 'admin') {
-        isAdmin.value = true
-      }
-      accessToken.value = currentUser.value.access_token
-      userId.value = currentUser.value._id
-      localStorage.setItem('token', accessToken.value)
-      localStorage.setItem('userId', userId.value)
-    } catch (error) {
-      console.error('Login Error', error)
-    }
+    const data = await requestEndpoint('/api/auth/login', 'POST', { email, password }, 'include')
+    currentUser.value = data.user
+    isAdmin.value = data.user.role === 'admin'
+    accessToken.value = data.access_token
+    userId.value = data.user._id
+    localStorage.setItem('isAdmin', isAdmin.value)
+    localStorage.setItem('userId', userId.value)
   }
 
   const auth = async () => {
     const requestOptions = {
       method: 'GET',
-      headers: { Authorization: `Bearer ${localStorage.accessToken}` }
+      headers: { Authorization: `Bearer ${accessToken.value}` }
     }
     try {
       const res = await fetch(`${BACKEND_URL}/api/auth`, requestOptions)
       if (!res.ok) throw new Error(`HTTP error status: ${res.status}`)
       isAuthenticated.value = true
+      //localStorage.setItem('auth', isAuthenticated.value)
     } catch (error) {
       console.error('authentication problem', error)
       isAuthenticated.value = false
     }
   }
 
-  const logout = async () => {
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' }
-    }
+  const validateToken = async () => {
+    const res = await requestEndpoint(
+      '/api/auth/validate',
+      'POST',
+      {
+        accessToken: accessToken.value
+      },
+      'include'
+    )
+
+    currentUser.value = res.user
+  }
+
+  const refresh = async () => {
     try {
-      const res = await fetch(`${BACKEND_URL}/api/auth/logout`, requestOptions)
-      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
-      currentUser.value = null
-      accessToken.value = ''
-      isAuthenticated.value = false
-      isAdmin.value = false
-      localStorage.removeItem('token')
-      localStorage.removeItem('userId')
+      const ping = await requestEndpoint('/api/auth/cookieping', 'POST', {}, 'include')
+      if (ping.authenticated) {
+        const res = await requestEndpoint('/api/auth/refresh', 'POST', {}, 'include')
+        accessToken.value = res.accessToken
+        validateToken(accessToken.value)
+        userId.value = localStorage.getItem('userId')
+        //isAuthenticated.value = localStorage.getItem('auth')
+        isAdmin.value = localStorage.getItem('isAdmin')
+        return true
+      } else {
+        throw new Error('No refresh token cookie found')
+      }
     } catch (error) {
-      console.error('logout problem', error)
+      //console.log('Token refresh problem: ', error)
+      if (currentUser.value) await logout()
+      accessToken.value = ''
+      localStorage.removeItem('userId')
+      localStorage.removeItem('isAdmin')
+      //localStorage.removeItem('auth')
+      return false
     }
+  }
+
+  const logout = async () => {
+    const res = await requestEndpoint('/api/auth/logout', 'POST', {}, 'include') //include cookies to logout with
+    if (!res.message) throw new Error(`HTTP error! status: ${res.status}`)
+    currentUser.value = null
+    accessToken.value = ''
+    isAuthenticated.value = false
+    isAdmin.value = false
+    localStorage.removeItem('userId')
+    localStorage.removeItem('isAdmin')
+    //localStorage.removeItem('auth')
   }
 
   const updateHighScore = async (highScore, userId) => {
@@ -127,6 +146,8 @@ export const useUserStore = defineStore('user', () => {
     login,
     auth,
     logout,
-    updateHighScore
+    updateHighScore,
+    refresh,
+    validateToken
   }
 })

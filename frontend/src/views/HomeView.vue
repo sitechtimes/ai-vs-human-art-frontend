@@ -18,8 +18,8 @@
             as="RouterLink"
             placeholder="Overriden"
             class="btn"
-            label="Acknowledgments"
-            to="/credits"
+            label="TOS & Consent"
+            to="/tos"
           />
         </div>
       </div>

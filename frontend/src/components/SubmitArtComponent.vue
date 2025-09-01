@@ -1,9 +1,16 @@
 <template>
-  <div class="flex flex-col gap-4 items-center m-8">
+  <div v-if="isUserNull">
+    <p class="text-lg ml-4"
+      >Hello, please sign in
+      <RouterLink to="/sign" class="underline text-blue-600">here</RouterLink>
+      in order to upload images. If you don't want to create an account in order to upload images, feel free to contact project.aatm@gmail.com directly.</p
+    >
+  </div>
+  <div v-else class="flex flex-col gap-4 items-center m-8">
     <h2 class="text-xl underline self-center font-bold">TERMS OF SERVICE & FAQ</h2>
     <TermsService />
     <div class="flex items-center gap-2 mt-4">
-      <label id="tos-label">I confirm that I have read and agree to these terms.</label>
+      <label id="tos-label">I confirm that I have read and agree to these terms and am 18+.</label>
       <Checkbox v-model="checked" :binary="true" />
     </div>
     <div class="flex items-center gap-2 mb-4">
@@ -55,7 +62,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import InputText from 'primevue/inputtext'
 import FileUpload from 'primevue/fileupload'
 import Checkbox from 'primevue/checkbox'
@@ -69,7 +76,6 @@ import TermsService from './TermsService.vue'
 const imageStore = useImageStore()
 const checked = ref(false)
 const checked2 = ref(false)
-const files = ref([])
 const uploading = ref(false)
 const termsAgreedTo = computed(
   () => checked.value && checked2.value && pictures.value && !uploading.value
@@ -87,7 +93,7 @@ const pictures = ref([
   {
     link: '',
     name: '',
-    file: ''
+    file: null
   }
 ])
 
@@ -95,16 +101,17 @@ const addNewPicture = () => {
   pictures.value.push({
     link: '',
     name: '',
-    file: ''
+    file: null
   })
 }
 
 const userStore = useUserStore()
 const user = userStore.currentUser
+const isUserNull = ref(true)
 const isAdmin = userStore.isAdmin
 
-const uploadedFile = (e) => {
-  files.value.push(e.files[0])
+async function uploadedFile(e, i) {
+  pictures.value[i].file = e.files[0]
   addToast('success', 'Success', 'File uploaded successfully.')
 }
 
@@ -128,7 +135,6 @@ const submit = async () => {
     formData.append(`image`, picture.file)
   })
   formData.append('type', 'unscreened')
-
   const res = await imageStore.uploadImage(formData)
   if (!res.ok) {
     addToast('error', 'Error', 'Failed to submit art.')
@@ -144,6 +150,16 @@ const submit = async () => {
   ]
   uploading.value = false
 }
+
+function checkAccess() {
+  if (user != null) {
+    isUserNull.value = !isUserNull.value
+  }
+}
+
+onMounted(() => {
+  checkAccess()
+})
 </script>
 
 <style scoped></style>
