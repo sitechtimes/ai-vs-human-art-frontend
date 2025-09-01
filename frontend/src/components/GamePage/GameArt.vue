@@ -93,8 +93,6 @@ const getArt = async () => {
     humanArt.value[artNumber],
     aiArt.value[aiNumber]
   ]
-  humanArt.value.splice(artNumber, 1)
-  aiArt.value.splice(aiNumber, 1)
   gameAnswer.value = 1
   if (artPieces.value.some((el) => el === null)) {
     alert('Failed to fetch art (boowomp)')
