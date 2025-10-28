@@ -3,7 +3,7 @@
     <h1 class="mt-20 mb-4 text-2xl font-bold">Acknowledgements</h1>
     <div class="card" >
       <Accordion value="0">
-        <AccordionPanel value="0">
+        <AccordionPanel value="1">
           <AccordionHeader>Thank you ♡</AccordionHeader>
           <AccordionContent>
             <p class="m-0">
@@ -11,7 +11,7 @@
             </p>
           </AccordionContent>
         </AccordionPanel>
-        <AccordionPanel value="1">
+        <AccordionPanel value="0">
           <AccordionHeader>Starred Creators/Artists ★</AccordionHeader>
           <AccordionContent>
             <p class="m-0">
