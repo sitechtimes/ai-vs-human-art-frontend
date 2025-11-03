@@ -1,7 +1,7 @@
 <template>
   <div class="">
     <div class="w-full bg-[var(--p-content-background)] mt-[58px] h-full">
-      <TabsComponent />
+      <!-- <TabsComponent /> -->
     </div>
     <div v-if="!gameStarted" class="grid grid-flow-row auto-rows-max mx-4 md:mx-8">
       <ConsentForm class="my-4" />
