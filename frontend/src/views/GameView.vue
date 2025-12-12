@@ -9,7 +9,7 @@
         class="flex flex-col md:flex-row items-center md:place-content-center gap-2 mb-2 text-center"
       >
         <label
-          >I confirm I have read and understood these instructions and give my consent to
+          >I confirm I have read and understood these instructions and give my, or a guardian's consent if I am a minor, to
           participate in the experiment.</label
         >
         <Checkbox v-model="checked" :binary="true" />
@@ -25,7 +25,8 @@
       <GameArt />
       <!-- <Button @click="endGame" class="self-center w-2/5 md:w-1/5 mb-0">End Game</Button> -->
        <p class="text-rose-600 place-self-center text-center text-sm mb-20" key="not-match-notif">
-          Play 10 rounds in order to end the game! <br> Your game will not save if you exit the tab or refresh.
+          Play 10 rounds in order to end the game! <br> Your game will not save if you exit the tab or refresh. <br>
+          Images may take a while to load.
         </p>
     </div>
     <div id="results" class="flex flex-col">
